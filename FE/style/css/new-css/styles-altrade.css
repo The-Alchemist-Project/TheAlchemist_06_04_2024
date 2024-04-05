@@ -1,0 +1,135 @@
+
+  @import url("https://fonts.googleapis.com/css?family=Poppins:400,700,500,600");
+
+  .dropdown-2{
+    background-color: #eff6ff;
+    margin-top: 28px;
+    padding: 12px 16px;
+    width: 1281px;
+    border-radius: 10px;
+    left:80px;
+  }
+
+ .homepage .dropdown-4{
+    align-items: center;
+    border-radius: 10px;
+    display:flex;
+    gap: 8px;
+    justify-content: center;
+    position:relative;
+  }
+  .text-3 {
+    letter-spacing: 0;
+    line-height: 20px;
+    position:center;
+    white-space: nowrap;
+    width: fit-content;
+    text-align: center;
+  }
+  /* notice css*/
+  .notice-wrap{
+    margin-top: 28px; 
+  }
+  .notice-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .notice-header-wrap{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+  }
+  .heading{
+    color:#081131;
+    font-size 12px;
+    font-weight: 500;
+    line-height:20px;
+  }
+  .confluence_box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 20px;
+    position: absolute;
+    width: 1036px;
+    height: 20px;
+    left: 80px;
+    top:205px;
+
+  }
+  .confluence_bar-1 {
+    color: #1A64F0;;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 20px;
+    margin-top:-1px;
+    position:relative;
+    white-space: nowrap;
+    width: fit-content;
+
+  }
+  .confluence_bar-2 {
+    letter-spacing: 0;
+    line-height: 20px;
+    margin-top:-1px;
+    position:relative;
+    white-space: nowrap;
+    width: fit-content;
+
+  }
+.span-blue {
+  clolor: #1A64F0;
+}
+.vector_60 {
+  min-width: 1px;
+  height: 19px;
+  position:relative;
+}
+.stable_coin_frame {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  position: relative;
+  top:250px;
+  width: fit-content;
+}
+.dropdown-1 {
+  border: 1px solid;
+  border-color: var(--mecury);
+  padding: 12px 32px;
+  width: fit-content;
+}
+.text-9 {
+  letter-spacing: 0;
+  line-height: 20px;
+  margin-top: -1px;
+  position:relative;
+  white-space: nowrap;
+  width: fit-content;
+}
+.dropdown {
+  border: 1px solid;
+  border-color: var(--mecury);
+  padding: 12px 3216px;
+  width: fit-content;
+}
+.dropdown-3 {
+  border: 2px solid;
+  border-top-color: blue;
+  box-shadow: opx opx 12px #5990ff4c;
+  scroll-margin-bottom: -1px;
+  margin-top: -1px;
+  margin-left: -1px;
+  padding: 12px 16px;
+  width: fit-content;
+}
+.label {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  position:relative;
+  width:fit-content;
+}

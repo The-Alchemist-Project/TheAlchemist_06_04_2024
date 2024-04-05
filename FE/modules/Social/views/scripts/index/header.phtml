@@ -1,0 +1,68 @@
+<?php
+$customer = $_SESSION['cp__customer'];
+$postsymbols = $this->postsymbols;
+?>
+<div class="social-header">
+    <div class="row social-header-sub">
+        <div class="col-xl-3 col-lg-3 col-md-3 social-header-sub-left">
+            <a href="<?= BASE_URL ?>/<?= $this->language ?>">
+                <img class="social-header-left-logo" src="<?= BASE_URL ?>/style/img/logo.jpg" alt=""></a>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 social-header-sub-center">
+            <div class="social-header-sub-center-search">
+                <input type="text" name="search" placeholder="Search" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 social-header-sub-right">
+            <div class="social-header-sub-right-info">
+                <?php if (!$customer['img']): ?>
+                    <img src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+                <?php else: ?>
+                    <img src="<?= BASE_URL ?>/files/customer/<?= $customer['ID'] ?>/<?= $customer['img'] ?>" alt="">
+                <?php endif; ?>
+                <a href="<?= BASE_URL ?>/<?= $this->language ?>/user"><?= $customer['name'] ?></a>
+            </div>
+            <div class="social-header-sub-right-notice">
+                <img class="notice dropdown-toggle" src="<?= BASE_URL ?>/style/img/notice.png" alt=""  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="social-header-sub-right-notice-num"><?= count($postsymbols) ?></div>
+                <ul class="social-header-sub-right-more-dropdown dropdown-menu pull-right" style="max-height: 500px;overflow-y: scroll;">
+                    <?php if ($postsymbols): ?>
+                        <?php foreach ($postsymbols as $a): ?>
+                            <?php
+                            $d2 = strtotime($a['date'], "+1 day");
+                            ?>
+                            <li><a href="trade?ID=<?= $a['id'] ?>&aclist=st&symbol=<?= $a['symbol'] ?>&tab=USDT&type=D1&study=RSI">Alert symbol <?= $a['symbol'] ?> ngày <?= date("d/m/Y", $d2) ?></a></li>
+
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <li><a>Nothing notice</a></li>
+                    <?php endif; ?>
+                </ul>
+                <!--                <div tabindex="-1" role="dialog" class="social-header-sub-right-more-dropdown dropdown-menu pull-right" style="max-height: 500px;min-height: 200px;overflow-y: scroll;">
+                                    <nav>
+                                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+                                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                                        </div>
+                                    </nav>
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+                                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                                    </div>
+                                </div>-->
+            </div>
+            <div class="social-header-sub-right-more">
+                <img class="notice dropdown-toggle" src="<?= BASE_URL ?>/style/img/icon6.png" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                <ul class="social-header-sub-right-more-dropdown dropdown-menu pull-right">
+                    <li><a href="<?= BASE_URL ?>/<?= $this->language ?>/profile">Profile</a></li>
+                    <li><a href="<?= BASE_URL ?>/<?= $this->language ?>/user">View info</a></li>
+                    <li><a  href="<?= BASE_URL ?>/<?= $this->language ?>/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+	
+</div>

@@ -1,0 +1,55 @@
+<div class="wrap_admintab">
+	<div class="adminleft">
+		<div class="admintab">
+			<p>"Bạn đang sử dụng hệ thông quản trị website của Thealchemist. Mọi thắc mắc hay yêu cầu nâng cấp vui lòng liên hệ trực tiếp với chúng tôi. Chúc bạn có một website đẹp."</p>
+			<img src="<?=BASE_URL?>/admin/chart.png" style='float:left'/> Tình trạng bộ nhớ:
+				<b><?=round(($this->Plugins->getSizeFolder("files") + $this->Plugins->getSizeFolder("upload"))/(1024*10))/100?> MB</b>
+			<br/> Kích thước file upload tối đa:
+				<b><?=$this->Plugins->getMaxSizeFileUpload()?> MB</b>
+		</div>
+		<div class="admintab">
+		<img src="<?=BASE_URL?>/admin/user.png" style='float:left'/> Tài khoản: <b><?=$_SESSION['cp__user']['name']?></b>
+		<br/>Email: <i><?=$_SESSION['cp__user']['email']?></i>
+		</div>
+<!--		<div class="admintab">
+			<img src="<?=BASE_URL?>/admin/iconh8.png" style='float:left'/><b> Thông Báo Khách Hàng</b><br/>
+			<?php if(file_exists('http://dosvn.com/connect/customer.html')):?>
+			<iframe src="http://dosvn.com/connect/customer.html" style="width:245px;height:120px;border:none;background:#fff"></iframe>
+			<?php else:?>
+				<i>Dữ liệu tạm thời không lấy được</i>
+			<?php endif;?>
+		</div>	-->
+	</div>
+	<div class="adminright">
+		<div class="admintab" style="min-height:376px;padding:0px;">
+			<table cellpadding="8" cellspacing="0" border="1" bordercolor="#d9d9d9" width="100%" style="margin:0px;">
+			<tr style="text-align:center;">
+				<th>STT</th>
+				<th><?=$this->translate("Photo")?></th>
+				<th><?=$this->translate("Username")?></th>
+				<th><?=$this->translate("Mail")?></th>
+				<th><?=$this->translate("Edit")?></th>
+				<th><?=$this->translate("Delete")?></th>
+			</tr>
+			<?php $i=0; foreach( $this->users as $user ): $i++;?>
+			<tr>
+				<td width="20" style="text-align:center;"><?=$i?></td>
+				<td width="60" valign="top" align="center">
+					<img src="<?=BASE_URL?><?php if( $user['img'] =="" ):?>/files/users/default.png<?php else:?>/files/users/<?=$user['img']?><?php endif;?>" style="max-width:30px"/></td>
+				<td valign="center" align="center">
+					<b class="user_name"<?=$user['ID']==1?" style='color:red'":""?>><?=$user['name']?></b>
+				</td>
+				<td align="center" valign="middle"><?=$user['email']?></td>
+				<td valign="middle" align="center"><a href="<?=$this->controllerUrl?>/edit/?ID=<?=$user['ID']?>" class='edit'></a></td>
+				<td valign="middle" align="center"><?php if( $user['ID'] !="1" ):?><a href="<?=$this->controllerUrl?>/delete/?ID=<?=$user['ID']?>" class='delete'></a><?php endif;?></td>
+			</tr>
+			<?php endforeach; ?>
+			</table>
+			<?php if($_SESSION['cp__user']['ID'] == 1):?>
+				<div class="add_hh">
+					<h3><a href="<?=$this->controllerUrl?>/add" title="<?=$this->translate('Add new post')?>" class="add" style="float:right"></a></h3>
+				</div>
+			<?php endif;?>
+		</div>
+	</div>
+</div>

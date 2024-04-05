@@ -1,0 +1,117 @@
+<?php
+$posts = $this->posts;
+$tab = $this->tab;
+$customer = $_SESSION['cp__customer'];
+?>
+
+ <div class="work-items-setting" style="margin-top: 24px">
+        <div class="work-items-setting-tab">
+            <div class="work-items-setting-sub work-items-setting-faq <?php $tab == 'bs' ? _e("work-items-setting-tab-sub-active") : "" ?>">
+                <a href="?tab=bs">Basic Setting</a>
+            </div>
+            <div class="work-items-setting-sub work-items-setting-info <?php $tab == 'df' ? _e("work-items-setting-tab-sub-active") : '' ?>">
+                <a href="?tab=df">My Setting<a/>
+            </div>
+            <div class="work-items-setting-sub work-items-setting-info <?php $tab == 'pro' ? _e("work-items-setting-tab-sub-active") : '' ?>">
+                <a href="?tab=pro">Professional Setting<a/>
+            </div>
+
+        </div>
+    </div>
+
+<div class="work-items" style="margin-top: 24px">
+   
+    <table cellpadding="8" border="1" bordercolor="#d9d9d9" style="border-collapse:collapse" width="100%" align="center">
+        <tr>
+            <th style="text-align: center">ID</th>
+            <th style="text-align: center">Name</th>
+            <th style="text-align: center">Type</th>
+            <th style="text-align: center">Date</th>
+            <?php if ($tab == 'bs'): ?>
+                <th style="text-align: center" colspan="2">Create new formula</th>
+            <?php else: ?>
+                <th style="text-align: center">Edit</th>
+                <th style="text-align: center">Delete</th>
+                <th style="text-align: center">Calculate</th>
+            <?php endif; ?>
+        </tr>
+        <?php foreach ($this->posts as $key => $post): ?>
+            <tr>
+                <td align="center"><?= $key + 1 ?></td>
+                <td>
+                    <?= $post['title'] ?>
+                </td>
+                <td align="center" nowrap="nowrap">
+                    <label class="ajax"><?= $post['parent_title'] ?></label>
+                </td>
+                <td align="center"><span title="<?= @date("H:i:s d/m/Y", $post['date_post']) ?>"><?= @date("H:i:s d/m/Y", $post['date_post']) ?></span></td>
+                <?php if ($post['method'] == 'PRO'): ?>
+                    <td align="center">
+                        <a href="<?= BASE_URL ?>/vn/work/index/editpost?ID=<?= $post['ID'] ?>&tab=pro" class="edit">Edit</a>
+                    </td>
+                    <td align="center">
+                        <a href="<?= BASE_URL ?>/vn/work/index/deletepost?ID=<?= $post['ID'] ?>&tab=pro" class="delete" onclick="return confirm('Do you want to delete?');">Delete</a>
+                    </td>
+
+                    <td align="center">
+                        <?php if ($post['parent_title'] == 'H4'): ?>
+                            <a href="<?= BASE_URL ?>/vn/cronh4?cal=<?= $post['ID'] ?>" class="run">Run</a>
+                        <?php else: ?>
+                            <a href="<?= BASE_URL ?>/vn/cron?cal=<?= $post['ID'] ?>" class="run">Run</a>
+                        <?php endif; ?>
+                    </td>
+                <?php elseif ($post['method'] == 'NORMAL'): ?>
+                    <td align="center">
+                        <a href="<?= BASE_URL ?>/vn/work/index/editpost?ID=<?= $post['ID'] ?>" class="edit">Edit</a>
+                    </td>
+                    <td align="center">
+                        <a href="<?= BASE_URL ?>/vn/work/index/deletepost?ID=<?= $post['ID'] ?>" class="delete" onclick="return confirm('Do you want to delete?');">Delete</a>
+                    </td>
+
+                    <td align="center">
+                        <?php if ($post['parent_title'] == 'H4'): ?>
+                            <a href="<?= BASE_URL ?>/vn/cronh4?cal=<?= $post['ID'] ?>" class="run">Run</a>
+                        <?php else: ?>
+                            <a href="<?= BASE_URL ?>/vn/cron?cal=<?= $post['ID'] ?>" class="run">Run</a>
+                        <?php endif; ?>
+                    </td>
+
+                <?php else: ?>
+                    <td align="center" colspan="2">
+
+                        <a href="<?= BASE_URL ?>/vn/work/index/addpost?copy_id=<?= $post['ID'] ?>&tab=df" class="edit">My Setting</a>
+                        | <a href="<?= BASE_URL ?>/vn/work/index/addpost?copy_id=<?= $post['ID'] ?>&tab=pro" class="edit">Professional Setting</a>
+                    </td>
+
+
+                <?php endif; ?>
+            </tr>
+        <?php endforeach; ?>
+        <?php if (isset($key)): ?>
+
+        <?php else: ?>
+            <tr>
+                <td colspan="7" align="center">
+                    <?= $this->translate("Nothing found") ?>
+                </td>
+            </tr>
+        <?php endif; ?>
+    </table>
+    <?php if ($customer['user'] == 'admin'): ?>
+        <div>
+            <br>
+            <a href="https://thealchemist.ai/vn/cron">Calculate All Formula D1</a>
+            <br>
+            <a href="https://thealchemist.ai/vn/cronh4">Calculate All Formula H4</a>
+
+        </div>
+    <?php elseif ($tab == 'df' || $tab == 'pro'): ?>
+        <div>
+            <br>
+            <a href="https://thealchemist.ai/vn/cron?date=<?= date("Y-m-d") ?>">Calculate All Formula D1 By <?= $customer['name'] ?></a>
+            <br>
+            <a href="https://thealchemist.ai/vn/cronh4?date=<?= date("Y-m-d H:00:00") ?>">Calculate All Formula H4 By <?= $customer['name'] ?></a>
+
+        </div>
+    <?php endif; ?>
+</div>

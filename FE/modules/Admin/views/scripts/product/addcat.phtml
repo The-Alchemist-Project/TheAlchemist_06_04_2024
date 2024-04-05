@@ -1,0 +1,34 @@
+<?php if( isset($this->message ) ):?>
+<div class="error">	<?=$this->translate( $this->message );?> </div>
+<?php endif;?>
+<?php if( ($this->message != "ERROR_MSQL") && ($this->message != "ERROR_NOT_EXISTS") ):?>
+<form action="<?=$this->actionUrl?>" method="post" enctype="multipart/form-data">
+<input type="hidden" name="ID" value="<?=$this->ID?>"/>
+<div class="wrap_admintab">
+	<?php include "_menu.phtml"?>	
+		<div class="adminright">		
+			<div class="admintab" style="min-height:376px;padding:0px;">
+		<table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+			<tr>
+				<td width="100"><label><?=$this->translate("Title")?></label></td>
+				<td><input type="text" name="title" class="itext" size="40" value="<?=$this->title?>" /></td>
+			</tr>
+			<tr>
+				<td><label><?=$this->translate("Lang")?></label></td>
+				<td><?=$this->translate("Language.{$_SESSION['cp_lang']}")?></td>
+			</tr>		
+			<tr>
+				<td><label><?=$this->translate("Parent")?></label></td>
+				<td><?=$this->catOptions?></td>
+			</tr>
+			
+			<tr>
+				<td colspan="2" align="center"><input type="submit" value="<?=$this->translate("Submit_Create")?>"/></td>
+			</tr>	
+		</table>	
+					</div>
+		</div>	
+</div>				
+
+		</form>
+<?php endif;?>

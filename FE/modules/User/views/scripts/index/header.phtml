@@ -1,0 +1,39 @@
+<?php
+$customer = $_SESSION['cp__customer'];
+?>
+<div class="social-header">
+    <div class="row social-header-sub">
+        <div class="col-xl-3 col-lg-3 col-md-3 social-header-sub-left">
+            <a href="<?= BASE_URL ?>/<?= $this->language ?>/social">
+                <img class="social-header-left-logo" src="<?= BASE_URL ?>/style/img/logo.jpg" alt=""></a>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 social-header-sub-center">
+            <div class="social-header-sub-center-search">
+                <input type="text" name="search" placeholder="Search" autocomplete="off"/>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3 col-md-3 social-header-sub-right">
+            <div class="social-header-sub-right-info">
+                <?php if (!$customer['img']): ?>
+                    <img src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+                <?php else: ?>
+                    <img src="<?= BASE_URL ?>/files/customer/<?= $customer['ID'] ?>/<?= $customer['img'] ?>" alt="">
+                <?php endif; ?>
+                <a href="<?= BASE_URL ?>/<?= $this->language ?>/user"><?= $customer['name'] ?></a>
+            </div>
+            <div class="social-header-sub-right-notice">
+                <img class="notice" src="<?= BASE_URL ?>/style/img/notice.png" alt="">
+            </div>
+            <div class="social-header-sub-right-more">
+                <img class="notice dropdown-toggle" src="<?= BASE_URL ?>/style/img/icon6.png" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                <ul class="social-header-sub-right-more-dropdown dropdown-menu pull-right">
+                    <li><a href="<?= BASE_URL ?>/<?= $this->language ?>/profile">Profile</a></li>
+                    <li><a>View info</a></li>
+                    <li><a  href="<?= BASE_URL ?>/<?= $this->language ?>/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>

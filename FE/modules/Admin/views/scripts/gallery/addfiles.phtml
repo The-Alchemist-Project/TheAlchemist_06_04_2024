@@ -1,0 +1,43 @@
+<?php if( isset($this->message ) ):?>
+<div class="error">	<?=$this->translate($this->message);?></div>
+<?php endif;?>
+
+<?php if( $this->message != "ERROR_MSQL" AND $this->message != "ERROR_NOT_EXISTS" ):?>
+<div class="wrap_admintab">
+	<?php include "_menu.phtml"?>	
+		<div class="adminright">
+		
+			<div class="admintab" style="min-height:376px;padding:0px;">	
+
+<form action="<?=$this->actionUrl?>" method="post" enctype="multipart/form-data">
+<input type="hidden" name="ID" value="<?=$this->ID?>"/>
+<table cellpadding="8" border="1" bordercolor="#888888" width="100%">
+	<tr>
+		<td><label><?=$this->translate("Parent")?></label></td>
+		<td><?=$this->catOptions?></td>
+	</tr>
+	<tr>
+		<td><label><?=$this->translate("Lang")?></label></td>
+		<td><?=$this->translate("Language.{$_SESSION['cp_lang']}")?></td>
+	</tr>
+		<tr>
+		<td><label>Tiêu đề</label></td>
+		<td>
+			<input type="text" name="title" size="50"/><br/>
+		</td>
+	</tr>
+	<tr>
+		<td><label>File</label></td>
+		<td>
+			<input type="file" name="files1"/><br/>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center"><input type="submit" value="<?=$this->translate("Submit_Create")?>" class="button"/></td>
+	</tr>	
+</table>	
+</form>
+</div>
+		</div>	
+</div>	
+<?php endif;?>

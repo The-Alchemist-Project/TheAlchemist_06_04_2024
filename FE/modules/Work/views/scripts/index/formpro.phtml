@@ -1,0 +1,96 @@
+
+<?php
+$postId = $this->id;
+$copyId = $this->copyId;
+$post = $this->post;
+$coinIds = [];
+if ($post && $post['coin_ids']) {
+    $coinIds = explode(',', $post['coin_ids']);
+}
+?>
+<?php if (isset($this->message)): ?>
+    <div class="error">	<?= $this->translate($this->message); ?></div>
+<?php endif; ?>
+
+<?php if ($this->message != "ERROR_MSQL" AND $this->message != "ERROR_NO_CATELOGY_EXISTS"): ?>
+    <form action="<?= BASE_URL ?>/vn/work/index/<?php $postId ? _e("editpost") : _e("addpost") ?>" method="post">
+        <input type='hidden' name="ID" value="<?= $postId ?>">
+        <input type='hidden' name="tab" value="pro">
+        <input type='hidden' name="copy_id" value="<?= $copyId ?>">
+        <div class="work-form">
+            <table cellpadding="8" border="0" bordercolor="#d9d9d9" style="border-collapse:collapse" width="100%" align="center">
+                <tr>
+                    <td><label>AI-Trade</label></td>
+                    <td><div class="form-group" style='width:450px;'><?= $this->itemAiTrades ?></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Name</label></td>
+                    <td><input type="text" name="title" class="itext" value="<?= $this->title ?>" /></td>
+                </tr>
+                <tr>
+                    <td><label>Time Frame</label></td>
+                    <td><div class="form-group" style='width:450px;'><?= $this->catOptions ?></div></td>
+                </tr>
+
+                <tr>
+                    <td><label>Trading Pair</label></td>
+                    <td><div class="form-group" style='width:450px;'>
+                            <select class="selectpicker" multiple data-live-search="true" name="coin_ids[]">
+                                <?php foreach ($this->coins as $a): ?>
+                                    <option  <?php in_array($a['id'], $coinIds) ? _e("selected='selected'") : _e("") ?> value="<?= $a['id'] ?>"><?= $a['symbol'] ?></option>
+                                <?php endforeach; ?>
+
+                            </select>
+                        </div></td>
+                </tr>
+
+                <tr>
+                    <td><label>Entry Zone</label></td>
+                    <td><input type="text" name="buylong" class="itext" value="<?= $this->buylong ?>" /></td>
+                </tr>
+                <tr>
+                    <td><label>DCA1</label></td>
+                    <td><input type="text" name="target1" class="itext" value="<?= $this->target1 ?>" /></td>
+                </tr>
+                <tr>
+                    <td><label>DCA2</label></td>
+                    <td><input type="text" name="target2" class="itext" value="<?= $this->target2 ?>" /></td>
+                </tr>
+                <tr>
+                    <td><label>Target Zone</label></td>
+                    <td><input type="text" name="target3" class="itext" value="<?= $this->target3 ?>" /></td>
+                </tr>
+                <tr>
+                    <td><label>Stop Loss</label></td>
+                    <td><input type="text" name="stoploss" class="itext" value="<?= $this->stoploss ?>" /></td>
+                </tr>
+                <tr>
+                    <td><label>Risk</label></td>
+                    <td><input type="text" name="r1" class="itext" value="<?= $this->r1 ?>" /></td>
+                </tr>
+                <tr>
+                    <td><label>Reward</label></td>
+                    <td><input type="text" name="r2" class="itext" value="<?= $this->r2 ?>" /></td>
+                </tr>
+
+
+                <tr>
+                    <td><label>Formula</label></td>
+                    <td align="left">
+                        <textarea  name="desc"><?= htmlspecialchars_decode($this->desc) ?></textarea>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td align="left"></td>
+                    <td align="left">
+                        <input type="submit" value="Create" class="btn btn-success" name="Create"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </form>
+<?php endif; ?>

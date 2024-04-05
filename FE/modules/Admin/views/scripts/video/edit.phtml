@@ -1,0 +1,55 @@
+<?php if( isset($this->message ) ):?>
+<div class="error">	<?=$this->translate($this->message);?></div>
+<?php endif;?>
+<?php if( $this->message != "ERROR_MSQL" AND $this->message != "ERROR_NOT_EXISTS" ):?>
+<div class="wrap_admintab">
+	<?php include "_menu.phtml"?>
+		<div class="adminright">
+
+			<div class="admintab" style="min-height:376px;padding:0px;">
+
+<form action="<?=$this->actionUrl?>" method="post" enctype="multipart/form-data">
+<input type="hidden" name="ID" value="<?=$this->ID?>"/>
+<table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+	<tr>
+		<td><label><?=$this->translate("Title")?></label></td>
+		<td><input type="text" class="itext" value="<?=$this->title?>" name="title" size="80"/>
+		</td>
+	</tr>
+<!--	<tr>
+		<td><label>Hình đại diện Video</label></td>
+		<td>
+			<input type="file" name="img"/><br/>
+			<img src="<?=BASE_URL?>/<?=$this->dirImage?><?=$this->img?>"/>
+		</td>
+	</tr>-->
+<!--	<tr>
+		<td><label><?=$this->translate("Video")?></label></td>
+		<td>
+			<input type="file" name="video"/><br/>
+		</td>
+	</tr>-->
+    <tr>
+        <td valign="top"><label>Đường dẫn(youtube):</label></td>
+        <td>
+            <input type="text" name="content" size="20" value="<?=$this->content?>"/><br/>
+            <p style="line-height:1.2em"><b>Ví dụ</b>: http://www.youtube.com/watch?v=<b>3NEfeLN5oRw</b>&feature=grec_index <br/><br/>
+			Thì ta chỉ copy đoạn đường dẫn <b>3NEfeLN5oRw</b> sau đoạn <b>"?v="</b> và trước dấu <b>"&"</b></p>
+        </td>
+    </tr>
+	<tr>
+		<td><label><?=$this->translate("Order")?></label></td>
+		<td><input type="text" class="itext" value="<?=$this->ord?>" name="ord" size="5"/>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<input type="submit" value="<?=$this->translate("Submit_Create")?>" class="button"/>
+		</td>
+	</tr>
+</table>
+</form>
+</div>
+		</div>
+</div>
+<?php endif;?>

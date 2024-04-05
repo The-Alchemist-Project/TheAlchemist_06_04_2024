@@ -1,0 +1,793 @@
+<?php
+$getTopOverSold = $this->getTopOverSold;
+$getTopOverBought = $this->getTopOverBought;
+$getListCoins = $this->getListCoins;
+$getRsiChangen = $this->getRsiChangen;
+$coinActive = $this->coinActive;
+$request = $this->request;
+$arrayShowRSIChart = [];
+$totalRSI = 0;
+$arrayRateRSIChart = [];
+$nameCoins =[];
+
+foreach ($getListCoins as $key => $coin) {
+    $key = $key + 1;
+    $arrayShowRSIChart[] = [$key, round($coin['rsi'], 2)];
+    $nameCoins[] = str_replace('USDT', '', $coin['symbol']);
+    $totalRSI += $coin['rsi'];
+    $rsiChange = array_values(array_filter($getRsiChangen, function ($i) use ($coin) {
+        return $i['symbol'] == $coin['symbol'];
+    }));
+    if (count($rsiChange) > 0) {
+        $arrayRateRSIChart[] = $rsiChange[0]['rsi_changen'];
+    } else {
+        $arrayRateRSIChart[] = 0;
+    }
+}
+$decimalRSI = round($totalRSI / count($getListCoins), 2);
+
+$entryPoint = $coinActive['high'];
+$DCA1 = ($coinActive['high'] + $coinActive['low']) /2;
+$DCA2 = $coinActive['low'];
+if($coinActive['rsi_value'] <=30 ){
+$targetPoint = $entryPoint *1.1;
+$stopLoss = $DCA2 * 0.9;
+$risk = $stopLoss - ($entryPoint + $DCA1 + $DCA2)/3;
+$reward = $targetPoint - ($entryPoint + $DCA1 + $DCA2)/3;
+}
+else{
+    $targetPoint = $DCA2 * 0.9;
+    $stopLoss = $entryPoint *1.1;
+    $risk = ($entryPoint + $DCA1 + $DCA2)/3 - $stopLoss;
+    $reward =  ($entryPoint + $DCA1 + $DCA2)/3 - $targetPoint;
+}
+?>
+<!DOCTYPE html>
+<html>
+<title>Heatmap RSI</title>
+<?php include __DIR__ . '/layouts/head.phtml'; ?>
+<link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/al-trade.css">
+<link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/rsi_custom.css?v=1">
+<body>
+<form action="" id="form-submit-change" style="display: none;"></form>
+<!--header-->
+<?php include __DIR__ . '/layouts/headerPatterns.phtml'; ?>
+<!--end header-->
+<!--Al-trade_body-->
+<div class="wapper">
+    <!--Notice Box-->
+    <div class="container">
+        <div class="altrade-body">
+            <div class="notice-box">
+                <a> Alchemist primary alert!<span style="color: #1A64F0;" href="#"> SEE MORE</span></a>
+            </div>
+            <div class="confluence-bar">
+                <div style="display: flex;">
+
+                    <div class="confluence-box-2 confluence-box-2-active">
+                        <a href="?symbol=<?= $symbol ?>&study=RSI&type=<?= $type ?>&aclist=<?= $activeList ?>">RSI-7
+                            &amp; Candlestick Model</a>
+                    </div>
+
+                    <div class="confluence-box-2 <?= $studies == 'RSI14' ? "confluence-box-2-active" : "" ?>">
+                        <a href="?symbol=<?= $symbol ?>&study=RSI14&type=<?= $type ?>&aclist=<?= $activeList ?>">RSI-14
+                            &amp; Candlestick Model</a>
+                    </div>
+
+                    <div class="confluence-box-2"><a>RSI7 & ParabolicSAR</a></div>
+
+                    <div class="confluence-box-2"><a>RSI14 & ParabolicSAR</a></div>
+                    <div class="confluence-box-2"><a>ADX14 & ParabolicSAR</a></div>
+                    <div class="confluence-box-2 "><a>Other</a></div>
+                </div>
+                <div class="stablecoin-frame">
+                    <a type="button"
+                       class="stablecoin-button-1 stablecoin-button-1-active"
+                       href="?tab=USDT">
+                                <span class="label-satblecoin">
+                                    <img src="<?= BASE_URL ?>/style/css/new-images/icon-coin/icon-usdt.svg">
+                                </span>
+                        <span style="font-size: 16;">Tether </span>
+                        <span style="color: #1A64F0;">USDT</span>
+                    </a>
+
+                    <a href="?tab=BTC"
+                       class="stablecoin-button-1 <?= $tab == 'BTC' ? "stablecoin-button-1-active" : "" ?>">
+                                <span class="label-satblecoin">
+                                    <img src="<?= BASE_URL ?>/style/css/new-images/icon-coin/icon-btc.svg">
+                                </span>
+                        <span>Bitcoin</span>
+                        <span style="color: #1A64F0;">BTC</span>
+                    </a>
+                    <a href="?tab=BUSD" type="button"
+                       class="stablecoin-button-1 <?= $tab == 'BUSD' ? "stablecoin-button-1-active" : "" ?>">
+                                <span class="label-satblecoin">
+                                    <img src="<?= BASE_URL ?>/style/css/new-images/icon-coin/icon-busd.svg"
+                                         alt="icon-busd.svg">
+                                </span>
+                        <span>Binance</span>
+                        <span style="color: #1A64F0;">USD</span>
+                    </a>
+                    <img src="<?= BASE_URL ?>/style/css/new-images/Vector 62 (Stroke).svg" alt="Vector 62 (Stroke).svg">
+
+                    <a class="timeframe-button <?= $type == 'D1' ? "timeframe-button-active" : "" ?>"
+                       href="?study=RSI&symbol=<?= $symbol ?>&tab=<?= $tab ?>&type=D1&aclist=<?= $activeList ?>"><span>1D</span></a>
+                    <a class="timeframe-button <?= $type == 'H4' ? "timeframe-button-active" : "" ?>"
+                       href="?study=RSI&symbol=<?= $symbol ?>&tab=<?= $tab ?>&type=H4&aclist=<?= $activeList ?>"><span>4H</span></a>
+                    <a class="timeframe-button <?= $type == 'H1' ? "timeframe-button-active" : "" ?>"
+                       href="?study=RSI&symbol=<?= $symbol ?>&tab=<?= $tab ?>&type=H1&aclist=<?= $activeList ?>"><span>1H</span></a>
+                    <a class="timeframe-button <?= $type == '30m' ? "timeframe-button-active" : "" ?>"
+                       href="?study=RSI&symbol=<?= $symbol ?>&tab=<?= $tab ?>&type=30m&aclist=<?= $activeList ?>"><span>30m</span></a>
+                </div>
+                <!-- left box -->
+                <div class="history-box">
+                    <a style="font-family: 'Poppins'; font-size: 18px;font-weight: bold; " class="text-success">Top Over
+                        Sold</a>
+                    <table class="listcoin-table">
+                        <thead>
+                        <tr class="tr-bottom text_headerlist">
+                            <th scope="col" style="color:#1A64F0;">Name &emsp;&emsp;&emsp;&emsp; Discovered on</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tr-bottom text_onlist">
+                        <?php foreach ($getTopOverSold as $key=>$item) : ?>
+                            <tr style="border-bottom: 1px solid #F6F6F6; height:38px;" data-id="<?= $item['id'] ?>" class="<?= $coinActive['id']==$item['id'] ? 'trade-coin-tr-active' : '' ?>">
+                                <td class="align-left">
+                                    <a
+                                            class="trade-coin-a text-success"
+                                            data-placement="right" style="font-weight: 400;">
+                                        <?= $item['symbol'] ?>
+                                    </a>
+                                </td>
+                                <td class="align-middle">
+                                                <span class="pr-2" data-placement="right" title="">
+                                                    <span class='desc'>00:00</span>
+                                                     -
+                                                      <?= date('d/m', strtotime($item['date'])) ?>
+                                                </span>
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!--tutorial-->
+                <div class="tutorial-frame" type="button">
+                    <label><img src="<?= BASE_URL ?>/style/css/new-images/video-circle.svg" alt="video-circle.svg"">
+                        Tutorial</label>
+                </div>
+                <div class="tutorial-frame-1" type="button">
+                    <label><img src="<?= BASE_URL ?>/style/css/new-images/book.svg" alt="book.svg"> Guide</label>
+                </div>
+                <!--coin-name-->
+                <div class="coin-name" style="top: 40px;">
+                    <span style="font-size: 14px;font-weight: 500;color: #7D7D7D;">Trading Pair:</span> <br><?= $coinActive['symbol'] ?>
+                </div>
+                <!--TDV JS-->
+                <div class="tradingview-frame">
+                    <div style="position: relative;height: 100%;width: 100%;">
+                        <a href="#" id="view-fullsceen-chart"
+                           style="position: absolute;right: 15px;top: 15px;cursor: pointer;z-index: 200;"><img
+                                    src="<?= BASE_URL ?>/style/css/new-images/fullscreen.svg" alt="fullscreen.svg"
+                                    style="width: 20px;"></a>
+                        <div id="main" style="height: 100%; width: 100%"></div>
+                    </div>
+                </div>
+                <!--listcoinbox-->
+                <div class="listcoin-box">
+                    <a style="font-family: 'Poppins'; font-size: 18px;font-weight: bold; " class="text-danger">Top Over
+                        Bought</a>
+                    <table class="listcoin-table">
+                        <thead>
+                        <tr class="tr-bottom text_headerlist">
+                            <th scope="col" style="color:#1A64F0;">Name &emsp;&emsp;&emsp;&emsp; Discovered on</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tr-bottom text_onlist">
+                        <?php foreach ($getTopOverBought as $key=>$item) : ?>
+                            <tr style="border-bottom: 1px solid #F6F6F6; height:38px;" data-id="<?= $item['id'] ?>" class="<?= $coinActive['id']==$item['id'] ? 'trade-coin-tr-active' : '' ?>">
+                                <td class="align-left">
+                                    <a
+                                            class="trade-coin-a text-danger"
+                                            data-placement="right">
+                                        <?= $item['symbol'] ?>
+                                    </a>
+                                </td>
+                                <td class="align-middle">
+                                                <span class="pr-2" data-placement="right" title="">
+                                                    <span class='desc'>00:00</span>
+                                                     -
+                                                      <?= date('d/m', strtotime($item['date'])) ?>
+                                                </span>
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--order infomation-->
+                <div class="order-information" style="padding-top: 24px;">
+                    <a style="font-family: 'Poppins'; font-size: 18px; "> <strong>Order Information</strong></a>
+                    <!--Trading Pair Information-->
+                    <div role="tabpanel" class="tab-pane" id="usd">
+                        <!--coin-name-->
+                        <div class="information-box">
+                            <div class="coin-box-1">
+                                <div class="text-box-frame left-frame">
+                                    <a class="title-box-1">Trading &nbsp; Pair:</a>
+                                    <a class="title-box-2"><?= $coinActive['symbol'] ?></a>
+                                </div>
+                            </div>
+                            <!--Patterm-->
+                            <div class="coin-box-1">
+                                <div class="text-box-frame left-frame">
+                                    <a class="title-box-1">Detected&emsp;Pattern:</a>
+                                    <a class="title-box-long">
+
+                                    </a>
+                                </div>
+                            </div>
+                            <!--Entry-->
+                            <div class="coin-box-1">
+                                <div class="text-box-frame left-frame">
+                                    <a class="title-box-1" style="color:#1A64F0;">Entry &emsp; Point:</a>
+                                    <a class="title-box-2" style="color:#1A64F0;">
+                                        <?= number_format($entryPoint,3) ?>
+                                    </a>
+                                </div>
+                            </div>
+                            <!--Target-->
+                            <div class="coin-box-1">
+                                <div class="text-box-frame left-frame">
+                                    <a style="color: #00BD46;" class="title-box-1">Target &emsp; Point:</a>
+                                    <a style="color: #00BD46" class="title-box-2">
+                                        <?= number_format($targetPoint,3) ?>
+                                    </a>
+                                </div>
+                            </div>
+                            <!---Stop-loss-->
+                            <div class="coin-box-2">
+                                <div class="text-box-frame left-frame">
+                                    <a style="color: #CC0001;" class="title-box-1">Stop Loss:</a>
+                                    <a style="color: #CC0001;" class="title-box-2">
+                                        <?= number_format($stopLoss,3) ?>
+                                    </a>
+                                </div>
+                            </div>
+                            <!---Reward-->
+                            <div class="coin-box-2">
+                                <div class="text-box-frame left-frame">
+                                    <a style="color: #00BD46;" class="title-box-1">Reward:</a>
+                                    <a style="color: #00BD46;" class="title-box-2">
+                                        <?= number_format($reward,3) ?>
+                                    </a>
+                                </div>
+                            </div>
+                            <!---Risk-->
+                            <div class="coin-box-2">
+                                <div class="text-box-frame left-frame">
+                                    <a style="color: #CC0001;" class="title-box-1">Risk:</a>
+                                    <a style="color: #CC0001;" class="title-box-2">
+                                        <?= number_format($risk,3) ?>
+                                    </a>
+                                </div>
+                            </div>
+                            <!---Detected-->
+                            <div class="coin-box-1">
+                                <div class="text-box-frame left-frame">
+                                    <a class="title-box-1">Detected &emsp; on:</a>
+                                    <a class="title-box-2">
+                                        --
+                                    </a>
+                                </div>
+                            </div>
+                            <!---Status-->
+                            <div class="coin-box-2">
+                                <div class="text-box-frame left-frame">
+                                    <a class="title-box-1">Status:</a>
+                                    <a class="title-box-2">
+                                        <span style='color:#28D781'>--</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!--End Trading Pair Information-->
+                            <!--Trading-Strategy-->
+                            <div class="trading-strategy-box" style="text-align: left;">
+                                <div class="title">Trading Strategy</div>
+                                <div class="d-flex justify-content-between">
+                                    <div class="trading-strategy-left">
+                                        <div class="text-box-frame left-frame mb-24">
+                                            <a style="width:fit-content; font-size: 14px;font-weight: bold;"
+                                               class="title-box-1">Signal:</a>
+                                            <a style="color:#1A64F0; font-size: 12px;" class="title-box-2">
+                                                Relative Strength Index </a>
+                                        </div>
+                                        <div class="mb-24 text-field">
+                                            <div class="title-field text-primary">
+                                                Entry Point
+                                            </div>
+                                            <div class="content-field text-primary">
+                                                <?= number_format($entryPoint,3) ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-24 text-field">
+                                            <div class="title-field">
+                                                DCA1
+                                            </div>
+                                            <div class="content-field">
+                                                <?= number_format($DCA1,3) ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-24 text-field">
+                                            <div class="title-field">
+                                                DCA2
+                                            </div>
+                                            <div class="content-field">
+                                                <?= number_format($DCA2,3) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="trading-strategy-right">
+                                        <div class="text-box-frame left-frame mb-24">
+                                            <a style="width:fit-content; font-size: 14px;font-weight: bold;"
+                                               class="title-box-1">Indicator:</a>
+                                            <a style="color:#1A64F0; font-size: 12px;font-weight: 400;">
+                                                RSI-7 </a>
+                                        </div>
+                                        <div class="mb-24 text-field">
+                                            <div class="title-field text-success">
+                                                Target Point
+                                            </div>
+                                            <div class="content-field text-success">
+                                                <?= number_format($targetPoint,3) ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-24 d-flex justify-content-between">
+                                            <div class="text-field text-field-2">
+                                                <div class="title-field text-danger">
+                                                    Risk
+                                                </div>
+                                                <div class="content-field text-danger">
+                                                    <?= number_format($risk,3) ?>
+                                                </div>
+                                            </div>
+                                            <div class="text-field text-field-2">
+                                                <div class="title-field">
+                                                    Reward
+                                                </div>
+                                                <div class="content-field">
+                                                    <?= number_format($reward,3) ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-24 text-field">
+                                            <div class="title-field text-danger">
+                                                Stop Loss
+                                            </div>
+                                            <div class="content-field text-danger">
+                                                <?= number_format($stopLoss,3) ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--button-Save-order-->
+                                <div class="save-button-frame" style="text-align: center;">
+                                    <button
+                                            class="save-order-button trade-container-bottom-item2-save">
+                                        <b>Save</b>
+                                    </button>
+                                    <div style="font-size: 14px;font-weight: 400;color: #7D7D7D;">
+                                        Please keep in mind that these are only suggestions,
+                                        <br>consider them carefully before trading!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--bottom-right-box-->
+
+                        <div class="top-bottom-right <?= $activeUSD ?>" id="usd">
+                        <a style="position: absolute;
+                                    width: 180px;
+                                    left: calc(50% - 180px/2);
+                                    top: 24px; font-size: 18px; font-family: 'Poppins'; font-weight: 700;">
+                            How to trade with Candlestick
+                        </a>
+                        <div class="text-model-information">
+                            <div class="infomartion-frame model-name">
+                                <a class="model-text-box" style="text-align: left;">Signal:</a>
+                                <a href='#' class="model-name" style="text-align: left;padding-left: 16px;">
+                                    Relative Strength <br> Index
+                                </a>
+                            </div>
+                        </div>
+                        <div class="learn-now-box" style="display: flex;justify-content: center;height:56px;">
+                            <a href="http://thealchemist.ai/en/academy" style="display: block;width: 100%;">
+                                No idea what RSI is?
+                                <br>
+                                <b>Learn now!</b>
+                            </a>
+                        </div>
+                        <div class="myformula-text-box">
+                            <a href="http://thealchemist.ai/en/work" style="color: #7D7D7D;">
+                                Got a strategy? Turn it into an algorithm with
+                                <a href="work" style="color:#1A64F0;">
+                                    <b>My Formula</b>
+                                </a>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bottom-right-box-end">
+                        <a class="text-box-manage">Manage your Portfolio</a>
+                        <div class="image-box-manage">
+                            <img src="<?= BASE_URL ?>/style/css/new-images/manage-img.svg" alt="portorio">
+                        </div>
+                        <button class="button-go-dashboard">
+                            <a href="profile" style="color: white;">Go to <b>My Dashboard</b></a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--footer-->
+<?php include __DIR__ . '/layouts/footerPatterns.phtml'; ?>
+<!--End footer-->
+
+<!--popup connect wallet-->
+<?php include __DIR__ . '/layouts/pop.phtml'; ?>
+<!--End popup connect wallet-->
+<?php include __DIR__ . '/layouts/scrips.phtml'; ?>
+
+<script src="<?= BASE_URL ?>/style/js/tv.js"></script>
+<script src="<?= BASE_URL ?>/style/js/new/tv.js"></script>
+<script src="<?= BASE_URL ?>/style/js/new/mainh4.js"></script>
+<script type="text/javascript">
+    if (document.getElementById('crypt-candle-chart')) {
+    }
+</script>
+
+<!--chat-->
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<script type="text/javascript">
+    var myChart = echarts.init(document.getElementById("main"));
+
+    // ở đây lấy ra danh sách tên các đồng coin cần show sắp xếp theo thứ tự tăng dần bảng chữ cái. Cắt đi chuỗi "USDT" ở cuối
+    const nameCoins = <?= json_encode($nameCoins) ?>;
+
+    // ở đây lấy ra dữ liệu RSI của từng đồng coin theo đúng thứ tự nameCoins ở trên. chú ý đây là mảng 2 chiều dạng [[a, b]]
+    // trong đó a tăng dần từ 0 đến length của nameCoins, b là giá trị RSI tương ứng
+    const data = <?= json_encode($arrayShowRSIChart) ?>;
+
+    var thresholdValues = [20, 30, 40, 60, 70, 80];
+    var zoneColors = ["#65a87a", "#829F8B", "#939393", "#D86D66", "#CD534A"];
+
+    /// lấy ra tỉ lệ phần trăn so với ngày trước đó, tăng hay giảm bao nhiêu phần tră. lấy chính xác đến 2 số thập phân
+    var rateCompared = <?= json_encode($arrayRateRSIChart) ?>;
+    console.log(rateCompared)
+
+    function getColor(value) {
+        if (value >= thresholdValues[0] && value <= thresholdValues[1]) {
+            return zoneColors[0];
+        } else if (value >= thresholdValues[1] && value <= thresholdValues[2]) {
+            return zoneColors[1];
+        } else if (value >= thresholdValues[2] && value <= thresholdValues[3]) {
+            return zoneColors[2];
+        } else if (value >= thresholdValues[3] && value <= thresholdValues[4]) {
+            return zoneColors[3];
+        } else {
+            return zoneColors[4];
+        }
+    }
+
+    var option;
+
+    option = {
+        grid: {
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+        },
+        title: {
+            show: false,
+            text: "Crypto Market RSI(4h) Heatmap",
+            fontSize: 14,
+            fontWeight: "normal",
+        },
+        tooltip: {
+            show: true,
+            formatter: function (params) {
+                return `<div>${params.name}<br />RSI: ${params.value[1]}</div>`;
+            },
+        },
+        xAxis: {
+            // name: "Coin Rank",
+            // nameLocation: "middle",
+            min: 0,
+            max: <?= count($getListCoins) + 1 ?>,
+            //interval: <?//= count($getListCoins) >= 100 ? 20 : 10 ?>//,
+            axisLabel: {
+                color: '#333333',
+                inside: true,
+                 showMaxLabel: false,
+                 showMinLabel: false,
+            },
+            z:10
+        },
+        yAxis: {
+            // name: "RSI(4h)",
+            // nameLocation: "middle",
+            // nameTextStyle: {
+            //     padding: 20,
+            // },
+            color: '#00000',
+            min: 0,
+            max: 100,
+            interval: 10,
+            axisLabel: {
+                color: '#333333',
+                inside: true,
+                 showMaxLabel: false,
+                 showMinLabel: false,
+            },
+            z:10
+        },
+        series: [
+            {
+                symbolSize: 20,
+                data: data.map(function (item, index) {
+                    return {
+                        value: item,
+                        name: nameCoins[index],
+                        label: {
+                            show: true,
+                            position: "top",
+                            formatter: function (params) {
+                                return params.name;
+                            },
+                        },
+                    };
+                }),
+                itemStyle: {
+                    color: function (params) {
+                        return getColor(params.value[1]);
+                    },
+                },
+                markPoint: {
+                    symbol: "line",
+                    silent: true,
+                    position: "top",
+
+                    // xoay đường nét đứt ở mỗi điểm, xoay ngược lại
+                    symbolRotate: 90,
+
+                    // chỗ này thể hiện phàn trăm so với ngày trước đó
+                    // symbolSize: 100,
+
+                    // // số thứ 2 bằnd một nửa của symbolSize
+                    // symbolOffset: [0, 40.12],
+
+                    symbolSize: function (value, params) {
+                        if (Math.abs(rateCompared[params.dataIndex]) > 20) {
+                            return 100;
+                        } else if (Math.abs(rateCompared[params.dataIndex]) < 3) {
+                            return 12;
+                        }
+                        return Math.abs(rateCompared[params.dataIndex]) * 5;
+                    },
+
+                    // số thứ 2 bằnd một nửa của symbolSize
+                    symbolOffset: function (value, params) {
+                        if (Math.abs(rateCompared[params.dataIndex]) > 20) {
+                            if (rateCompared[params.dataIndex] >= 0) {
+                                return [0, 50];
+                            } else {
+                                return [0, -50];
+                            }
+                        } else if (Math.abs(rateCompared[params.dataIndex]) < 3) {
+                            if (rateCompared[params.dataIndex] >= 0) {
+                                return [0, 6];
+                            } else {
+                                return [0, -6];
+                            }
+                        }
+
+                        return [0, rateCompared[params.dataIndex] * 2.5];
+                    },
+                    itemStyle: {
+                        borderWidth: 2,
+                        borderType: "dotted",
+                    },
+                    data: data.map(function (item, index) {
+                        return {
+                            coord: [item[0], item[1]],
+                            itemStyle: {
+                                color: rateCompared[index] >= 0 ? "#22AB94" : "#eb3434",
+                            },
+                        };
+                    }),
+                },
+                markArea: {
+                    silent: true,
+                    label: {
+                        show: true,
+                        fontSize: 18,
+                        color: "#90959e",
+                        position: "insideRight",
+                        offset: [-80, 0],
+                    },
+                    emphasis: {
+                        disabled: true,
+                    },
+                    data: [
+                        [
+                            {
+                                name: "OVERSOLD",
+                                yAxis: 0,
+                                itemStyle: {
+                                    color: "rgba(209,224,208,0.95)",
+                                    borderWidth: 2,
+                                    borderType: "dashed",
+                                    borderColor: "#008001",
+                                },
+                            },
+                            {
+                                yAxis: 30,
+                            },
+                        ],
+                        [
+                            {
+                                name: "WEAK",
+                                yAxis: 30,
+                                itemStyle: {
+                                    color: "rgba(216,245,225,0.95)",
+                                    borderWidth: 2,
+                                    borderType: "dashed",
+                                    borderColor: "#00CC66",
+                                },
+                            },
+                            {
+                                yAxis: 40,
+                            },
+                        ],
+                        [
+                            {
+                                name: "NEUTRAL",
+                                yAxis: 40,
+                                itemStyle: {
+                                    color: "rgba(255,255,255,0.95)",
+                                },
+                            },
+                            {
+                                yAxis: 60,
+                            },
+                        ],
+                        [
+                            {
+                                name: "STRONG",
+                                yAxis: 60,
+                                itemStyle: {
+                                    color: "rgba(255,231,233,0.95)",
+                                    borderWidth: 2,
+                                    borderType: "dashed",
+                                    borderColor: "#FED0D1",
+                                },
+                            },
+                            {
+                                yAxis: 70,
+                            },
+                        ],
+                        [
+                            {
+                                name: "OVERBOUGHT",
+                                yAxis: 70,
+                                itemStyle: {
+                                    color: "rgb(233,196,194, 0.95)",
+                                    borderWidth: 2,
+                                    borderType: "dashed",
+                                    borderColor: "#FF0000",
+                                },
+                            },
+                            {
+                                yAxis: 100,
+                            },
+                        ],
+                    ],
+                },
+                type: "scatter",
+                markLine: {
+                    silent: true,
+                    symbol: ["none", "none"],
+                    label: {
+                        show: true,
+                        position: "insideEndTop",
+                        formatter: "AVG RSI:{c}",
+                        color: "rgb(234,151,62)",
+                        fontSize: 18,
+                        distance: [30, 10],
+                    },
+                    lineStyle: {
+                        type: "dashed",
+                        color: "rgb(234,151,62)",
+                        width: 2,
+                    },
+                    data: [
+                        {
+                            yAxis: <?= $decimalRSI ?>,
+                        },
+                    ],
+                },
+            },
+        ],
+    };
+    myChart.setOption(option);
+
+    function toggleFullscreen(elem) {
+        elem = elem || document.documentElement;
+        if (!document.fullscreenElement && !document.mozFullScreenElement &&
+            !document.webkitFullscreenElement && !document.msFullscreenElement) {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        }
+    }
+
+    $('#view-fullsceen-chart').click(function (e) {
+        e.preventDefault();
+        let ele = document.getElementById("main");
+        toggleFullscreen(ele);
+        option.yAxis.axisLabel.color = "#ffffff";
+        option.xAxis.axisLabel.color = "#ffffff";
+        myChart.setOption(option);
+        myChart.resize({
+            width: window.innerWidth,
+            height: window.innerHeight
+        });
+    });
+    document.addEventListener('fullscreenchange', function () {
+        if (document.fullscreenElement) {
+        } else {
+            let element = document.getElementById('main');
+            option.yAxis.axisLabel.color = "#333333";
+            option.xAxis.axisLabel.color = "#333333";
+            myChart.setOption(option);
+            myChart.resize({
+                width: element.offsetWidth,
+                height: element.offsetHeight
+            }).setOptions(option);
+        }
+    });
+</script>
+
+<script>
+    $('.listcoin-table tbody tr').click(function (){
+       let id = $(this).data('id');
+        $('#form-submit-change').html('');
+       if(id){
+           $('#form-submit-change').append(`<input type="hidden" name="ID" value="${id}"  />`);
+           $('#form-submit-change').submit();
+       }
+    });
+</script>
+</body>
+</html>

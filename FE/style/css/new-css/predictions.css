@@ -1,0 +1,98 @@
+.table-predictions {
+    margin: 40px 0;
+    display: flex;
+    width: 100%;
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+}
+
+.desc-predictions {
+    display: flex;
+    width: 650px;
+    margin: 0 auto 40px;
+    text-align: center;
+    max-width: 100%;
+}
+
+.table-predictions h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.table-predictions table {
+    border-radius: 10px;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: #FFF;
+    border-collapse: unset;
+}
+
+.table-predictions table tr {
+    display: flex;
+    flex-direction: row;
+}
+
+.table-predictions table thead {
+    background: rgba(244, 245, 248, 0.50);
+}
+
+.table-predictions table thead th {
+    padding: 16px;
+    text-transform: uppercase;
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+    flex: 1;
+    text-align: right;
+}
+
+.table-predictions table thead th:first-child {
+    text-align: left;
+}
+
+.table-predictions table tbody td:first-child {
+    justify-content: flex-start;
+}
+
+.table-predictions table tbody td {
+    display: flex;
+    gap: 12px;
+    align-items: start;
+    padding: 12px 16px;
+    flex: 1;
+    justify-content: flex-end;
+    color: rgba(0, 0, 0, 0.60);
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.table-predictions table tbody td .info-coin {
+    display: flex;
+    gap: 4px;
+    flex-direction: column;
+}
+
+.table-predictions table tbody td .info-coin .name-coin {
+    color: #000;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.table-predictions table tbody td .info-coin .sym-coin {
+    color: rgba(0, 0, 0, 0.50);
+    font-size: 13px;
+    font-weight: bold;
+}
+.table-predictions table tbody td img {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #f1e3e3;
+}

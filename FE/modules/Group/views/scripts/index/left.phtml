@@ -1,0 +1,46 @@
+<?php
+$customer = $_SESSION['cp__customer'];
+$type = 'group';
+?>
+<div class="social-content-sub-left">
+    <div class="social-content-sub-left-info">
+        <?php if (!$customer['img']): ?>
+            <img src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+        <?php else: ?>
+            <img src="<?= BASE_URL ?>/files/customer/<?= $customer['ID'] ?>/<?= $customer['img'] ?>" alt="">
+        <?php endif; ?>
+        <a href="<?= BASE_URL ?>/<?= $this->language ?>/user"><?= $customer['name'] ?></a>
+    </div>
+    <div class="social-content-sub-left-2">
+        <ul>
+            <li class="social-content-sub-left-2-newfeed<?php $type == 'all' ? _e(" active") : "" ?>"><a href="<?= BASE_URL ?>/vn/social">News Feed</a></li>
+            <li class="social-content-sub-left-2-private"><a href="#">Personal Page</a></li>
+            <li class="social-content-sub-left-2-group<?php $type == 'group' ? _e(" active") : "" ?>"><a href="<?= BASE_URL ?>/vn/group">Discussion Groups</a></li>
+        </ul>
+    </div>
+</div>
+<div class="social-content-sub-left">
+    <div class="social-content-sub-left-info">
+        <a href="">Manager</a>
+    </div>
+    <div class="social-content-sub-left-2">
+        <ul>
+            <li class="social-content-sub-left-2-myaccount"><a href="<?= BASE_URL ?>/vn/user">My Account</a></li>
+            <li class="social-content-sub-left-2-dashboard"><a href="<?= BASE_URL ?>/vn/work">My Formula</a></li>
+            <li class="social-content-sub-left-2-mywork"> <a href="">My Dashboard</a></li>
+        </ul>
+    </div>
+</div>
+<div class="social-content-sub-left">
+    <div class="social-content-sub-left-2">
+        <ul>
+            <li class="social-content-sub-left-2-rank"><a href="#">Rank Diamond</a></li>
+            <li class="social-content-sub-left-2-list"><a href="#">My Books List</a></li>
+        </ul>
+    </div>
+</div>
+<div class="social-content-sub-leftend">
+    <a href="#">Privacy</a>
+    <span>.</span> <a href="#">Terms of Service </a>
+    <span>.</span> <a href="#">Advertising</a>
+</div>

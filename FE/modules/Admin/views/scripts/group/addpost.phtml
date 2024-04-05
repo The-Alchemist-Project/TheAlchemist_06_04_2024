@@ -1,0 +1,84 @@
+<?php if( isset($this->message ) ):?>
+<div class="error">	<?=$this->translate($this->message);?></div>
+<?php endif;?>
+
+<?php if( $this->message != "ERROR_MSQL" AND $this->message != "ERROR_NO_CATELOGY_EXISTS"):?>
+<div class="wrap_admintab">
+	<?php include "_menu.phtml"?>	
+		<div class="adminright">
+		
+			<div class="admintab" style="min-height:376px;padding:0px;">				
+			<form action="<?=$this->actionUrl?>" method="post" enctype="multipart/form-data">
+			<table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+				<tr>
+					<td><label><?=$this->translate("Title")?></label></td>
+					<td><input type="text" name="title" size="60" class="itext" value="<?=$this->title?>" /></td>
+				</tr>
+				<tr>
+					<td><label>Chọn làm tin nổi bật</label></td>
+					<td>
+						<select name="hot">
+							<option value="1"<?=$this->hot ==1 ? " selected":""?>><?=$this->translate('Yess')?></option>
+							<option value="0"<?=$this->hot ==0 ? " selected":""?>><?=$this->translate('Noo')?></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td><label><?=$this->translate("Parent")?></label></td>
+					<td><?=$this->catOptions?></td>
+				</tr>
+				<tr>
+					<td><label><?=$this->translate("Lang")?></label></td>
+					<td><?=$this->translate("Language.{$_SESSION['cp_lang']}")?></td>
+				</tr>
+				<tr>
+					<td><label><?=$this->translate("Date")?></label></td>
+					<td><input type="text" class="itext date_picker" value="<?=$this->date?>" name="date" size="20"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label><?=$this->translate("Sticky")?></label></td>
+					<td><input type="type" name="sticky" class="itext" value="<?=$this->sticky?>" size="1"/></td>
+				</tr>
+				<tr>
+					<td><label><?=$this->translate("Status")?></label></td>
+					<td>
+						<select name="status">
+							<option value="0"<?=$this->status == 0 ?" selected":""?>><?=$this->translate("Yess")?></option>	
+							<option value="1"<?=$this->status == 1 ?" selected":""?>><?=$this->translate("Noo")?></option>
+						</select>
+					</td>
+				</tr>
+					
+				<tr>
+					<td><label><?=$this->translate("Img")?></label></td>
+					<td>
+						<input type="file" name="img"/><br/>
+					</td>
+				</tr>
+				<tr>
+					<td><label><?=$this->translate("Quote")?></label></td>
+					<td align="center">
+						<textarea rows="18" name="quote"><?=$this->quote?></textarea>
+						<?=$this->Plugins->textEditor('quote')?>
+					</td>
+				</tr>
+				<tr>
+					<td><label><?=$this->translate("Content")?></label></td>
+					<td align="center">
+						<textarea rows="18" name="content"><?=$this->content?></textarea>
+						<?=$this->Plugins->textEditor('content')?>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="" class="taomoi"/>
+					</td>
+				</tr>	
+			</table>	
+			</form>
+			</div>
+		</div>	
+</div>				
+
+<?php endif;?>

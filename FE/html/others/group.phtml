@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TheAlchemist</title>
+        <link rel="shortcut icon" href="<?= BASE_URL ?>/favicon.ico" />
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/bootstrap.css">
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/social.css">
+        <script src="<?= BASE_URL ?>/style/js/jquery-3.6.0.min.js"></script>
+        <script src="<?= BASE_URL ?>/style/js/bootstrap.min.js"></script>
+        <script src="<?= BASE_URL ?>/style/js/social.js"></script>
+        <script src="<?= BASE_URL ?>/style/ckeditor/ckeditor.js"></script>
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/bootstrap-select.css">
+        <script src="<?= BASE_URL ?>/style/js/bootstrap-select.js"></script>
+
+    </head>
+    <body>
+        <div id="container">
+
+            <?php if (isMobile()): ?>
+                <?=
+                $this->action("mobile", "index", "Group", array(
+                    'language' => $this->language,
+                    'id_active' => $this->id_active,
+                    'moduleTitle' => $this->module))
+                ?>
+            <?php else: ?>
+                <?=
+                $this->action("header", "index", "Group", array(
+                    'language' => $this->language,
+                    'id_active' => $this->id_active,
+                    'moduleTitle' => $this->module))
+                ?>
+                <?=
+                $this->action("content", "index", "Group", array(
+                    'language' => $this->language,
+                    'id_active' => $this->id_active,
+                    'moduleTitle' => $this->module))
+                ?>
+            <?php endif; ?>
+
+        </div>
+
+    </body>
+
+
+</html>

@@ -1,0 +1,35 @@
+<?php if( isset($this->message ) ):?>
+<div class="error">	<?=$this->translate($this->message);?></div>
+<?php endif;?>
+
+<?php if( $this->message != "ERROR_MSQL" AND $this->message != "ERROR_NOT_EXISTS" ):?>
+<form action="<?=$this->actionUrl?>" method="post" enctype="multipart/form-data">
+
+<table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+	<tr>
+		<td><label>Tiêu đề banner</label></td>
+		<td><input type="text" name="title" size="80" class="itext" value="<?=$this->title?>" /></td>
+	</tr>
+	
+	<tr>
+		<td><label><?=$this->translate("Lang")?></label></td>
+		<td><?=$this->translate("Language.{$_SESSION['cp_lang']}")?></td>
+	</tr>
+	<tr>
+		<td><label><?=$this->translate("Order")?></label></td>
+		<td><input type="text" class="itext" value="<?=$this->ord?>" name="ord" size="5"/>
+		</td>
+	</tr>
+	<tr>
+		<td><label><?=$this->translate("Img")?></label></td>
+		<td>
+			<input type="file" name="img"/><br/>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<input type="submit" value="<?=$this->translate("Submit_Create")?>" class="button"/></td>
+	</tr>	
+</table>	
+</form>
+<?php endif;?>

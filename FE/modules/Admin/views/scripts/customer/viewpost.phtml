@@ -1,0 +1,66 @@
+<?php if( isset($this->message ) ):?>
+<div class="error">	<?=$this->translate($this->message);?></div>
+<?php endif;?>
+
+				<table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+					
+					<tr><td colspan="2"><b>Thông tin học viên</b></td></tr>
+					
+					<tr>
+						<td><label>Tên học viên</label></td>
+						<td width="70%">
+							<b><?=$this->post['name']?>
+							</b>
+						</td>
+					</tr>
+					<tr>
+						<td><label>Tên tài khoản</label></td>
+						<td width="70%">
+							<b><?=$this->post['user']?>
+							</b>
+						</td>
+					</tr>
+				
+					<tr>
+						<td><label>Địa chỉ</label></td>
+						<td><?=$this->post['address']?></td>
+					</tr>
+				<?/*	
+					<tr>
+						<td><label><?=$this->translate("Lang")?></label></td>
+						<td><?=$this->translate("Language.{$_SESSION['cp_lang']}")?></td>
+					</tr>
+				*/?>	
+					<tr>
+						<td><label>Điện thoại</label></td>
+						<td>
+							<?=$this->post['phone']?>
+						</td>
+					</tr>
+					<tr>
+						<td><label>Email</label></td>
+						<td>
+							<?=$this->post['email']?>
+						</td>
+					</tr>
+					
+					<tr><td colspan="2"><b>Thông tin khóa học</b></td></tr>
+					<?php foreach($this->room as $k=>$room):?>
+					<tr>
+						<td><label>Tên khóa học</label></td>
+						<td>
+							<?=$room['name']?>
+						</td>
+					</tr>
+					<?/*
+					<tr>
+						<td><label>Thời gian học</label></td>
+						<td>
+							<?=$this->post['date_room']?>
+						</td>
+					</tr>
+					*/?>
+					<?php endforeach;?>
+	
+				
+				</table>	

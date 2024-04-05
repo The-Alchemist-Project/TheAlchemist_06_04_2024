@@ -1,0 +1,50 @@
+<div class="content-tile">
+    <img src="<?= BASE_URL ?>/style/images/news.png">
+    <div class="title">
+        <h4><?= $this->translate('News Highlights') ?></h4>
+    </div>
+</div>
+<?php if ( $this->hots ): ?>
+    <ul class="new_list">
+        <?php foreach ( $this->hots as $k => $post ): ?>
+            <?php
+            if ( $k + 1 == count($this->hots) ) {
+                $last = 'last-first';
+            } else {
+                $last = '';
+            }
+            ?>
+            <li id="<?= $last ?>">
+                <h4><a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'hoat-dong' : 'News'); ?>/p<?= $post['ID'] ?>/<?= $this->Plugins->createAlias($post['title']) ?>" title="<?= $post['title'] ?>" ><?= $post['title'] ?></a><span> [<?= date("d/m/Y", $post['date']) ?>]</span></h4>
+                <p><?= get_quote(strip_tags($post['content']), 200) ?></p>
+            </li>
+        <?php endforeach; ?>
+
+    </ul>
+    <div id="details">
+        <a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'hoat-dong' : 'News'); ?>"> <span><?= $this->translate('All') ?></span></a>
+    </div>
+<?php endif; ?>
+<div class="clear_both"></div>
+<?php include("project.phtml"); ?>
+<div class="clear_both"></div>
+<?php if ( $this->link ): ?>
+    <div class="content-tile">
+        <img src="<?= BASE_URL ?>/style/images/web.png">
+        <div class="title">
+            <h4><?= $this->translate('Link') ?></h4>
+        </div>
+    </div>
+    <select onChange="jsFunction(this)" class="form-control" style="margin-top: 10px;">
+        <option><?= $this->translate('Link selected') ?></option>
+        <?php foreach ($this->link as $a):?>
+        <option value="<?=$a['link']?>"><?=$a['title']?></option>
+        <?php endforeach;?>
+    </select>
+    <script>
+        function jsFunction(elem) {
+            window.location.href = elem.value;
+        }
+    </script>
+<?php endif; ?>
+

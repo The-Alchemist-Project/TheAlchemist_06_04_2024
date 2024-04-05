@@ -1,0 +1,71 @@
+<div class="left_main_index">
+<div class="school_index ">
+	<div class="title_top">
+		<span class="title_sub">
+			<span class="title_sub2">
+				<span class="title_sub1">
+					<?=$this->translate($this->module)?>
+				</span>
+			</span>
+		</span>	
+	</div><!--end title_top-->
+	
+	<div class="content_school_index schools_home">
+		<div class="schools_posts">
+			<?php if($this->post):?>
+				
+				<div class="content_left_details">
+					<div class="content_left_details1">
+						<a class="title_news" href="javascript:"><?=$this->post['title']?></a>
+						<p class="date_time"><?= $this->post['date'] <= $this->Plugins->time() ? date("H:s | d/m/Y",$this->post['date']) : ("<span class='nextdate'>".date("H:s | d/m/Y",$this->post['date'])."</span>") ?></p>
+						<div class="content_news">
+							<?=$this->post['content']?>
+						</div><!--end content_news-->
+					</div><!--end content_left_details1-->
+					<div class="content_left_details2">
+						<a class="news_related" href="javascript:">CÁC TIN LIÊN QUAN :</a>
+						<ul>
+							<?php foreach($this->olderPosts as $k=>$old):?>
+								<li>
+									<a class="link_news_relates"  href="<?=BASE_URL?>/vn/<?=$this->module?>/?ID=<?=$old['ID']?>">
+										<?=$old['title']?>
+										<span class="date_relates"><?= $old['date'] <= $this->Plugins->time() ? date("(d/m/Y)",$old['date']) : ("<span class='nextdate'>".date("(d/m/Y)",$old['date'])."</span>") ?></span>
+									</a>
+								</li>
+							<?php endforeach;?>
+							
+						</ul>
+					</div><!--end content_left_details2-->
+</div><!--end content_left_details-->	
+			<?php else:?>
+			<?php $name = $this->module;?>
+			<?php $lowname = strtolower($name);?>
+				<?php foreach($this->posts as $k=>$posts):?>
+					<div class="schools_left">
+						<div class="schools_title">
+							<a href="<?=BASE_URL?>/vn/<?=$name?>/?ID=<?=$posts['ID']?>"><?=$posts['title']?></a>
+						</div>
+						<p class="schools_date"><?= $posts['date'] <= $this->Plugins->time() ? date("H:s | d/m/Y",$posts['date']) : ("<span class='nextdate'>".date("H:s | d/m/Y",$posts['date'])."</span>") ?></p>
+						<a href="<?=BASE_URL?>/vn/<?=$name?>/?ID=<?=$posts['ID']?>">
+							<img src="<?=BASE_URL?>/files/images/<?=$lowname?>/<?=$posts[img]?>"/>
+						</a>
+						<div class="schools_quote">
+							<?=get_quote(strip_tags($posts['quote']),250)?>
+						</div>
+						<div class="schools_detail"><a href="<?=BASE_URL?>/vn/<?=$name?>/?ID=<?=$posts['ID']?>">Xem chi tiết</a></div>
+					</div>
+				<?php endforeach;?>
+				<!--PAGEBAR-->
+			<?php if( $this->pageBar ):?>
+			<div class="pageBar">
+				<?php print $this->pageBar?>
+			</div>
+			<?php endif;?>
+		<!--END PAGEBAR-->
+			<?php endif;?>	
+					
+		</div>
+	</div><!--end content_school_index-->
+</div><!--end school_index-->
+
+</div><!--end left_main_index-->

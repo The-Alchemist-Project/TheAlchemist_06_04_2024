@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+-->
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>CKEditor Sample</title>
+	<script src="ckeditor.js"></script>
+</head>
+<body id="main">
+<div id="editor" contenteditable="true">
+					<h1>Hello world!</h1>
+					<p>I'm an instance of <a href="https://ckeditor.com">CKEditor</a>.</p>
+				</div>
+<script>
+    // Turn off automatic editor creation first.
+    CKEDITOR.disableAutoInline = true;
+    CKEDITOR.inline( 'editor' );
+</script>
+
+</body>
+</html>

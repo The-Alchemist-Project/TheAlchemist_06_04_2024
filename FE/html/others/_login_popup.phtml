@@ -1,0 +1,76 @@
+<div class="popupboxlg" id="popuprellg" style="">
+<script type="text/javascript">
+$(document).ready(function() {
+
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+	
+	//On Click Event
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active contentd
+		return false;
+	});
+
+});
+</script>
+    
+    
+<div id="intabdivlg"></div>
+	<div class="wrap_login_pop">
+		<a href="" class="abc" style="position:absolute;top:8px; right:10px;font-weight:bold;font-size:13px;">X</a>
+		<h2>Bạn phải đăng nhập.</h2>
+		<h3>Đăng nhập</h3>
+		<div class="clear"></div>
+		<ul class="tabs">
+			<li><a href="#tab1">Giáo viên</a></li>
+			<li><a href="#tab2">Học sinh</a></li>
+		</ul>
+		<div class="tab_container">
+			<div id="tab1" class="tab_content">
+				<form method="post" action="http://trunghocchuvanan.edu.vn/vn/Download" name="login_form">
+					<table cellpadding="0" cellspacing="0" border="0" style="width:210px" class="table_login">
+						<tr>
+						<td><label title="username" class="login_label">Tài khoản</label></td>
+						<td><span class="input_left"></span><input  style="width:127px" type="text" class="login_form" name="username" onfocus="this.value=''"/><span class="input_right"></span></td>
+						</tr>
+						<tr><td style="height:7px"></td></tr>
+						<tr>
+						<td><label title="pw" class="login_label">Mật khẩu</label></td>
+						<td><span class="input_left"></span><input style="width:127px" type="password" class="login_form" name="userpwd" onfocus="this.value=''"/><span class="input_right"></span></td>
+						</tr>
+						<input type="hidden" value="<?=$this->module?>" />
+					</table>
+					<div class="button_login">
+						<span class="button_left"></span><input type="submit" class="button_login" value="Đăng nhập"/><span class="button_right"></span>
+					</div>
+					<div class="clear"></div>
+				</form>
+			</div>
+			<div id="tab2" class="tab_content">
+				<form method="post" action="http://trunghocchuvanan.edu.vn/vn/Download" name="login_form">
+					<table cellpadding="0" cellspacing="0" border="0" style="width:210px" class="table_login">
+						<tr>
+						<td><label title="username" class="login_label">Tài khoản</label></td>
+						<td><span class="input_left"></span><input  style="width:127px" type="text" class="login_form" name="username" onfocus="this.value=''"/><span class="input_right"></span></td>
+						</tr>
+						<tr><td style="height:7px"></td></tr>
+						<tr>
+						<td><label title="pw" class="login_label">Mật khẩu</label></td>
+						<td><span class="input_left"></span><input style="width:127px" type="password" class="login_form" name="userpwd" onfocus="this.value=''"/><span class="input_right"></span></td>
+						</tr>			
+					</table>
+					<div class="button_login">
+						<span class="button_left"></span><input type="submit" class="button_login" value="Đăng nhập"/><span class="button_right"></span>
+					</div>
+					<div class="clear"></div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div><a href="" id="fadelg" class="abc" >X</a>

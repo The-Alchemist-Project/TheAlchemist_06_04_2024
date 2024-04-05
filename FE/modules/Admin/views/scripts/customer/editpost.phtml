@@ -1,0 +1,51 @@
+<?php if (isset($this->message)): ?>
+    <div class="error">	<?= $this->translate($this->message); ?></div>
+<?php endif; ?>
+<?php if ($this->message != "ERROR_MSQL" AND $this->message != "ERROR_NOT_EXISTS"): ?>
+    <div class="wrap_admintab">
+        <?php include "_menu.phtml" ?>
+        <div class="adminright">
+
+            <div class="admintab" style="min-height:376px;padding:0px;">
+                <form action="<?= $this->actionUrl ?>" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="ID" value="<?= $this->ID ?>"/>
+                    <table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+
+                        <tr>
+                            <td><label>Trạng thái</label></td>
+                            <td>
+                                <select name="status">
+                                    <option value="1"<?= $this->status == 1 ? " selected" : "" ?>><?= $this->translate("customer_status_1") ?></option>
+                                    <option value="0"<?= $this->status == 0 ? " selected" : "" ?>><?= $this->translate("customer_status_0") ?></option>
+                                    <option value="0"<?= $this->status == 2 ? " selected" : "" ?>><?= $this->translate("customer_status_2") ?></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Hình thức báo kèo</label></td>
+                            <td>
+                                <select name="type_id">
+                                    <option value="1"<?= $this->type_id == 1 ? " selected" : "" ?>>Xem báo kèo D1 (Classic Member)</option>
+                                    <option value="2"<?= $this->type_id == 2 ? " selected" : "" ?>>Xem báo kèo D1 và H4 (Gold Member)</option>
+                                    <option value="3"<?= $this->type_id == 3 ? " selected" : "" ?>>Xem báo kèo D1, H4 & H4PSAR (Platinum Member - Tư vấn chuyên gia)</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label><?= $this->translate("Date") ?></label></td>
+                            <td><input type="text" class="itext date_picker" value="<?= $this->date ?>" name="date" size="20"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <input type="submit" value="" class="capnhat"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<?php endif; ?>

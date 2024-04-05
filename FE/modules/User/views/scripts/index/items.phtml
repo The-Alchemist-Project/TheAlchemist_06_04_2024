@@ -1,0 +1,134 @@
+<?php
+$posts = $this->posts;
+$customer = $_SESSION['cp__customer'];
+?>
+<?php foreach ($posts as $post): ?>
+    <div class="social-item">
+        <div class="social-item-header">
+            <div class="social-item-header-left">
+                <?php if (!$post['img']): ?>
+                    <img src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+                <?php else: ?>
+                    <img src="<?= BASE_URL ?>/files/customer/<?= $post['user_post'] ?>/<?= $post['img'] ?>" alt="">
+                <?php endif; ?>
+                <div class="social-item-header-left-title">
+                    <p class="title"><a href=""><?= $post['customer_name'] ?></a> posted in <a href="">group</a></p>
+                    <p class="time"><?= smartTime(strtotime($post['date_post'])) ?></p>
+                </div>
+            </div>
+            <div class="social-item-header-right">
+                <div class="social-item-header-right-editicon">...</div>
+                <div class="social-edit-post">
+                    <a href="#" data-toggle="modal" data-target="#popEdit<?= $post['ID'] ?>">Edit</a>
+                    <a href="<?= BASE_URL ?>/<?= $this->language ?>/social/post/delete?ID=<?= $post['ID'] ?>">Delete</a>
+                    <div class="modal fade" id="popEdit<?= $post['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="popAvatarLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="popAvatarLabel">Edit post</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="form-avatar" action="<?= BASE_URL ?>/<?= $this->language ?>/social/post/edit" method="POST" enctype="multipart/form-data">
+                                        <input type="hidden" name="ID_POST" value="<?= $post['ID'] ?>">
+                                        <textarea name ="content" class="form-control" id="exampleFormControlTextarea1" rows="3"><?= $post['content'] ?></textarea>
+                                        <br>
+                                        <button class="btn btn-success" type="submit" value="Change" name="Change">Change</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="social-item-content">
+            <?= $post['content'] ?>
+        </div>
+        <div class="social-item-total">
+            <div class="social-item-total-like" rel-num="<?= $post['num_like'] ?? 0 ?>">
+                <?= $post['num_like'] ?? 0 ?>
+            </div>
+            <div class="social-item-total-comment">
+                <?= $post['num_comment'] ?? 0 ?> comments
+            </div>
+        </div>
+        <div class="social-item-lc">
+            <div class="social-item-lc-like<?php $post['liked'] == 1 ? _e(" social-item-lc-like-active") : _e("") ?>" rel-id="<?= $post['ID'] ?>" rel-status="<?php $post['liked'] == 1 ? _e("active") : _e("none") ?>">
+                Like
+            </div>
+            <div class="social-item-lc-comment">
+                <img src="<?= BASE_URL ?>/style/img/social/comment.png" alt=""> Comment
+            </div>
+        </div>
+        <div class="social-item-comments">
+            <?php foreach ($post['comments'] as $comment): ?>
+                <div class="social-item-comment">
+                    <?php if (!$comment['img']): ?>
+                        <img src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+                    <?php else: ?>
+                        <img src="<?= BASE_URL ?>/files/customer/<?= $comment['user_post'] ?>/<?= $comment['img'] ?>" alt="">
+                    <?php endif; ?>
+                    <div class="social-item-comment-title">
+                        <div class="social-item-comment-title-content" data-toggle="modal" data-target="#popEditComment<?= $comment['ID'] ?>">
+                            <p class="title"><a href=""><?= $comment['customer_name'] ?></a></p>
+                            <p class="dt"><?= $comment['content'] ?> </p>
+                        </div>
+                        <div class="social-item-comment-edit">
+                            <div class="social-item-comment-edit-l"><span>...</span></div>
+                            <div class="social-item-comment-edit-a"  style="display:none;">
+                                <a href="#" data-toggle="modal" data-target="#popEditComment<?= $comment['ID'] ?>">Edit</a>
+                                <a href="<?= BASE_URL ?>/<?= $this->language ?>/social/post/deletecomment">Delete</a>
+                            </div>
+                            <div class="modal fade" id="popEditComment<?= $comment['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="popAvatarLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="popAvatarLabel">Edit post</h3>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="form-avatar" action="<?= BASE_URL ?>/<?= $this->language ?>/social/post/editcomment" method="POST" enctype="multipart/form-data">
+                                                <input type="hidden" name="ID_CC" value="<?= $comment['ID'] ?>">
+                                                <textarea name ="content" class="form-control" id="exampleFormControlTextarea1" rows="3"><?= $comment['content'] ?></textarea>
+                                                <br>
+                                                <button class="btn btn-success" type="submit" value="Change" name="Change">Change</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="cc">
+                            <a class="social-item-lc-like-comment<?php $comment['liked'] == 1 ? _e(" social-item-lc-like-comment-active") : _e("") ?>" rel-id="<?= $comment['ID'] ?>" rel-status="<?php $comment['liked'] == 1 ? _e("active") : _e("none") ?>">Like</a>
+                            <span>.</span>
+                            <a>Reply</a> <span>.</span>
+                            <a title="<?= date('H:i, d/m/Y', strtotime($comment['date_post'])) ?>"><?= smartTime(strtotime($comment['date_post'])) ?></a>
+                        </p>
+                    </div>
+                </div>
+
+            <?php endforeach; ?>
+        </div>
+        <div class="social-top-comment">
+            <?php
+            if (!$customer['img']):
+                ?>
+                <img class="social-top-comment-avatar" src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+            <?php else: ?>
+                <img class="social-top-comment-avatar" src="<?= BASE_URL ?>/files/customer/<?= $customer['ID'] ?>/<?= $customer['img'] ?>" alt="">
+            <?php endif; ?>
+            <form class="form-ajax" action="<?= BASE_URL ?>/vn/Social/post/addcomment" method="post">
+                <input type="hidden" name="id_content" value="<?= $post['ID'] ?>">
+                <input class="social-top-comment-detail" name="content" type="text" placeholder="Write a comment..." autocomplete="off"/>
+            </form>
+        </div>
+    </div>
+<?php endforeach; ?>

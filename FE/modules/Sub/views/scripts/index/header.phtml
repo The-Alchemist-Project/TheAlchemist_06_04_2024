@@ -1,0 +1,102 @@
+<?php
+$page = basename($_SERVER['REQUEST_URI']);
+if ( !$page ) {
+    $page = "index.php";
+}
+$page = explode('.', $page);
+$page = $page[0];
+//
+$lang = $this->language;
+$path = strtolower($_SERVER['REQUEST_URI']);
+$arrModule = array(
+    'Home' => 'trang-chu',
+    'About' => 'gioi-thieu',
+    'Shareholder' => 'co-dong',
+    'News' => 'hoat-dong',
+    'Services' => 'linh-vuc-kinh-doanh',
+    'Contact' => 'lien-he',
+    'Career' => 'nhan-su',
+    'Library' => 'thu-vien',
+    'Project' => 'du-an',
+);
+
+$aLink = "";
+if ( $this->language == 'vn' ) {
+    $arrPath = strstr($path, '/vn/');
+    $a = str_replace('/vn/', '', $arrPath);
+    if ( $a ) {
+        $ab = explode('/', $a);
+        $aLink = $ab[1];
+    }
+} else {
+    $arrPath = strstr($path, '/en/');
+    $a = str_replace('/en/', '', $arrPath);
+    if ( $a ) {
+        $ab = explode('/', $a);
+        $aLink = $ab[1];
+    }
+}
+?>
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="<?= $this->meta['desc'] ?>">
+        <meta name="author" content="">
+        <meta name="keywords" content="<?= $this->meta['key'] ?>">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/pvpe.min.css"/>
+		<title><?=$this->translate($this->moduleTitle)?></title>
+        <script>
+            var base_url="<?=BASE_URL?>";
+        </script>
+        <script src="<?= BASE_URL ?>/style/js/pvpe.min.js"></script>
+        <script>
+            $(function() {
+                $('.carousel').carousel({
+                    interval: 10000,
+                    pause: 'hover'
+                });
+            });
+        </script>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-53157012-2', 'auto');
+            ga('send', 'pageview');
+
+          </script>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                        <div class="langs">
+                            <a class="lang<?php if ( $lang == 'vn' ) echo(" active"); ?>" href="<?= BASE_URL ?>/vn/<?= $arrModule[$this->moduleTitle] ?>/<?= $aLink ?>">Tiếng Việt</a>
+                            | <a class="lang<?php if ( $lang == 'en' ) echo(" active"); ?>" href="<?= BASE_URL ?>/en/<?= $this->moduleTitle ?>/<?= $aLink ?>">English</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-9">
+                        <a href="<?= BASE_URL ?>/<?=$lang?>"><img src="<?= BASE_URL ?>/style/css/images/logo.png" class="logo"/></a>
+                        <span class="lg">CÔNG TY CỔ PHẦN TƯ VẤN ĐIỆN LỰC DẦU KHÍ VIỆT NAM </span>
+                        <span class="sm2">PV Power Engineering (PVPE)</span>
+                        <span class="sm">Design into Reality</span>
+                    </div>
+                    <div class="col-lg-3" align="right">
+                        <div id="searchform-wrap">
+                            <div id="search-icon" class="mobile-button"></div>
+                            <form method="get" id="searchform" action="<?=BASE_URL?>/<?=$this->language?>/<?php echo ($this->language == "vn" ? 'tim-kiem' : 'Search'); ?>">
+                                <input type="hidden" name="module" value="<?=  strtolower($this->moduleTitle)?>" />
+                                <input autocomplete="off" type="text" name="srch-term" id="s" placeholder="<?=$this->translate('Search')?>">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>

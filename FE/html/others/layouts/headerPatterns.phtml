@@ -1,0 +1,70 @@
+<!--header-->
+<?php
+    $url = $_SERVER['REQUEST_URI'] ?? '';
+?>
+<div class="header">
+    <div class="container">
+        <a href="http://thealchemist.ai/en" class="logo">The Alchemist</a>
+        <ul class="menu-top">
+            <li class="<?= strpos($url, 'trade2') ? 'active' : '' ?>">
+                <a href="https://thealchemist.ai/en/trade2">Confluence Trade</a>
+            </li>
+            <li class="<?= strpos($url, 'chartpatterns') ? 'active' : '' ?>">
+                <a href="https://thealchemist.ai/en/chartpatterns">Chart Patterns</a>
+            </li>
+            <li class="<?= strpos($url, 'aipredictions') ? 'active' : '' ?>">
+                <a href="https://thealchemist.ai/en/aipredictions">AI-Predictions</a>
+            </li>
+            <li class="<?= strpos($url, 'academy') ? 'active' : '' ?>">
+                <a href="https://thealchemist.ai/en/academy">Academy</a>
+            </li>
+        </ul>
+        <div class="head-right">
+            <a href="https://thealchemist.ai/en/login" class="btn-login">Login</a>
+            <button class="btn-connect-wallet" data-toggle="modal" data-target="#connect-wallet">Connect Wallet</button>
+        </div>
+        <div class="menu-mobile">
+            <script>
+                function handleMenuMobileBtn() {
+                    const navMenu = document.querySelector(".nav-menu-mobile");
+                    const body = document.querySelector("body")
+                    if (navMenu && body) {
+                        navMenu.classList.toggle("active");
+                        body.classList.toggle("openMenu");
+                    }
+                }
+            </script>
+            <button>
+                <img src="/style/css/images/predictions/search.svg" alt="icon search" />
+            </button>
+            <button onclick="handleMenuMobileBtn()" id="btnMenuMobile">
+                <img src="/style/css/images/predictions/menu.svg" alt="icon menu" />
+            </button>
+        </div>
+    </div>
+    <div class="nav-menu-mobile">
+        <ul class="menu">
+            <li class="<?= strpos($url, 'trade2') ? 'active' : '' ?>">
+                <a href="https://thealchemist.ai/en/trade2">Confluence Trade</a>
+            </li>
+            <li class="<?= strpos($url, 'chartpatterns') ? 'active' : '' ?>">
+                <a href="https://thealchemist.ai/en/chartpatterns">Chart Patterns</a>
+            </li>
+            <li class="<?= strpos($url, 'aipredictions') ? 'active' : '' ?>">
+                <a href="https://thealchemist.ai/en/aipredictions">AI-Predictions</a>
+            </li>
+            <li class="<?= strpos($url, 'academy') ? 'active' : '' ?>">
+                <a href="https://thealchemist.ai/en/academy">Academy</a>
+            </li>
+        </ul>
+        <div class="buttons">
+            <a href="/" target="blank" class="btn-primary">
+                Connect Wallet
+            </a>
+            <a href="https://thealchemist.ai/vn/login" target="blank" class="btn-link">
+                Login
+            </a>
+        </div>
+    </div>
+</div>
+<!--end header-->

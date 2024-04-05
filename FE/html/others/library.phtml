@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title><?= $this->translate($this->module) ?></title>
+        <?php include '_script.phtml'; ?>
+    </head>
+
+    <body>
+        <?=
+        $this->action("header", "index", "Sub", array(
+            'language' => $this->language,
+            'moduleTitle' => $this->module))
+        ?>
+        <div id="myCarousel" class="carousel slide" data-interval="3000" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="active item" style="height: 125px">
+                    <img src="<?= BASE_URL ?>/style/images/1.jpg" width="100%">
+                </div>
+            </div>
+            <div class="logo-banner" style="top:-35%">
+                <a href="<?= BASE_URL ?>/<?= $this->language ?>"><img src="<?= BASE_URL ?>/style/images/logo.png" id="logo"/></a>
+                <h2>CÔNG TY CỔ PHẦN TƯ VẤN ĐIỆN LỰC DẦU KHÍ VIỆT NAM</h2>
+                <h1>PV POWER ENGINEERING</h1>
+            </div>
+        </div>
+        <section class="about" style="padding-top:10px !important;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <?php if ( $this->post ): ?>
+                            <div class="content-tile">
+                                <img src="<?= BASE_URL ?>/style/images/about.png">
+                                <div class="title" >
+                                    <h4><?= $this->translate('Library') ?></h4>
+                                </div>
+                            </div>
+                             <?=
+                                $this->action("subshare", "index", "Sub", array(
+                                    'language' => $this->language,
+                                    'moduleTitle' => $this->module))
+                                ?>
+                            <h4 style="margin-top:0px;"><?= $this->post['title'] ?></h4>
+                            <div  id="print-content">
+                                <?php if ( $this->post['img'] ): ?>
+                                    <img style="width: 100%;height: 350px;margin-bottom: 15px;" src="<?= BASE_URL ?>/files/images/library/<?= $this->post['img'] ?>" alt="<?= $this->post['title'] ?>"/>
+                                <?php endif; ?>
+                                <div>
+                                    <?= $this->post['content'] ?>
+                                </div>
+                            </div>
+
+                            <div class="clear_both"></div>
+                            <?=
+                            $this->action("share", "index", "Sub", array(
+                                'language' => $this->language,
+                                'moduleTitle' => $this->module))
+                            ?>
+                            <div class="clear_both"></div>
+                            <div class="more-details">
+                                <h4><?= $this->translate('Other') ?></h4>
+                                <?php if ( $this->newerPosts ): ?>
+                                    <ul>
+                                        <?php foreach ( $this->newerPosts as $post ): ?>
+                                            <li><a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'thu-vien' : 'Library'); ?>/C<?= $post['ID'] ?>/<?= $this->Plugins->createAlias($post['title']) ?>" title="<?= $post['title'] ?>" class="viewinfo" ><?= $post['title'] ?></a>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                <?php endif; ?>
+                            </div>
+                        <?php else: ?>
+                            <div class="content-tile">
+                                <img src="<?= BASE_URL ?>/style/images/about.png">
+                                <div class="title" >
+                                    <h4><?= $this->translate('Library') ?></h4>
+                                </div>
+                            </div>
+                            <?php if ( $this->posts ): ?>
+                                <?php foreach ( $this->posts as $post ): ?>
+                                    <div class="row about-all">
+                                        <h4><a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'thu-vien' : 'Library'); ?>/C<?= $post['ID'] ?>/<?= $this->Plugins->createAlias($post['title']) ?>" title="<?= $post['title'] ?>" class="viewinfo" ><?= $post['title'] ?></a></h4>
+                                        <div class="col-md-4 about-detail">
+                                            <a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'thu-vien' : 'Library'); ?>/C<?= $post['ID'] ?>/<?= $this->Plugins->createAlias($post['title']) ?>" title="<?= $post['title'] ?>" ><img src="<?= BASE_URL ?>/files/images/library/<?= $post['img'] ?>" alt="<?= $post['title'] ?>" /></a>
+                                        </div>
+                                        <div class="col-md-8 about-detail">
+                                            <p><?= get_quote(strip_tags($post['content']), 200) ?></p>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <div class="clear"></div>
+                                <!--PAGEBAR-->
+                                <?php if ( $this->pageBar ): ?>
+                                    <?php
+                                    $current = $this->currentPage;
+                                    $currentNext = $current + 1;
+                                    $currentPrev = $current - 1 > 1 ? $current - 1 : 1;
+                                    ?>
+                                    <div class="btn-toolbar pagebar" role="toolbar">
+                                        <div class="btn-group button-page"><a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'thu-vien' : 'Library'); ?>/?p=1">Đầu</a></div>
+                                        <div class="btn-group button-page"><a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'thu-vien' : 'Library'); ?>/?p=<?= $currentPrev ?>">Trước</a></div>
+                                        <div class="btn-group button-page active-page"><?= $current ?></div>
+                                        <div class="btn-group button-page"><a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'thu-vien' : 'Library'); ?>/?p=<?= $currentNext ?>">Tiếp</a></div>
+                                        <div class="btn-group button-page"><a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'thu-vien' : 'Library'); ?>/?p=<?= $this->totalPage ?>">Cuối</a></div>
+                                    </div>
+                                <?php endif; ?>
+                                <!--END PAGEBAR-->
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-md-4 ">
+                         <?=
+                        $this->action("submenu", "index", "Sub", array(
+                            'language' => $this->language,
+                            'id_active' => $this->id_active,
+                            'moduleTitle' => $this->module))
+                        ?>
+                        <?=
+                        $this->action("right", "index", "Sub", array(
+                            'language' => $this->language,
+                            'moduleTitle' => $this->module))
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <?=
+        $this->action("footer", "index", "Sub", array(
+            'language' => $this->language,
+            'moduleTitle' => $this->module))
+        ?>
+    </body>
+</html>

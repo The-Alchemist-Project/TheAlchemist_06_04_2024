@@ -1,0 +1,47 @@
+<h3><a href="<?=$this->controllerUrl?>/add" class="add"></a></h3>
+<form action="<?=$this->controllerUrl?>/delete<?=$this->action?>" method="post">
+<table cellpadding="5" border="1" bordercolor="#d9d9d9" width="100%" align="center">
+<tr>
+	<th width="20"><?=$this->translate("ID")?></th>
+	<th><?=$this->translate("Img")?></th>
+	<th width="80"><?=$this->translate("Title")?></th>
+	<th width="50"><?=$this->translate("Poster")?></th>
+	<th width="50"><?=$this->translate("Editer")?></th>
+	<th width="30"><?=$this->translate("Up")?></th>
+	<th width="30"><?=$this->translate("Down")?></th>
+	<th width="30"><?=$this->translate("Edit")?></th>
+	<th width="30"><?=$this->translate("Delete")?></th>
+</tr>
+<?php foreach( $this->posts as $key => $post ): ?>
+	<tr>
+		<td align="center">
+			<?=$post['ord']?>
+		</td>
+		<td align="center">
+			<img src="<?=BASE_URL?>/<?=$this->dirImage?><?=$post['img']?>" width="150px" height="100px"/>
+		</td>
+		<td align="center">
+			<?=$post['title']?>
+		</td>
+		<td align="center">
+			<?=$post['user_post']?>
+		</td>
+		<td align="center">
+			<?=$post['user_edit']?>
+		</td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/up/?ID=<?=$post['ID']?>" class="up"></a>
+		</td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/down/?ID=<?=$post['ID']?>" class="down"></a>
+		</td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/edit/?ID=<?=$post['ID']?>" class="edit"></a>
+		</td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/delete/?ID=<?=$post['ID']?>" class="delete"></a>
+		</td>
+	</tr>
+<?php endforeach; ?>
+</table>
+</form>

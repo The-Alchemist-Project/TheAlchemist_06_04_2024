@@ -1,0 +1,109 @@
+<?php if ( isset($this->message) ): ?>
+    <div class="error">	<?= $this->translate($this->message); ?></div>
+<?php endif; ?>
+
+<?php if ( $this->message != "ERROR_MSQL" AND $this->message != "ERROR_NO_CATELOGY_EXISTS" ): ?>
+    <div class="wrap_admintab">
+        <?php include "_menu.phtml" ?>
+        <div class="adminright">
+
+            <div class="admintab" style="min-height:376px;padding:0px;">
+
+                <form action="<?= $this->actionUrl ?>" method="post" enctype="multipart/form-data">
+                    <table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+                        <tr>
+                            <td width="100"><label>Tiêu đề</label></td>
+                            <td align="left">Tiếng việt <input type="text" name="title_vn" class="itext" size="80" value="<?= $this->title_vn ?>" />
+                                <br/>Tiếng anh <input type="text" name="title_en" class="itext" size="80" value="<?= $this->title_en ?>" /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Meta Description(Mô tả)</label></td>
+                            <td><input type="text" name="desc" class="itext" size="60" value="<?= $this->desc ?>" /></td>
+                        </tr>
+                        <tr>
+                            <td><label>Meta Keyword(Từ khóa)</label></td>
+                            <td><input type="text" name="desc" class="itext" size="60" value="<?= $this->keyword ?>" /></td>
+                        </tr>
+                        <tr>
+                            <td><label><?= $this->translate("Parent") ?></label></td>
+                            <td><?= $this->catOptions ?></td>
+                        </tr>
+                        <tr>
+                            <td><label>Dự án tiêu biểu</label></td>
+                            <td>
+                                <select name="hot">
+                                    <option value="1"<?= $this->hot == 1 ? " selected" : "" ?>><?= $this->translate('Yess') ?></option>
+                                    <option value="0"<?= $this->hot == 0 ? " selected" : "" ?>><?= $this->translate('Noo') ?></option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100"><label>Chủ đầu tư</label></td>
+                            <td align="left">Tiếng việt <input type="text" name="inventory_vn" class="itext" size="40" value="<?= $this->inventory_vn ?>" />
+                                <br/>Tiếng anh <input type="text" name="inventory_en" class="itext" size="40" value="<?= $this->inventory_en ?>" /></td>
+                        </tr>
+                        <tr>
+                            <td width="100"><label>Năm dự kiến hoàn thành</label></td>
+                            <td><input type="text" name="year" class="itext" size="80" value="<?= $this->year ?>" /></td>
+                        </tr>
+                        <tr>
+                            <td width="100"><label>Địa điểm</label></td>
+                            <td align="left">Tiếng việt <input type="text" name="address_vn" class="itext" size="80" value="<?= $this->address_vn ?>" />
+                                <br/>Tiếng anh <input type="text" name="address_en" class="itext" size="80" value="<?= $this->address_en ?>" /></td>
+                        </tr>
+                        <tr>
+                            <td width="100"><label>Dịch vụ</label></td>
+                            <td align="left">Tiếng việt <input type="text" name="service_vn" class="itext" size="80" value="<?= $this->service_vn ?>" />
+                                <br/>Tiếng anh <input type="text" name="service_en" class="itext" size="80" value="<?= $this->service_en ?>" /></td>
+                        </tr>
+                        <tr>
+                            <td width="100"><label>Chi tiết dịch vụ( Tiếng việt)</label></td>
+                            <td align="center">
+                                <textarea rows="18" name="service_info_vn"><?= $this->service_info_vn ?></textarea>
+                                <?= $this->Plugins->textEditor('service_info_vn') ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="100"><label>Chi tiết dịch vụ( Tiếng anh)</label></td>
+                            <td align="center">
+                                <textarea rows="18" name="service_info_en"><?= $this->service_info_en ?></textarea>
+                                <?= $this->Plugins->textEditor('service_info_en') ?>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><label><?= $this->translate("Date") ?></label></td>
+                            <td><input type="text" class="itext date_picker" value="<?= $this->date ?>" name="date" size="20"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label><?= $this->translate("Img") ?></label></td>
+                            <td>
+                                <input type="file" name="img"/><br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Nội dung <br/>(Tiếng việt)</label></td>
+                            <td align="center">
+                                <textarea rows="18" name="content_vn"><?= $this->content_vn ?></textarea>
+                                <?= $this->Plugins->textEditor('content_vn') ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Nội dung <br/>(Tiếng anh)</label></td>
+                            <td align="center">
+                                <textarea rows="18" name="content_en"><?= $this->content_en ?></textarea>
+                                <?= $this->Plugins->textEditor('content_en') ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <input type="submit" value="<?= $this->translate("Submit_Create") ?>" class="button"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

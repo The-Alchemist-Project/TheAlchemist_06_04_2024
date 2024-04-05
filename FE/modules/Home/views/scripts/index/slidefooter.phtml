@@ -1,0 +1,19 @@
+<div class="slide_left"></div>
+			<div class="slide_cont">
+				<img class="button_left" src="<?=BASE_URL?>/style/images/button_slide_left.png" onmouseover="start_scroll_right2();" onmouseout="stop_scrolling2();" style="cursor:pointer;"></src>
+				<div  class="slide_between" id="partslide_outer02" >		
+					<table>
+						<tr>
+							<?php foreach($this->link as $link):?>
+							<td>
+								<div class="image"><a target="_blank"  href="<?=$link['link']?>">	
+									<img src="<?=BASE_URL?>/files/images/link/<?=$link['img']?>" width="93px" height="72px"> 
+								</a></div>
+							</td>
+							<?php endforeach;?>
+						</tr>
+					</table>
+				</div>
+				<img class="button_right" src="<?=BASE_URL?>/style/images/button_slide_right.png"  onmouseover="start_scroll_left2();" onmouseout="stop_scrolling2();" style="cursor:pointer;"></src>
+			</div>
+<div class="slide_right"></div>

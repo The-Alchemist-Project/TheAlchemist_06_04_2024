@@ -1,0 +1,442 @@
+<?php
+//$result = $this->post_data1;
+$listTrades = $this->list_trades;
+$totalTrades = $this->total_trades;
+$coinDropdowns = [
+    'BTC' => [
+        'name' => "Bitcoin",
+        'img' => BASE_URL.'/style/new/images/coins/btc.png',
+    ],
+    'ETH' => [
+        'name' => "Ethereum",
+        'img' => BASE_URL.'/style/new/images/coins/ethd.png',
+    ],
+    'SOL' => [
+        'name' => "Solana",
+        'img' =>  BASE_URL.'/style/new/images/coins/sol.png'
+    ],
+    'DOT' => [
+        'name' => "Polkadot",
+        'img' =>  BASE_URL.'/style/new/images/coins/dot.svg'
+    ],
+    'KLAY' => [
+        'name' => "Klaytn",
+        'img' =>  BASE_URL.'/style/new/images/coins/klay.svg'
+    ],
+];
+$listTradeShowCharts = $this->listTradeShowCharts;
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TheAlchemist AI Predictons Dashboard </title>
+    <?php include __DIR__ . '/layouts/head.phtml'; ?>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/ai-predictions-new.css?v=2">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/dropdowns.css">
+</head>
+
+<body>
+
+<!--header-->
+<!--header-->
+<?php include __DIR__ . '/layouts/headerPatterns.phtml'; ?>
+<!--end header-->
+<!--end header-->
+<div class="prediction-wrapper" style="overflow-x: auto;margin-top: 110px;">
+    <div class="container">
+        <div class="d-flex justify-content-between align-center flex-wrap">
+            <h2>AI Predictions Dashboard</h2>
+            <form action="" id="filter-form">
+                <div class="filter">
+                    <div class="dropdown" data-id="#coinSelect2">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                            <?= !empty($coinDropdowns[$this->request->getParam('coin')]['name']) ? $coinDropdowns[$this->request->getParam('coin')]['name'] : 'All Trading Pairs' ?>
+                        </button>
+                        <ul class="dropdown-menu" style="width: 166px;">
+                            <li>
+                                <a class="dropdown-item" href="">
+                                        <span style="margin-left: 2px;flex: 1 0 0;">
+                                             All Trading Pairs
+                                        </span>
+                                    <span style="margin-top: 5px;" class="icon-active"></span>
+                                </a>
+                            </li>
+                            <?php foreach ($coinDropdowns as $key=>$coin) : ?>
+                                <li>
+                                    <a class="dropdown-item <?= $this->request->getParam('coin') == $key ?'active' : '' ?>" href="#" data-value="<?= $key ?>">
+                                        <?php if (!empty($coin['img'])) : ?>
+                                            <span><img style="width: 16px;height: 16px;border-radius: 50%;"
+                                                       src="<?= $coin['img'] ?>"></span>
+                                        <?php endif; ?>
+                                        <span style="margin-left: 2px;flex: 1 0 0;"><?= $coin['name'] ?></span>
+                                        <span style="margin-top: 5px;" class="icon-active"></span>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                        <input type="hidden" id="coinSelect2" name="coin">
+                    </div>
+                    <div class="dropdown" data-id="#daySelect2">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false" >
+                            <?= $this->request->getParam('day') ?? 'Day' ?>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <?php foreach (['Day','Week','Month','Year'] as $item) : ?>
+                                <li>
+                                    <a class="dropdown-item <?= $this->request->getParam('day') == $item ?'active' : '' ?>" href="#" data-value="<?= $item ?>">
+                                        <span style="margin-left: 2px;flex: 1 0 0;"><?= $item ?></span>
+                                        <span style="margin-top: 5px;" class="icon-active"></span>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                        <input type="hidden" id="daySelect2" name="day">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="dashboard-wrapper">
+            <div class="dashboard-card">
+                <div class="header-card">
+                    <img src="<?= BASE_URL ?>/style/css/images/aiprediction/icon-dashboard-1.svg">
+                    <div class="title">
+                        All trade
+                    </div>
+                </div>
+                <div class="card-content text-primary">
+                    <?= number_format($totalTrades['wins'] + $totalTrades['losts']) ?>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="header-card">
+                    <img src="<?= BASE_URL ?>/style/css/images/aiprediction/icon-dashboard-3.svg">
+                    <div class="title">
+                        Win Trade
+                    </div>
+                </div>
+                <div class="card-content text-success">
+                    <?= number_format($totalTrades['wins']) ?>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="header-card">
+                    <img src="<?= BASE_URL ?>/style/css/images/aiprediction/icon-dashboard-4.svg">
+                    <div class="title">
+                        Lose Trade
+                    </div>
+                </div>
+                <div class="card-content text-danger">
+                    <?= number_format($totalTrades['losts']) ?>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="header-card">
+                    <img src="<?= BASE_URL ?>/style/css/images/aiprediction/icon-dashboard-2.svg">
+                    <div class="title">
+                        Total profit
+                    </div>
+                </div>
+                <div class="card-content <?= $totalTrades['sum_prices'] < 0 ? 'text-danger' : 'text-success' ?> font-mobile" style="letter-spacing: -1px;">
+
+                    <?= ($totalTrades['sum_prices'] >= 0 ? "+":'').auto_decimal_format($totalTrades['sum_prices'],2) ?>$ (<?=($totalTrades['sum_prices'] >= 0 ? "+":''). auto_decimal_format($totalTrades['percent_sum_price'],2) ?>%)
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="header-card">
+                    <img src="<?= BASE_URL ?>/style/css/images/aiprediction/icon-dashboard-5.svg">
+                    <div class="title">
+                        Highest Profit
+                    </div>
+                </div>
+                <div class="card-content" style="color:#253bd9;">
+                    <?= auto_decimal_format($totalTrades['max_price_wins'], 2) ?> $
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="header-card">
+                    <img src="<?= BASE_URL ?>/style/css/images/aiprediction/icon-dashboard-6.svg">
+                    <div class="title">
+                        Lowest Profit
+                    </div>
+                </div>
+                <div class="card-content text-danger">
+                    <?= auto_decimal_format($totalTrades['min_price_wins'], 2) ?> $
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-content">
+            <div class="dashboard-left">
+                <div class="title-chart">
+                    Statistical graph
+                </div>
+                <form action="" id="filter-form">
+                    <div class="filter mobile">
+                        <div class="dropdown disabled" data-id="#coinSelect1">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                <?= !empty($coinDropdowns[$this->request->getParam('coin')]['name']) ? $coinDropdowns[$this->request->getParam('coin')]['name'] : 'All Trading Pairs' ?>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="">
+                                        <span style="margin-left: 2px;flex: 1 0 0;">
+                                             All Trading Pairs
+                                        </span>
+                                        <span style="margin-top: 5px;" class="icon-active"></span>
+                                    </a>
+                                </li>
+                                <?php foreach ($coinDropdowns as $key=>$coin) : ?>
+                                    <li>
+                                        <a class="dropdown-item <?= $this->request->getParam('coin') == $key ?'active' : '' ?>" href="#" data-value="<?= $key ?>">
+                                            <?php if (!empty($coin['img'])) : ?>
+                                                <span><img style="width: 16px;height: 16px;border-radius: 50%;"
+                                                           src="<?= $coin['img'] ?>"></span>
+                                            <?php endif; ?>
+                                            <span style="margin-left: 2px;flex: 1 0 0;"><?= $coin['name'] ?></span>
+                                            <span style="margin-top: 5px;" class="icon-active"></span>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <input type="hidden" id="coinSelect1" name="coin">
+                        </div>
+                        <div class="dropdown disabled" data-id="#daySelect1">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                <?= $this->request->getParam('day') ?? 'Day' ?>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <?php foreach (['Day','Week','Month','Year'] as $item) : ?>
+                                    <li>
+                                        <a class="dropdown-item <?= $this->request->getParam('day') == $item ?'active' : '' ?>" href="#" data-value="<?= $item ?>">
+                                            <span style="margin-left: 2px;flex: 1 0 0;"><?= $item ?></span>
+                                            <span style="margin-top: 5px;" class="icon-active"></span>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <input type="hidden" id="daySelect1" name="day">
+                        </div>
+                    </div>
+                </form>
+
+                <div class="chart">
+                    <div class="flexElement" id="ChartID-iktm1qga"></div>
+                </div>
+            </div>
+
+            <div class="dashboard-right">
+                <div class="title-history">History trading</div>
+                <div class="content-history">
+                    <?php foreach ($listTrades as $trade) : // <-- change here! ?>
+                        <div class="history-item">
+                            <div class="d-flex justify-content-between align-center">
+                                <div class="item-coin-name">
+                                    <?= $trade['symbol'] ?>, <span
+                                        class="<?= $trade['price_preidct_last'] - $trade['price_actual_previous'] >= 0 ? 'text-primary' : 'text-warning' ?>"
+                                        style="font-weight: 400;font-style: normal;">
+                                    <?= $trade['price_preidct_last'] - $trade['price_actual_previous'] >= 0 ? 'buy' : 'sell' ?> 1.00
+                                </span>
+                                </div>
+                                <div class="text-smail-history">
+                                    <?= date('d/m/Y H:i:s', $trade['time_create']) ?>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-center">
+                                <div class="text-smail-history d-flex align-center" style="gap: 8px;">
+                                    <div class="start-price"> <?= ($trade['price_actual_previous']) ?></div>
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="8" viewBox="0 0 13 8"
+                                             fill="none">
+                                            <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"
+                                                  fill="#7D7D7D"/>
+                                        </svg>
+                                    </div>
+                                    <div class="end-price">
+                                        <?= ($trade['price_actual_last']) ?>
+                                    </div>
+                                </div>
+                                <?php if ($trade['price_preidct_last'] - $trade['price_actual_previous'] >= 0) : ?>
+                                    <div class="price-history <?= $trade['price_actual_last'] - $trade['price_actual_previous'] >= 0 ? 'text-success' : 'text-danger' ?>">
+                                        <?= ($trade['price_actual_last'] - $trade['price_actual_previous'] >= 0 ? '+' :''). auto_decimal_format($trade['price_actual_last'] - $trade['price_actual_previous'], 2) ?>
+                                        USD
+                                    </div>
+                                <?php else : ?>
+                                    <div class="price-history  <?= $trade['price_actual_previous'] - $trade['price_actual_last'] >= 0 ? 'text-success' : 'text-danger' ?>">
+                                        <?= ($trade['price_actual_previous'] - $trade['price_actual_last'] >= 0 ? '+' :''). auto_decimal_format($trade['price_actual_previous'] - $trade['price_actual_last'], 2) ?>
+                                        USD
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<?php include __DIR__ . '/layouts/footerPatterns.phtml'; ?>
+<!--End footer-->
+
+<!--popup connect wallet-->
+<?php include __DIR__ . '/layouts/pop.phtml'; ?>
+<!--End popup connect wallet-->
+<?php include __DIR__ . '/layouts/scrips.phtml'; ?>
+
+<script src="<?= BASE_URL ?>/style/js/tv.js"></script>
+<script src="<?= BASE_URL ?>/style/js/new/tv.js"></script>
+<script src="<?= BASE_URL ?>/style/js/new/mainh4.js"></script>
+<script src="<?= BASE_URL ?>/style/js/new/dropdowns.js"></script>
+<script type="text/javascript">
+    var studies = <?php echo json_encode($study); ?>;
+    if (document.getElementById('crypt-candle-chart')) {
+        new TradingView.widget(
+            {
+                "autosize": true,
+                "symbol": "BTCUSDT",
+                "interval": "<?php echo($interval); ?>",
+                "timezone": "Asia/Bangkok",
+                "theme": "Light",
+                "style": "1",
+                "locale": "en_EN",
+                "toolbar_bg": "rgba(255, 255, 255, 1)",
+                "enable_publishing": false,
+                "allow_symbol_change": true,
+                "show_popup_button": true,
+                "popup_width": "1000",
+                "popup_height": "1000",
+                "withdateranges": true,
+                "container_id": "crypt-candle-chart",
+                "studies_overrides": {
+                    "rsi.rsi.plot.color": "#2196f3",
+                    "rsi.level.0": 20,
+                    "rsi.level.1": 80
+                },
+                "studies": studies
+            }
+        );
+    }
+</script>
+
+<!-- chart -->
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20180112/classList.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn@1.0.0/findIndex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.22.0/dist/apexcharts.min.js"></script>
+<script>
+    function nFormatter(num, digits) {
+        const lookup = [
+            { value: 1, symbol: "" },
+            { value: 1e3, symbol: "k" },
+            { value: 1e6, symbol: "M" },
+            { value: 1e9, symbol: "G" },
+            { value: 1e12, symbol: "T" },
+            { value: 1e15, symbol: "P" },
+            { value: 1e18, symbol: "E" }
+        ];
+        const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+        var item = lookup.slice().reverse().find(function(item) {
+            return num >= item.value;
+        });
+        return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+    }
+
+    var options = {
+            chart: {
+                height: 422,
+                type: "line",
+                toolbar: {
+                    show: false,
+                },
+            },
+            series: [
+                {
+                    name: "All trade",
+                    data: <?= json_encode(array_column($listTradeShowCharts,'all_trade')) ?>,
+                },
+                {
+                    name: "Win trade",
+                    data: <?= json_encode(array_column($listTradeShowCharts,'win_trade')) ?>,
+                },
+                {
+                    name: "Lose trade",
+                    data: <?= json_encode(array_column($listTradeShowCharts,'lost_trade')) ?>,
+                },
+            ],
+            xaxis: {
+                categories: <?= json_encode(array_column($listTradeShowCharts,'date')) ?>,
+                labels :{
+                    style: {
+                        colors: "#7D7D7D",
+                        fontSize: '12px',
+                        fontFamily: "'Poppins', Arial, Helvetica, sans-serif",
+                        fontWeight: 400,
+                        cssClass: 'apexcharts-yaxis-label',
+                    },
+                }
+            },
+            yaxis: {
+                labels:{
+                    formatter: (value) => { return nFormatter(value,2) },
+                    style: {
+                        colors: "#7D7D7D",
+                        fontSize: '12px',
+                        fontFamily: "'Poppins', Arial, Helvetica, sans-serif",
+                        fontWeight: 400,
+                        cssClass: 'apexcharts-yaxis-label',
+                    },
+                },
+            },
+            grid: {
+                show: true,
+                borderColor: "#DFE6EC",
+                strokeDashArray: 7,
+                xaxis: {
+                    lines: {
+                        show: true,
+                    },
+                },
+                yaxis: {
+                    lines: {
+                        show: true,
+                    }
+                },
+            },
+
+            stroke: {
+                dashArray: [4, 4, 4],
+                width: 2,
+            },
+            markers: {
+                size: 6,
+                hover: {
+                    size: 8,
+                },
+            },
+            colors: ["#1A64F0", "#00BD46", "#CC0001"],
+            legend: {
+                fontSize: '12px',
+                fontWeight: 600,
+                markers: {
+                    width: 16,
+                    height: 16,
+                    radius: 4
+                },
+                itemMargin: {
+                    horizontal: 24,
+                },
+            }
+        },
+        chart = new ApexCharts(
+            document.querySelector("#ChartID-iktm1qga"),
+            options
+        );
+    chart.render();
+</script>
+<!--End chart-->
+</body>
+</html>

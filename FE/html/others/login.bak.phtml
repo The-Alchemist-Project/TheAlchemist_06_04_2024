@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TheAlchemist</title>
+        <link rel="shortcut icon" href="<?= BASE_URL ?>/favicon.ico" />
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/new/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/new/css/style.css">
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/new/css/icons.css">
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/new/css/ui.css">
+
+    </head>
+
+    <body>
+        <div class="container container-login">
+            <div class="container-login-content">
+                <div class="container-login-logo">
+                    <a href="<?= BASE_URL ?>/<?= $this->language ?>"><img src="<?= BASE_URL ?>/style/img/login.png" alt=""></a>
+                </div>
+                <div class="container-login-sologan">
+                    Welcome back
+                </div>
+                <div class="container-login-form">
+                    <ul>
+                        <li class="active"><a class="nav-link active" href="<?= BASE_URL ?>/<?= $this->language ?>/login">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="<?= BASE_URL ?>/<?= $this->language ?>/register">Register</a></li>
+                    </ul>
+                    <div class="container-login-form-action">
+                        <?php if ($this->error) { ?>
+                            <div style="color:red;font-size:14px;">
+                                <?= $this->error ?>
+                            </div>
+                        <?php } ?>
+                        <?php if ($this->success) { ?>
+                            <div style="color:red;font-size:14px;">
+                                <?= $this->success; ?>
+                            </div>
+                        <?php } ?>
+                        <form action="<?= BASE_URL ?>/<?= $this->language ?>/login" method="post" autocomplete="off">
+                            <div class="container-login-form-sub">
+                                <label>Username</label>
+                                <input class="username" type="text" name="us" placeholder="Email hoặc Số điện thoại" autocomplete="off">
+                            </div>
+                            <div class="container-login-form-sub">
+                                <label>Password</label>
+                                <input  class="password"  type="password" name="pw" placeholder="****" autocomplete="new-password">
+                            </div>
+                            <button type="submit" value="Login">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

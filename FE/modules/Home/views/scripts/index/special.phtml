@@ -1,0 +1,5 @@
+				<marquee onmouseout="this.start();" onmouseover="this.stop();" scrollamount="1" loop="-1" direction="up" behavior="scroll" style="text-align:justify;"> 
+					<?php foreach($this->news as $news):?>
+					<a href="#"><?=$news['title']?></a><br />
+					<?php endforeach; ?>
+				</marquee>

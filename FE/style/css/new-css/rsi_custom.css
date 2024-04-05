@@ -1,0 +1,110 @@
+.text-success {
+    color: #00BD46 !important;
+}
+.d-flex{
+    display: flex;
+}
+.justify-content-between{
+    justify-content: space-between;
+}
+.text-primary{
+    color: #1A64F0 !important;
+}
+.text-danger {
+    color: #CC0001 !important;
+}
+.m-24{
+    margin: 24px;
+}
+.mb-24{
+    margin-bottom: 24px;
+}
+
+.coin-name{
+    left: 1190px;
+    width: 200px;
+}
+.tradingview-frame{
+    width: 928px;
+}
+.listcoin-box{
+    right: -135px;
+}
+
+.listcoin-table tbody {
+    height: 530px;
+    overflow: scroll;
+}
+
+.top-bottom-right {
+    left: 1186px;
+    top: 0;
+}
+tr.trade-coin-tr-active a{
+    color: #1A64F0 !important;
+}
+
+.bottom-right-box-end {
+    left: 1186px;
+    top: 327px;
+}
+.trading-strategy-box{
+    padding: 24px;
+    width: 926px;
+}
+.trading-strategy-box .title{
+    text-align: left;
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 28px;
+    margin-bottom: 36px;
+}
+.trading-strategy-box .text-field{
+    display: flex;
+    width: 352px;
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    border-radius: 8px;
+    background: #F6F6F6;
+}
+.trading-strategy-box .text-field-2{
+    width: auto;
+    min-width: 164px;
+}
+.trading-strategy-box .text-field .title-field{
+    color: #7D7D7D;
+    /* Body/14/Medium */
+    font-family: "Poppins";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+}
+.trading-strategy-box .text-field .content-field{
+    color: #333;
+/* Headline/16/Semibold */
+    font-family: "Poppins";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 150% */
+}
+.trading-strategy-box .save-button-frame{
+    margin-top: 20px;
+}
+
+.trading-strategy-box .save-button-frame .save-order-button{
+    position: unset;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 24px;
+    color: #ffffff;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+}

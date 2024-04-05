@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html> 
+<head> 
+	<title>Đăng Nhập</title> 
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" /> 
+	<link rel="stylesheet" href="<?=BASE_URL?>/admin/login.css"/>
+</head>
+<body>
+		<div id="wrap">
+			<form action="<?=BASE_URL?>/<?=$this->language?>/Admin/login" method="post">
+			<table cellpadding="2" align="center">
+				<tr>
+					<td style="color:red" align="center" colspan="2">
+						<?php if( isset($this->error )):?>
+							<?=$this->translate($this->error)?>
+						<?php endif;?>
+					</td>
+				</tr>
+				<tr>
+					<td width="100"><?=$this->translate("LOGIN_USERNAME")?></td>
+					<td><input type="text" value="" style="width:150px" name="username"/></td>
+				</tr>
+				<tr>
+					<td><?=$this->translate("LOGIN_PASSWORD")?></td>
+					<td><input type="password" value="" style="width:150px" name="password"/></td>
+				</tr>
+				<tr>
+					<td colspan="3" align="center">
+						<input type="submit" class="submit" value="<?=$this->translate("LOGIN_SUBMIT")?>"/>
+					</td>
+				</tr>				
+			</table>
+			</form>
+		</div>
+</body></html>

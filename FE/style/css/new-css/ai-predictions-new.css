@@ -1,0 +1,293 @@
+*{
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+form{
+    margin-block-end: inherit;
+}
+.flex-wrap{
+   flex-wrap: wrap;
+}
+.text-success{
+    color: #00BD46 !important;
+}
+.text-danger{
+    color: #CC0001 !important;
+}
+.text-primary{
+    color: #1A64F0 !important;
+}
+.text-warning{
+    color: #F59E0B !important;
+}
+.d-flex{
+    display: flex;
+}
+
+h2{
+    font-size: 32px;
+}
+
+.justify-content-between{
+    justify-content: space-between;
+}
+.align-center{
+    align-items: center;
+}
+.dashboard-wrapper {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: stretch;
+}
+
+.dashboard-wrapper .dashboard-card {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    flex: 1 0 0;
+    border-radius: 12px;
+    border: 1px solid  #E7E7E7;
+    background:  #FFF;
+}
+
+.dashboard-card .header-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.dashboard-card .title {
+    color:  #333;
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px; /* 114.286% */
+}
+.card-content{
+    /*height: 36px;*/
+    align-self: stretch;
+    color: #111;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 36px;
+    text-align: center;
+}
+.card-content.font-mobile{
+    font-size: 17px;
+}
+.dashboard-content{
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+.dashboard-right{
+    display: flex;
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    border-radius: 12px;
+    border: 1px solid #E7E7E7;
+    background: #FFF;
+    height: 640px;
+}
+.title-history{
+    color: #111111;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+}
+.content-history{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+    max-height: 640px;
+    overflow-y: scroll;
+}
+
+
+
+.history-item{
+    width: 100%;
+    border-bottom: 0.5px solid  #E7E7E7;
+    padding-bottom: 8px;
+}
+
+.history-item .item-coin-name{
+    color: #333;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+}
+.history-item .text-smail-history{
+    color: #7D7D7D;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 166.667% */
+}
+.price-history{
+    text-align: right;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+}
+.dashboard-content{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+.dashboard-left{
+    width: 100%;
+    /*max-width: 845px;*/
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    border: 1px solid #E7E7E7;
+    background: #FFF;
+}
+.title-chart{
+    color: #111;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+}
+.apexcharts-legend{
+    background: #F6F6F6 !important;
+    display: flex !important;
+    padding: 8px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 24px !important;
+    align-self: stretch !important;
+    border-radius: 6px !important;
+}
+#ChartID-iktm1qga svg{
+    overflow: unset;
+}
+#ChartID-iktm1qga foreignObject{
+    overflow: unset;
+}
+.filter{
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+/*@media (min-width:320px)  { !* smartphones, portrait iPhone, portrait 480x320 phones (Android) *! }*/
+/*@media (min-width:600px)  { !* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) *! }*/
+@media screen and (min-width:1010px) and (max-width:1302px)  {
+    /* tablet, landscape iPad, lo-res laptops ands desktops */
+    .dashboard-wrapper .dashboard-card{
+        min-width: 140px;
+    }
+    .dashboard-wrapper{
+        gap: 12px;
+    }
+    .dashboard-left{
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    .dashboard-right{
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    .dashboard-content{
+        gap: 10px;
+        flex-wrap: nowrap;
+        justify-content: center;
+    }
+
+}
+@media screen and (max-width:980px) {
+    .dashboard-content{
+       display: flex;
+    }
+    .dashboard-right{
+        width: 100%;
+    }
+    .apexcharts-legend{
+        justify-content: space-between !important;
+    }
+    .apexcharts-legend-series{
+        margin: 0 !important;
+    }
+    .dashboard-wrapper .dashboard-card{
+        min-width: 170px;
+    }
+    
+}
+
+@media screen and (max-width:801px) {
+    h2{
+        font-size: 25px;
+        margin: 0;
+    }
+    .dashboard-right{
+        width: 100%;
+    }
+}
+
+@media screen and(min-width: 796px) and (max-width: 991px) {
+    .dashboard-wrapper .dashboard-card{
+        min-width: 170px;
+    }
+    .dashboard-right{
+        width: 100%;
+    }
+}
+@media screen and (max-width:480px)  {
+    h2{
+        font-size: 16px;
+        margin: 0;
+    }
+    .dashboard-wrapper{
+        gap: 20px;
+    }
+    .dashboard-wrapper .dashboard-card .card-content.font-mobile{
+        font-size: 20px;
+    }
+    .dashboard-content .dashboard-left{
+        width: 100%;
+        border: none;
+        padding: 0;
+    }
+    .dashboard-content .dashboard-right{
+        width: 100%;
+        border: none;
+        padding: 0;
+    }
+    .filter.mobile{
+        display: flex;
+        justify-content: space-between;
+    }
+    .apexcharts-legend{
+        justify-content: space-between !important;
+          margin: 5px !important;
+    }
+    .apexcharts-legend-series{
+        margin: 0!important;
+    }
+    #ChartID-iktm1qga foreignObject{
+        border-radius: 20px;
+        border: 1px solid #E7E7E7;
+    }
+}

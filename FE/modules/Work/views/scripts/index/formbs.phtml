@@ -1,0 +1,41 @@
+<?php
+$postId = $this->id;
+?>
+<?php if (isset($this->message)): ?>
+    <div class="error">	<?= $this->translate($this->message); ?></div>
+<?php endif; ?>
+
+<?php if ($this->message != "ERROR_MSQL" AND $this->message != "ERROR_NO_CATELOGY_EXISTS"): ?>
+    <form action="<?= BASE_URL ?>/vn/work/index/<?php $postId ? _e("editpost") : _e("addpost") ?>" method="post">
+        <input type='hidden' name="ID" value="<?= $postId ?>">
+        <input type='hidden' name="tab" value="<?= $this->tab ?>">
+        <input type='hidden' name="copy_id" value="<?= $copyId ?>">
+        <div class="work-form">
+            <table cellpadding="8" border="0" bordercolor="#d9d9d9" style="border-collapse:collapse" width="100%" align="center">
+                <tr>
+                    <td><label>AI-Trade</label></td>
+                    <td><?= $this->itemAiTrades ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>RSI</label></td>
+                    <td><?= $this->items ?>
+                        <?= $this->additions ?>
+                        <input type="number" name="bs_percent" class="itext" value="<?= $this->bs_percent ?>" placeholder="" style="width: 100px;padding-left: 10px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Candlestick Model</label></td>
+                    <td><?= $this->catOptions ?></td>
+                </tr>
+                <tr>
+                    <td  align="left"></td>
+                    <td  align="left">
+                        <input type="submit" value="Create" class="btn btn-success" name="Create"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </form>
+<?php endif; ?>

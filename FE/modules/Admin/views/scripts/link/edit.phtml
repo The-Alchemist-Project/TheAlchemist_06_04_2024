@@ -1,0 +1,39 @@
+<div class="wrap_admintab">
+    <?php include "_menu.phtml" ?>
+    <div class="adminright">
+
+        <div class="admintab" style="min-height:376px;padding:0px;">
+            <?php if ( isset($this->message) ): ?>
+                <div class="error">	<?= $this->translate($this->message); ?></div>
+            <?php endif; ?>
+            <?php if ( $this->message != "ERROR_MSQL" AND $this->message != "ERROR_NOT_EXISTS" ): ?>
+                <form action="<?= $this->actionUrl ?>" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="ID" value="<?= $this->ID ?>"/>
+                    <table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+                       <tr>
+                            <td><label>Tên</label></td>
+                            <td><input type="text" name="title" size="80" class="itext" value="<?= $this->title ?>" />
+                             </td>
+                        </tr>
+                        <tr>
+                            <td><label>Link liên kết</label></td>
+                            <td><input type="text" name="link" size="80" class="itext" value="<?= $this->link ?>" />
+                                <br/> Ví dụ : https://www.google.com.vn</td>
+                        </tr>
+
+                        <tr>
+                        <td><label><?= $this->translate("Order") ?></label></td>
+                        <td><input type="text" class="itext" value="<?= $this->ord ?>" name="ord" size="5"/>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <input type="submit" value="<?= $this->translate("Submit_Create") ?>" class="button"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

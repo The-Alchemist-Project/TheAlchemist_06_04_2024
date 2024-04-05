@@ -1,0 +1,47 @@
+<?php
+$arrModule = array(
+    'Home' => 'trang-chu',
+    'About' => 'gioi-thieu',
+    'Shareholder' => 'co-dong',
+    'News' => 'hoat-dong',
+    'Services' => 'linh-vuc-kinh-doanh',
+    'Contact' => 'lien-he',
+    'Career' => 'nhan-su',
+    'Library' => 'thu-vien',
+    'Project' => 'du-an',
+    'Activities' => 'hoat-dong',
+    'Gallery' => 'thu-vien-anh',
+);
+?>
+<div class="box color-orange">
+    <h2 class="cat-title">
+        <a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php  echo($this->language=='vn' ?  $arrModule[$this->moduleTitle]: ($this->moduleTitle=='Activities' ? 'News' : $this->moduleTitle )) ?>">
+            <?= $this->translate($this->moduleTitle) ?>
+        </a>
+    </h2>
+    <div id="accordion" class="panel-group">
+        <?php if ( $this->posts ): ?>
+            <?php foreach ( $this->posts as $k => $post ): ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a href="<?= BASE_URL ?>/<?= $this->language ?>/<?= $post['module'] ?>/<?= $post['cat'] . $post['ID'] ?>/<?= $this->Plugins->createAlias($post['title']) ?>" title="<?= $post['title'] ?>">
+                                <span class="fa fa-caret-right"></span> <?= $post['title'] ?></a>
+                        </h4>
+                    </div>
+                    <?php if ( count($post['sub_posts']) > 0 ): ?>
+                        <div id="collapseOne" class="panel-collapse collapse<?php if ( $this->idCat == $post['ID'] || $this->id_active == $post['ID'] ) echo(" in"); ?>">
+                            <div class="panel-body">
+                                <?php foreach ( $post['sub_posts'] as $j => $sub ): ?>
+                                    <h4 class="panel-title">
+                                        <a href="<?= BASE_URL ?>/<?= $this->language ?>/<?= $sub['module'] ?>/<?= $sub['cat'] . $sub['ID'] ?>/<?= $this->Plugins->createAlias($sub['title']) ?>"><?= $sub['title'] ?></a>
+                                    </h4>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</div>

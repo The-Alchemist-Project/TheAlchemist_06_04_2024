@@ -1,0 +1,60 @@
+<table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+
+    <?php for ($i = 1; $i <= 4; $i++): ?>
+        <tr>
+            <td rowspan="12">Nến số <?= $i ?></td>
+            <td>{cd<?= $i ?>_open}</td>
+            <td>Giá mở của nến số <?= $i ?></td>
+        </tr>
+        <tr>
+            <td>{cd<?= $i ?>_high}</td>
+            <td>Giá cao nhất nến số <?= $i ?></td>
+        </tr>
+        <tr>
+            <td>{cd<?= $i ?>_low}</td>
+            <td>Giá thấp nhất nến số <?= $i ?></td>
+        </tr>
+        <tr>
+            <td>{cd<?= $i ?>_close}</td>
+            <td>Giá đóng cửa nến số <?= $i ?></td>
+        </tr>
+        <tr>
+            <td>{cd<?= $i ?>_rsi}</td>
+            <td>RSI7 nến số <?= $i ?></td>
+        </tr>
+        <tr>
+            <td>{cd<?= $i ?>_rsi14}</td>
+            <td>RSI14 nến số <?= $i ?></td>
+        </tr>
+        <tr>
+            <td>{cd<?= $i ?>_psar}</td>
+            <td>PSAR nến số <?= $i ?></td>
+        </tr>
+        <tr>
+            <td>{cd<?= $i ?>_psar_high}</td>
+            <td>PSAR cao nhật nến số <?= $i ?> tính theo chu kỳ 14 phiên giao dịch gần nhất</td>
+        </tr>
+        <tr>
+            <td>{cd<?= $i ?>_psar_low}</td>
+            <td>PSAR  thấp nhất nến số <?= $i ?> tính theo chu kỳ 14 phiên giao dịch gần nhất</td>
+        </tr>
+        <tr>
+            <td>{cd<?= $i ?>_ema89}</td>
+            <td>EMA89 nến số <?= $i ?></td>
+        </tr>
+        <tr>
+            <td>{cd<?= $i ?>_adx}</td>
+            <td>ADX nến số <?= $i ?></td>
+        </tr>
+        <tr>
+            <td>{cd<?= $i ?>_ema89_h4}</td>
+            <td>EMA89_H4 nến số <?= $i ?></td>
+        </tr>
+    <?php endfor; ?>
+
+    <tr>
+        <td colspan="11"><b>Chú ý:</b> Các ký hiệu điều kiện viết theo format chuẩn của PHP:
+            <br> >= || <= && ==
+            <br> Còn định dạng tiền thì phải là 0.000012. Không dùng dấu ","</td>
+    </tr>
+</table>

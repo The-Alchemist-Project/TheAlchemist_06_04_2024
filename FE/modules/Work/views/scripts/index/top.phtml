@@ -1,0 +1,48 @@
+<?php
+$customer = $_SESSION['cp__customer'];
+?>
+
+<div class="content-user-info">
+    <div class="user-info-left">
+        <?php if (!$post['img']): ?>
+            <img class="avatar" src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+        <?php else: ?>
+            <img class="avatar" src="<?= BASE_URL ?>/files/customer/<?= $post['user_post'] ?>/<?= $post['img'] ?>" alt="">
+        <?php endif; ?>
+        <img class="button-change-avatar" src="<?= BASE_URL ?>/style/img/camera.png" alt="">
+        <span class="badge">Lv. 6</span>
+    </div>
+    <div class="user-info-right">
+        <div class="top-info">
+            <h2>
+                <?= $customer['name'] ?>
+            </h2>
+            <button>
+                <img src="<?= BASE_URL ?>/style/img/edit.png" alt="">
+                Edit Profile
+            </button>
+        </div>
+        <div class="bottom-info">
+            <div class="item-info">
+                <p class="info-label">Win Rate</p>
+                <p class="info-content" style="color:#00BD46;">75%</p>
+            </div>
+            <div class="item-info">
+                <p class="info-label">Win - Loss Ratio</p>
+                <p class="info-content" style="color:#F59E0B ;">16%</p>
+            </div>
+            <div class="item-info">
+                <p class="info-label">Skill Books Revenue:</p>
+                <p class="info-content" style="color:#00BCD4;">2423 AAI</p>
+            </div> 
+            <div class="item-text">
+                <h6>
+                    About:
+                </h6>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, 
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,286 @@
+<?php
+$post = $this->post;
+$type = $this->type;
+$detailId = $this->detailId;
+$dataChartCols = $this->dataChartCols;
+$customer = $_SESSION['cp__customer'];
+$wonChart = implode(',', array_values($dataChartCols['won']));
+$failChart = implode(',', array_values($dataChartCols['fail']));
+$processingChart = implode(',', array_values($dataChartCols['processing']));
+$waitingChart = implode(',', array_values($dataChartCols['waiting']));
+?>
+<div class="work-items-header profile-items-section">
+    <div>
+        <p class="work-items-header-name profile-items-section-title"><?= $customer['name'] ?></p>
+        <p class="work-items-header-setting profile-items-section-detail">DASHBOARD</p>
+    </div>
+    <div class="work-items-header-view">
+        <span>Week </span><label class="switch">
+            <input type="checkbox" name="select-report" val="1" <?php $type == 'month' ? _e('checked') : '' ?>>
+            <span class="slider round"></span>
+        </label><span> Month</span>
+        <div class="form-group">
+            <select rel="<?= $type ?>" class="selectpicker" data-live-search="true" name="detail_id">
+                <?php foreach ($this->options as $a): ?>
+                    <option  value="<?= $a['ID'] ?>" <?= $detailId == $a['ID'] ? _e('selected') : _e("") ?>><?= $a['title'] ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="work-items profile-items">
+    <div class="profile-items-char-top">
+        <div class="profile-items-char-top-sub profile-items-char-top-won">
+            <h1>WIN</h1>
+            <p><a href="history?aclist=win"><?= _e($post['won']) ?></a></p>
+        </div>
+        <div class="profile-items-char-top-sub profile-items-char-top-fail">
+            <h1>LOSS</h1>
+            <p><a href="history?aclist=loss"><?= _e($post['fail']) ?></a></p>
+        </div>
+        <div class="profile-items-char-top-sub profile-items-char-top-waiting">
+            <h1>PROCESSING</h1>
+            <p><a href="history?aclist=match"><?= _e($post['watch']) ?></a></p>
+        </div>
+        <div class="profile-items-char-top-sub profile-items-char-top-total">
+            <h1>TOTAL</h1>
+            <p><?= _e($post['total']) ?></p>
+        </div>
+        <div class="profile-items-char-top-sub profile-items-char-top-profit">
+            <h1>PROFIT </h1>
+            <div class="profile-items-char-top-profit1">
+                <table width="60%" cellspacing="0" cellpadding="0" style="padding:0px;">
+                    <tr>
+                        <td style="text-align: right;color: #3AA4F1">TOTAL</td>
+                        <td>&nbsp;|&nbsp;</td>
+                        <td style="text-align: left; color:#1923FF">AVG</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;color: #3AA4F1"><?php _e($post['profit']) ?>%</td>
+                        <td>&nbsp;|&nbsp;</td>
+                        <td style="text-align: left; color:#1923FF"><?php _e($post['profitAvg']) ?>%</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <figure class="highcharts-figure profile-highchart">
+        <div id="profile-highchart-left"></div>
+        <div id="profile-highchart-right"></div>
+    </figure>
+    <script>
+        Highcharts.chart('profile-highchart-left', {
+            colors: ["#00C896", "#FFFF00", "#FF2B01"],
+            title: {
+                text: ''
+            },
+
+            subtitle: {
+                text: ''
+            },
+
+            xAxis: {
+                categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+//            tooltip: {
+//                headerFormat: '<b>{series.name}</b><br />',
+//                pointFormat: 'x1 = {point.x}, y2 = {point.y}'
+//            },
+            plotOptions: {
+                series: {
+                    allowPointSelect: true
+                }
+            },
+
+            series: [{
+                    name: 'Win',
+                    data: [<?php echo($wonChart) ?>]
+                }, {
+                    name: 'Processing ',
+                    data: [<?php echo($processingChart) ?>]
+
+                }, {
+                    name: 'Loss',
+                    data: [<?php echo($failChart) ?>]
+                }],
+
+            responsive: {
+                rules: [{
+                        condition: {
+                            maxWidth: 500
+                        },
+                        chartOptions: {
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom'
+                            }
+                        }
+                    }]
+            }
+
+        });
+        //Right//
+        Highcharts.chart('profile-highchart-right', {
+            colors: ["#00C896", "#FFFF00", "#FF2B01"],
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            xAxis: {
+                categories: ['Win', 'Processing', 'Loss']
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            showInLegend: false,
+            series: [{
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: [{
+                            name: 'Win',
+                            y: <?php _e($post['won']) ?>,
+                            sliced: true,
+                            selected: true
+                        }, {
+                            name: 'Processing',
+                            y: <?php _e($post['processing']) ?>
+                        }, {
+                            name: 'Loss',
+                            y: <?php _e($post['fail']) ?>
+                        }]
+                }]
+        });
+    </script>
+
+</div>
+
+<div class="profile-items2">
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" celllpadding="0" cellspacing="0" width="100%">
+        <thead>
+            <tr class="profile-items2-table-header">
+                <th class="th-sm">Book Name
+                </th>
+                <th class="th-sm">Quants
+                </th>
+                <th class="th-sm">Price
+                </th>
+                <th class="th-sm">Total
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Skill Trade 01</td>
+                <td>1</td>
+                <td>1.000</td>
+                <td>1.000</td>
+            </tr>
+            <tr>
+                <td>Skill Trade 02</td>
+                <td>1</td>
+                <td>1.000</td>
+                <td>1.000</td>
+            </tr>
+            <tr>
+                <td>Skill Trade 03</td>
+                <td>1</td>
+                <td>1.000</td>
+                <td>1.000</td>
+            </tr>
+            <tr>
+                <td>Skill Trade 04</td>
+                <td>1</td>
+                <td>1.000</td>
+                <td>1.000</td>
+            </tr>
+            <tr>
+                <td>Skill Trade 05</td>
+                <td>1</td>
+                <td>1.000</td>
+                <td>1.000</td>
+            </tr>
+            <tr>
+                <td>Skill Trade 06</td>
+                <td>1</td>
+                <td>1.000</td>
+                <td>1.000</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<div class="profile-items3">
+    <table id="dtBasicExample" class="table table-striped table-bordered table-sm" celllpadding="0" cellspacing="0" width="100%">
+        <thead>
+            <tr class="profile-items2-table-header">
+                <th class="th-sm">Name
+                </th>
+                <th class="th-sm">Revenue
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td width="200">Skill Trade 01</td>
+                <td><div class="profile-items3-process profile-items3-process-100" title="75%">&nbsp;</div></td>
+            </tr>
+            <tr>
+                <td>Skill Trade 02</td>
+                <td><div class="profile-items3-process profile-items3-process-75" title="75%">&nbsp;</div></td>
+            </tr>
+            <tr>
+                <td>Skill Trade 03</td>
+                <td><div class="profile-items3-process profile-items3-process-50" title="75%">&nbsp;</div></td>
+            </tr>
+            <tr>
+                <td>Skill Trade 04</td>
+                <td><div class="profile-items3-process profile-items3-process-35" title="75%">&nbsp;</div></td>
+            </tr>
+            <tr>
+                <td>Skill Trade 05</td>
+                <td><div class="profile-items3-process profile-items3-process-65" title="75%">&nbsp;</div></td>
+            </tr>
+            <tr>
+                <td>Skill Trade 06</td>
+                <td><div class="profile-items3-process profile-items3-process-15" title="75%">&nbsp;</div></td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+<div class="work-items-header profile-items-section">
+    <div>
+        <p class="work-items-header-name profile-items-section-title">Go to the</p>
+        <p class="work-items-header-setting profile-items-section-detail"><a href="<?= BASE_URL ?>/vn/history"><?= $customer['name'] ?>’s watchlist</a></p>
+    </div>
+    <div class="work-items-header-sub">
+        <p class="work-items-header-name profile-items-section-title">Go to the</p>
+        <p class="work-items-header-setting profile-items-section-detail"><a href=""><?= $customer['name'] ?>’s report</a></p>
+    </div>
+</div>

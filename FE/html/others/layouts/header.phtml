@@ -1,0 +1,50 @@
+<!--header-->
+<?php
+    $url = $_SERVER['REQUEST_URI'] ?? '';
+?>
+<div class="header">
+    <div class="container">
+        <a href="http://thealchemist.ai/en" class="logo">The Alchemist</a>
+        <ul class="menu-top">
+            <li class="<?= (strpos($url, 'trade2') || strpos($url, 'predictions') || strpos($url, 'chartpatterns') ) ? 'active' : '' ?>">
+                <?php 
+                    if (strpos($url, 'trade2')) {
+                ?>
+                    <a href="https://thealchemist.ai/en/trade2">Al-Trade</a>
+                    <ul class="sub-menu">
+                        <li><a href="https://thealchemist.ai/en/predictions">AI Predictions</a></li>
+                    </ul>
+                <?php
+                    } else if (strpos($url, 'predictions')) {
+                ?>
+                    <a href="https://thealchemist.ai/en/predictions">AI Predictions</a>
+                <?php
+                    } else if (strpos($url, 'chartpatterns')) {
+                ?>
+                    <a href="https://thealchemist.ai/en/chartpatterns">Chart Patterns</a>
+                <?php
+                    } else {
+                ?>
+                    <a href="https://thealchemist.ai/en/predictions">Al-Trade</a>
+                <?php
+                    }
+                ?>
+                
+            </li>
+            <li class="<?= strpos($url, 'work') ? 'active' : '' ?>">
+                <a href="https://thealchemist.ai/en/social">Social</a>
+            </li>
+            <li class="<?= strpos($url, 'academy') ? 'active' : '' ?>">
+                <a href="https://thealchemist.ai/en/academy">Academy</a>
+            </li>
+            <li class="<?= strpos($url, 'news') ? 'active' : '' ?>">
+                <a href="https://thealchemist.ai/en/news">News</a>
+            </li>
+        </ul>
+        <div class="head-right">
+            <a href="https://thealchemist.ai/en/login" class="btn-login">Login</a>
+            <button class="btn-connect-wallet" data-toggle="modal" data-target="#connect-wallet">Connect Wallet</button>
+        </div>
+    </div>
+</div>
+<!--end header-->

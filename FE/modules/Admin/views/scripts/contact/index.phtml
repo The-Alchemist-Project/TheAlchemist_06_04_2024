@@ -1,0 +1,108 @@
+<style>
+    #cptime{
+        width:100%
+    }
+    .sub_time{
+        width:99.2%
+    }
+</style>
+<?php if ( isset($this->message) ): ?>
+    <div class="error">	<?= $this->translate($this->message); ?> </div>
+<?php endif; ?>
+<form action="<?= $this->controllerUrl ?>" method="post" enctype="multipart/form-data">
+    <table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+<!--        <tr>
+            <td width="130"><label><?= $this->translate("Lang") ?></label></td>
+            <td colspan="2"><?= $this->translate("Language.{$_SESSION['cp_lang']}") ?></td>
+        </tr>-->
+		 <tr>
+            <td width="130"><label>Link google analytics</label></td>
+            <td colspan="2"><a target="_bank" href="https://www.google.com/analytics/web/?hl=vi&pli=1#report/visitors-overview/a53157012w86131836p89353442/">Link xem thống kê</a></td>
+        </tr>
+        <tr>
+            <td><label><?= $this->translate("Email") ?></label></td>
+            <td colspan="2"><input size="50" type="input" class="itext" name="email" value="<?= $this->info['email'] ?>"/></td>
+        </tr>
+        <tr>
+            <td><label>Link frame's google map's</label></td>
+            <td><textarea style="width:100%;height:150px;" name="link"><?= $this->info['link'] ?></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Meta Description(Mô tả)</label></td>
+            <td><textarea style="width:100%;height:150px;" name="text2"><?= $this->info['text2'] ?></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Meta Keyword(Từ khóa)</label></td>
+            <td><textarea style="width:100%;height:150px;" name="text1"><?= $this->info['text1'] ?></textarea>
+            </td>
+        </tr>
+        <?/*<tr>
+            <td><label>Hỗ trợ 01</label></td>
+            	<td>Yahoo: <input size="43" type="input" class="itext" name="yh01" value="<?= $this->info['yh01'] ?>"/></td>
+
+            <td>Số điện thoại: <input size="50" type="input" class="itext" name="hl01" value="<?= $this->info['hl01'] ?>"/></td>
+        </tr>
+        <tr>
+            <td><label>Hỗ trợ 02</label></td>
+            	<td>Yahoo: <input size="43" type="input" class="itext" name="yh02" value="<?= $this->info['yh02'] ?>"/></td>
+
+            <td>Số điện thoại: <input size="50" type="input" class="itext" name="hl02" value="<?= $this->info['hl02'] ?>"/></td>
+        </tr>
+        <tr>
+        <td><label>Hỗ trợ 03</label></td>
+        <td><input size="50" type="input" class="itext" name="yh03" value="<?= $this->info['yh03'] ?>"/></td>
+        <td><input size="50" type="input" class="itext" name="hl03" value="<?= $this->info['hl03'] ?>"/></td>
+        </tr>
+        */?>
+
+        <tr>
+            <td><label>Liên hệ(Tiếng việt)</label></td>
+            <td align="center" colspan="2">
+                <textarea rows="18" name="contact_vn"><?= $this->info["contact_vn"] ?></textarea>
+                <?= $this->Plugins->textEditor('contact_vn') ?>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Liên hệ(Tiếng anh)</label></td>
+            <td align="center" colspan="2">
+                <textarea rows="18" name="contact_en"><?= $this->info["contact_en"] ?></textarea>
+                <?= $this->Plugins->textEditor('contact_en') ?>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Trụ sở(Tiếng việt)</label></td>
+            <td align="center" colspan="2">
+                <textarea rows="18" name="footer_vn"><?= $this->info["footer_vn"] ?></textarea>
+                <?= $this->Plugins->textEditor('footer_vn') ?>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Trụ sở(Tiếng anh)</label></td>
+            <td align="center" colspan="2">
+                <textarea rows="18" name="footer_en"><?= $this->info["footer_en"] ?></textarea>
+                <?= $this->Plugins->textEditor('footer_en') ?>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Văn phòng đại diện(Tiếng việt)</label></td>
+            <td align="center" colspan="2">
+                <textarea rows="18" name="office_vn"><?= $this->info["office_vn"] ?></textarea>
+                <?= $this->Plugins->textEditor('office_vn') ?>
+            </td>
+        </tr>
+        <tr>
+            <td><label>Văn phòng đại diện(Tiếng anh)</label></td>
+            <td align="center" colspan="2">
+                <textarea rows="18" name="office_en"><?= $this->info["office_en"] ?></textarea>
+                <?= $this->Plugins->textEditor('office_en') ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" align="center">
+                <input type="submit" value="" class="capnhat"/>
+            </td>
+        </tr>
+    </table>
+</form>

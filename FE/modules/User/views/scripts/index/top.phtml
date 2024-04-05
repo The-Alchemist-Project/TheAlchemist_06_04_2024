@@ -1,0 +1,138 @@
+<?php
+$customer = $_SESSION['cp__customer'];
+?>
+
+<div class="social-top-banner">
+    <div class="social-top-banner-1">
+        <img class="social-top-banner-img" src="<?= BASE_URL ?>/style/img/social/imgbg.jpg" alt="">
+    </div>
+    <div class="social-top-banner-2">
+        <?php if (!$customer['img']): ?>
+            <img class="social-top-banner-avatar" src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+        <?php else: ?>
+            <img class="social-top-banner-avatar" src="<?= BASE_URL ?>/files/customer/<?= $customer['ID'] ?>/<?= $customer['img'] ?>" alt="">
+        <?php endif; ?>
+        <div class="social-top-banner-2-st">
+
+            <div class="social-top-banner-2-inputfile" data-toggle="modal" data-target="#popAvatar"></div>
+            <!-- Modal -->
+            <div class="modal fade" id="popAvatar" tabindex="-1" role="dialog" aria-labelledby="popAvatarLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="popAvatarLabel">Avatar</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="form-avatar" action="<?= BASE_URL ?>/<?= $this->language ?>/user/post/change" method="POST" enctype="multipart/form-data">
+                                <input id="file-avatar"  type="file" name="img"><br>
+                                <button class="btn btn-success" type="submit" value="Upload" name="Upload">Upload</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="social-top">
+
+    <div class="social-top-comment">
+        <?php if (!$customer['img']): ?>
+            <img class="social-top-comment-avatar" src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+        <?php else: ?>
+            <img class="social-top-comment-avatar" src="<?= BASE_URL ?>/files/customer/<?= $customer['ID'] ?>/<?= $customer['img'] ?>" alt="">
+        <?php endif; ?>
+        <form class="form-ajax" action="<?= BASE_URL ?>/vn/Social/post/add" method="post" >
+            <input class="social-top-comment-detail" name="content" type="text" placeholder="<?= $customer['name'] ?>, what’s on your mind?" autocomplete="off"/>
+        </form>
+        <div class="social-top-setting" data-toggle="modal" data-target="#popSetting"></div>
+        <div class="modal fade" id="popSetting" tabindex="-1" role="dialog" aria-labelledby="popSettingLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="popSettingLabel">Info</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-change-info-error"></div>
+                        <form id="form-change-info" name="form-change-info">
+                            <div class="form-group">
+                                <label for="recipient-fullname" class="col-form-label">Fullname</label>
+                                <input type="text" class="form-control" id="recipient-fullname" name="fullname" value="<?= $customer['name'] ?>" />
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-username" class="col-form-label">Username</label>
+                                <input type="text" class="form-control" id="recipient-username" name="username" value="<?= $customer['user'] ?>" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="recipient-email" class="col-form-label">Email</label>
+                                <input type="text" class="form-control" id="recipient-email" name="email" value="<?= $customer['email'] ?>" />
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-phone" class="col-form-label">Phone</label>
+                                <input type="text" class="form-control" id="recipient-phone" name="phone" value="<?= $customer['phone'] ?>" />
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-refer" class="col-form-label">Referral code</label>
+                                <input type="text" class="form-control" id="recipient-refer" name="refer" value="<?= $customer['refer'] ?>" />
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-refer" class="col-form-label">Company</label>
+                                <input class="form-control" type="text" name="company" placeholder="" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-refer" class="col-form-label">Position</label>
+                                <input class="form-control" type="text" name="position" placeholder="" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-refer" class="col-form-label">Industry</label>
+                                <input class="form-control" type="text" name="industry" placeholder="" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-refer" class="col-form-label">Education</label>
+                                <input class="form-control" type="text" name="education" placeholder="" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-refer" class="col-form-label">Country</label>
+                                <input class="form-control" type="text" name="country" placeholder="" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-refer" class="col-form-label">City</label>
+                                <input class="form-control" type="text" name="city" placeholder="" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-desc" class="col-form-label">Description</label>
+                                <textarea  class="form-control" name="desc"><?= $customer['desc'] ?>
+                                </textarea>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button class="btn btn-success" id="form-change-info-submit">Update</button>
+                            <a href="#" class="btn" data-dismiss="modal">Close</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="social-top-more">
+        <div class="social-top-more-sub social-top-more-video">
+            <img class="social-top-more-video-img" src="<?= BASE_URL ?>/style/img/social/icon9.png" alt="">Videos
+        </div>
+        <div class="social-top-more-sub social-top-more-photo">
+            <img class="social-top-more-photo-img" src="<?= BASE_URL ?>/style/img/social/icon10.png" alt="">
+            Photos
+        </div>
+        <div class="social-top-more-sub social-top-more-emo">
+            <img class="social-top-more-emo-img" src="<?= BASE_URL ?>/style/img/social/icon11.png" alt="">Emotions
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<?php
+$customer = $_SESSION['cp__customer'];
+?>
+<div class="social-content" style="padding: 10px 0;">
+    <div class="row social-content-sub">
+        <div class="col-xl-3 col-lg-3 col-md-3 social-content-left">
+            <?=
+            $this->action("left", "index", "Social", array(
+                'language' => $this->language,
+                'id_active' => $this->id_active,
+                'moduleTitle' => $this->module))
+            ?>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-9 social-content-center" style="margin-left:20px; width: 79%">
+            <?=
+            $this->action("top", "index", "Work", array(
+                'language' => $this->language,
+                'id_active' => $this->id_active,
+                'moduleTitle' => $this->module))
+            ?>
+            <?=
+            $this->action("items", "index", "Work", array(
+                'language' => $this->language,
+                'id_active' => $this->id_active,
+                'moduleTitle' => $this->module))
+            ?>
+        </div>
+    </div>
+</div>

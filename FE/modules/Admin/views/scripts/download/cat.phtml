@@ -1,0 +1,48 @@
+<div class="wrap_admintab">
+	<?php include "_menu.phtml"?>	
+		<div class="adminright">
+		
+			<div class="admintab" style="min-height:376px;padding:0px;">	
+				
+				<table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+				<tr>
+					<th width="50"><?=$this->translate("#")?></th>
+					<th><?=$this->translate("Title")?></th>
+					<th width="30"><?=$this->translate("View")?></th>
+					<th width="30"><?=$this->translate("Up")?></th>
+					<th width="30"><?=$this->translate("Down")?></th>		
+					<th width="30"><?=$this->translate("Edit")?></th>
+					<th width="30"><?=$this->translate("Delete")?></th>
+				</tr>
+				<?php foreach( $this->cats as $k => $cat ): ?>
+				<tr>
+					<td valign="top" align="center">
+						<a class='quick_ord' u='<?=$this->controllerUrl?>/edit<?=$this->action?>/?ID=<?=$cat['info']['ID']?>'><?=$cat['info']['ord']?></a>
+					</td>
+					<td valign="top">
+						<?=str_repeat("+",$cat['ord'])?>&nbsp;<a class="quick_edit_title" u="<?=$this->controllerUrl?>/edit<?=$this->action?>/?ID=<?=$cat['info']['ID']?>"><?=$cat['info']['title']?></a>
+					</td>
+					<td align="center">
+						<a href="<?=$this->controllerUrl?>/post/?parent_id=<?=$cat['info']['ID']?>" class="view"></a>
+					</td>
+					<td align="center">
+						<a href="<?=$this->controllerUrl?>/up<?=$this->action?>/?ID=<?=$cat['info']['ID']?>" class="up"></a>
+					</td>
+					<td align="center">
+						<a href="<?=$this->controllerUrl?>/down<?=$this->action?>/?ID=<?=$cat['info']['ID']?>" class="down"></a>
+					</td>
+					<td align="center">
+						<a href="<?=$this->controllerUrl?>/edit<?=$this->action?>/?ID=<?=$cat['info']['ID']?>" class="edit"></a>
+					</td>
+					<td align="center">
+						<a href="<?=$this->controllerUrl?>/delete<?=$this->action?>/?ID=<?=$cat['info']['ID']?>" class="delete"></a>
+					</td>
+				</tr>
+				<?php endforeach; ?>
+				</table>
+				<div class="add_hh">
+					<h3 class="add_link"><a href="<?=$this->controllerUrl?>/add<?=$this->action?>" class="add"></a></h3>
+				</div>
+			</div>
+		</div>	
+</div>				

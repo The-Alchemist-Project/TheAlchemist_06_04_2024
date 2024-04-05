@@ -1,0 +1,46 @@
+﻿<div id="header">
+	<a href="<?=BASE_URL?>/vn/" class="logo"><img src="<?=BASE_URL?>/style/images/logo.jpg" alt="logo"/></a>
+	<div class="head_middle"><br />
+		<img src="<?=BASE_URL?>/style/images/name.png" alt="name" class="web_name"/>
+	</div>
+	<div class="head_right">
+		<div class="head_option">
+		</div>
+	</div>
+	<a href="<?=BASE_URL?>/vn/" style="float:right;margin-top:10px;" class="linhvat"><img src="<?=BASE_URL?>/style/images/linhvat.png" alt=""/></a>
+	<div class="clear"></div>
+</div><!-- End #header -->
+
+<style>
+	#banner {position:relative; width:718px; height:257px;}
+	#banner img {position:absolute;left:0;top:0;}
+	
+</style>
+<script>
+	$(function() {
+	$('#banner img:gt(0)').hide();
+	setInterval(function(){
+      $('#banner :first-child').fadeOut(1000)
+         .next('img').fadeIn(1000)
+         .end().appendTo('#banner');}, 
+      4700);
+})
+
+</script>
+<div id="below_header">
+	<div id="slide">
+		<?=$this->action("banner","index","Sub",array('language'=>$this->language))?>
+		<div class="vanban" >
+			<?=$this->action("vanban","index","Sub",array('language'=>$this->language))?>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="leftbg_menu"></div>
+	<div id="menu_box">
+		<?=$this->action("submenu","index","Sub",array('language'=>$this->language,'moduleTitle'=>$this->module))?>
+		<div class="clear"></div>
+	</div>
+	<div class="rightbg_menu"></div>
+	<div class="clear"></div>
+</div><!-- End #below_header -->
+		<?=$this->action("sitemap","index","Sub",array( 'language'=>$this->language ))?>

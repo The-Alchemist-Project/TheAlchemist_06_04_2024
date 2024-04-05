@@ -1,0 +1,45 @@
+<?php if( isset($this->message ) ):?>
+<div class="error">
+	<?=$this->translate($this->message);?>
+</div>
+<?php endif;?>
+
+<?php if( $this->message != "0" ):?>
+<form action="<?=$this->actionUrl?>" method="post" enctype="multipart/form-data">
+<input type="hidden" name="ID" size="40" value="<?=$this->ID?>" />
+<table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+	<?php if( $_SESSION['cp__user']['ID'] == 1):?><tr>
+	<td>
+		<label><?=$this->translate("Name")?></label>
+	</td><td>
+	<input type="text" class="itext" name="name" size="40" value="<?=$this->name?>" /><br/>
+	</td></tr><?php endif;?>
+	<?php if( $_SESSION['cp__user']['ID'] != 1):?>
+	<tr><td>
+		<label><?=$this->translate("Password Old")?></label>
+	</td><td>
+		<input type="password" class="itext" name="password0" autocomplete="off" size="40" value=""/><br/>
+	</td></tr>
+	<?php endif;?>
+	<tr><td>
+		<label><?=$this->translate("Password New")?></label>
+	</td><td>
+		<input type="password" class="itext" name="password" autocomplete="off" size="40" value=""/><br/>
+	</td></tr><tr><td>
+		<label><?=$this->translate("Password Again")?></label>
+	</td><td>
+		<input type="password" class="itext" name="password2" autocomplete="off" size="40" value=""/><br/>
+	</td></tr><tr><td>
+		<label><?=$this->translate("Email")?></label>
+	</td><td>
+		<input type="text" class="itext" name="email" size="40" value="<?=$this->email?>"/><br/>
+	</td></tr><tr><td>
+		<label><?=$this->translate("Photo")?></label>
+	</td><td>
+		<input type="file" name="img"/><img src="<?=BASE_URL?>/files/users/<?=$this->img? $this->img : "default.png"?>" style="max-width:100px"/>
+	</td></tr><tr><td colspan="2" align="center">
+		<input type="submit" value="<?=$this->translate("Submit_Update")?>"/>
+	</td></tr>	
+</table>	
+</form>
+<?php endif;?>

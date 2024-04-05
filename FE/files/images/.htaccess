@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteRule ^(.*)/(\d+)x(\d+)$ ../../plugins/thumbnail.php?w=$2&h=$3&path=../files/images/$1 [L] 
+RewriteCond %{REQUEST_FILENAME} !(\.jpg|\.jpeg|\.png|\.gif|\.flv|\.00*|\.cda|\.mp3|\.mp4|\.swf)
+RewriteRule ^(.*)$ - [F]
+
+
+

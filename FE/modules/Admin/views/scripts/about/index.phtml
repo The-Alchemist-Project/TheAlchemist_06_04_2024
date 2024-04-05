@@ -1,0 +1,48 @@
+<div class="wrap_admintab">
+
+	<div class="adminleft">
+		<ul id="menu_left">
+
+				<li class="big_link"><a href="">Giới Thiệu</a></li>
+				<li class="sub_link"><a href="<?=$this->moduleUrl?>/about/setting">Cài đặt phân trang</a></li>
+				<li class="sub_link"><a href="<?=$this->moduleUrl?>/about">Danh Sách Giới Thiệu</a></li>
+				<li class="sub_link"><a href="<?=$this->moduleUrl?>/about/add">Thêm Giới Thiệu</a></li>
+		</ul>
+	</div>
+
+	<div class="adminright">
+
+		<div class="admintab" style="min-height:376px;padding:0px;">
+			<table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+			<tr>
+				<th><?=$this->translate("#")?></th>
+				<th><?=$this->translate("Title")?></th>
+				<th><?=$this->translate("Up")?></th>
+				<th><?=$this->translate("Down")?></th>
+				<th><?=$this->translate("Edit")?></th>
+				<th><?=$this->translate("Delete")?></th>
+			</tr>
+			<?php foreach( $this->posts as $post ): ?>
+			<tr>
+				<td valign="top" align="center">
+					<a class="quick_ord" u="<?=$this->controllerUrl?>/edit/?ID=<?=$post['info']['ID']?>"><?=$post['info']['ord']+1?></a>
+				</td>
+				<td valign="top">
+					<?=str_repeat("+",$post['ord'])?>&nbsp;
+						<a u="<?=$this->controllerUrl?>/edit/?ID=<?=$post['info']['ID']?>" <?=$post['info']['sticky']==1 ? " style='color:red'":""?>>
+								<?=$post['info']['title']?>
+						</a>
+				</td>
+				<td align="center"><a href="<?=$this->controllerUrl?>/up/?ID=<?=$post['info']['ID']?>" class="up"></a></td>
+				<td align="center"><a href="<?=$this->controllerUrl?>/down/?ID=<?=$post['info']['ID']?>" class="down"></a></td>
+				<td align="center"><a href="<?=$this->controllerUrl?>/edit/?ID=<?=$post['info']['ID']?>" class="edit"></a></td>
+				<td align="center"><a href="<?=$this->controllerUrl?>/delete/?ID=<?=$post['info']['ID']?>" class="delete"></a></td>
+			</tr>
+			<?php endforeach; ?>
+			</table>
+			<div class="add_hh">
+				<h3 class="add_link"><a href="<?=$this->controllerUrl?>/add" class="add"></a></h3>
+			</div>
+		</div>
+	</div>
+</div>

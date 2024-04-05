@@ -1,0 +1,15 @@
+<?php
+    $url=($_SERVER['HTTPS'] ? "https" : "http") . '://' . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+?>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="pull-right">
+            <div class="share">
+                <span><?=$this->translate('Share')?></span>
+                <a target="_blank" title="facebook" href="http://www.facebook.com/sharer/sharer.php?u=<?=$url?>" class="facebook"></a>
+                <a target="_blank" title="twitter" href="https://twitter.com/share?url=<?=$url?>" class="twitter"></a>
+                <a target="_blank" title="google" href="https://plus.google.com/share?url=<?=$url?>" class="google"></a>
+            </div>
+        </div>
+    </div>
+</div>

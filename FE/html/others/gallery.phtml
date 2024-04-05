@@ -1,0 +1,122 @@
+<?=
+$this->action("header", "index", "Sub", array(
+    'language' => $this->language,
+    'moduleTitle' => $this->module))
+?>
+<?php
+$colors = array(
+    //"color-orange",
+    "color-blue");
+$color = $colors[rand(0, count($colors) - 1)];
+if(count($this->posts)>0){
+    foreach($this->posts as $a){
+        $array[]="".BASE_URL."/files/images/gallery/".$a['img'];
+        if(count($a['imgs'])>0){
+            foreach($a['imgs'] as $b){
+                $arrImg["".BASE_URL."/files/images/gallery/".$a['img']][]=array(
+                    href=>BASE_URL."/upload/gallery/".$b['file'],
+                    title=> ($b['title'] ? $b['title'] : $a['title'])
+                );
+            }
+        }
+    }
+}
+?>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="clearfix">
+                <div class="row cols">
+                    <div class="col-xs-6"></div>
+                    <div class="col-xs-6"></div>
+                </div>
+                <script>
+                    function removeImg(elem) {
+                        var height = elem.offsetHeight;
+                        var html = '<div style="width:100%;margin-bottom:' + (2 * window.PADDING) + 'px;height:' + height + 'px" ontouchstart="this.classList.toggle(\'hover\');">'
+                                + '<img style="width:100%" src="' + elem.src + '"/>'
+                                + '</div>';
+
+                        var $a = $(html).click(function() {
+                            var imgView=<?php echo(json_encode($arrImg));?>;
+                            $.fancybox(imgView[elem.id], {
+                                prevEffect: 'none',
+                                nextEffect: 'none',
+                                helpers: {
+                                    title: {
+                                        type: 'outside'
+                                    },
+                                    thumbs: {
+                                        width: 150,
+                                        height: 150
+                                    }
+                                }
+                            });
+                        })
+                                .fadeOut();
+
+                        $(elem).wrapAll($a);
+                        $a.fadeIn(300);
+                    }
+                    function appendImg(imgs) {
+                        var img = (imgs || []).shift();
+                        if (!img) {
+                            return;
+                        }
+
+                        var h = 0, idx = 0;
+                        for (var j = 0; j < 2; j++) {
+                            var H = $(".cols > div").slice(j, j + 1).height();
+                            if (h == 0 || h > H) {
+                                idx = j;
+                                h = H;
+                            }
+                        }
+
+                        setTimeout(function() {
+                            $('<img onload=\'appendImg(this.imgs);removeImg(this);\' id="'+img+'" style="z-index:1;position:relative;top:0;left:0;width:100%" src="' + img + '" class="pic"/>')
+                                    .each(function() {
+                                        $(this).prop('imgs', imgs);
+                                    })
+                                    .appendTo($(".cols > div")[idx])
+                                    .css({
+                                        opacity: 0.2
+                                    });
+                        }, 400);
+
+                    }
+
+                    $(function() {
+                        // doan nay tao 1 mang php roi json_encode mang dẻ truyen vao js
+                        var arr=<?php echo(json_encode($array))?>;
+                        appendImg(arr);
+                    });
+
+                </script>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <?=
+            $this->action("submenu", "index", "Sub", array(
+                'language' => $this->language,
+                'id_active' => $this->id_active,
+                'moduleTitle' => $this->module))
+            ?>
+            <?=
+            $this->action("quickmenu", "index", "Sub", array(
+                'language' => $this->language,
+                'moduleTitle' => $this->module))
+            ?>
+            <?=
+            $this->action("news", "index", "Sub", array(
+                'language' => $this->language,
+                'moduleTitle' => $this->module))
+            ?>
+        </div>
+    </div>
+</div>
+<?=
+$this->action("footer", "index", "Sub", array(
+    'language' => $this->language,
+    'moduleTitle' => $this->module))
+?>

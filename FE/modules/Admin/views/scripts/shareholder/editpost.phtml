@@ -1,0 +1,108 @@
+<?php if ( isset($this->message) ): ?>
+    <div class="error">	<?= $this->translate($this->message); ?></div>
+<?php endif; ?>
+<?php if ( $this->message != "ERROR_MSQL" AND $this->message != "ERROR_NOT_EXISTS" ): ?>
+    <div class="wrap_admintab">
+        <?php include "_menu.phtml" ?>
+        <div class="adminright">
+
+            <div class="admintab" style="min-height:376px;padding:0px;">
+                <form action="<?= $this->actionUrl ?>" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="ID" value="<?= $this->ID ?>"/>
+                    <table cellpadding="8" border="1" bordercolor="#d9d9d9" width="100%">
+                        <tr>
+                            <td width="100"><label>Tiêu đề</label></td>
+                            <td>Tiếng việt <input type="text" name="title_vn" class="itext" size="40" value="<?= $this->title_vn ?>" />
+                                <br/>Tiếng anh <input type="text" name="title_en" class="itext" size="40" value="<?= $this->title_en ?>" /></td>
+                        </tr>
+<!--                        <tr>
+                            <td><label>Chọn làm tin nổi bật</label></td>
+                            <td>
+                                <select name="hot">
+                                    <option value="1"<?= $this->hot == 1 ? " selected" : "" ?>><?= $this->translate('Yess') ?></option>
+                                    <option value="0"<?= $this->hot == 0 ? " selected" : "" ?>><?= $this->translate('Noo') ?></option>
+                                </select>
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td><label><?= $this->translate("Parent") ?></label></td>
+                            <td><?= $this->catOptions ?></td>
+                        </tr>
+                        <tr>
+                            <td><label>Năm</label></td>
+                            <td>
+                                <input type="text" name="year" class="itext" size="10" value="<?=$this->year?>" />
+                            </td>
+                        </tr>
+    <!--						<tr>
+                            <td><label><?= $this->translate("Lang") ?></label></td>
+                            <td><?= $this->translate("Language.{$_SESSION['cp_lang']}") ?></td>
+                        </tr>-->
+<!--                        <tr>
+                            <td><label><?= $this->translate("Date") ?></label></td>
+                            <td><input type="text" class="itext date_picker" value="<?= $this->date ?>" name="date" size="20"/>
+                            </td>
+                        </tr>-->
+<!--
+                        <tr>
+                            <td><label><?= $this->translate("Sticky") ?></label></td>
+                            <td><input type="type" name="sticky" class="itext" value="<?= $this->sticky ?>" size="1"/></td>
+                        </tr>-->
+                        <tr>
+                            <td><label><?= $this->translate("Status") ?></label></td>
+                            <td>
+                                <select name="status">
+                                    <option value="1"<?= $this->status == 1 ? " selected" : "" ?>><?= $this->translate("Noo") ?></option>
+                                    <option value="0"<?= $this->status == 0 ? " selected" : "" ?>><?= $this->translate("Yess") ?></option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><label><?= $this->translate("Img") ?></label></td>
+                            <td>
+                                <input type="file" name="img"/><br/>
+                                <p>File: <?=$this->img?></p>
+                            </td>
+                        </tr>
+<!--                        <tr>
+                            <td><label>Trích dẫn <br/>(Tiếng việt)</label></td>
+                            <td align="center">
+                                <textarea rows="18" name="quote_vn"><?= $this->quote_vn ?></textarea>
+                                <?= $this->Plugins->textEditor('quote_vn') ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Trích dẫn <br/>(Tiếng anh)</label></td>
+                            <td align="center">
+                                <textarea rows="18" name="quote_en"><?= $this->quote_en ?></textarea>
+                                <?= $this->Plugins->textEditor('quote_en') ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Nội dung <br/>(Tiếng việt)</label></td>
+                            <td align="center">
+                                <textarea rows="18" name="content_vn"><?= $this->content_vn ?></textarea>
+                                <?= $this->Plugins->textEditor('content_vn') ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label>Nội dung <br/>(Tiếng anh)</label></td>
+                            <td align="center">
+                                <textarea rows="18" name="content_en"><?= $this->content_en ?></textarea>
+                                <?= $this->Plugins->textEditor('content_en') ?>
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td colspan="2" align="center">
+                                <input type="submit" value="" class="capnhat"/>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<?php endif; ?>

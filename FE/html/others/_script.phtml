@@ -1,0 +1,43 @@
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="CÔNG TY CỔ PHẦN TƯ VẤN ĐIỆN LỰC DẦU KHÍ VIỆT NAM">
+<meta name="author" content="">
+<meta name="keywords" content="<?=$this->info['text1']?>">
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="<?= BASE_URL ?>/favicon.ico" />
+<link href="<?= BASE_URL ?>/style/css/bootstrap.css" rel="stylesheet">
+<link href="<?= BASE_URL ?>/style/css/bootstrap-reponsive.css" rel="stylesheet">
+<link href="<?= BASE_URL ?>/style/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="<?= BASE_URL ?>/style/js/bootstrap.js"></script>
+<script src="<?= BASE_URL ?>/style/js/jquery.jcarousel.min.js"></script>
+<script>
+    $(function() {
+        $('ul.nav li.dropdown').hover(function() {
+            $(this).addClass('open');
+            $(this).closest('.dropdown-menu').stop(true, true).slideDown(200);
+        }, function() {
+            $(this).removeClass('open');
+            $(this).closest('.dropdown-menu').stop(true, true).slideUp(200);
+        });
+    });
+
+</script>
+<script>
+            function printPage(id)
+                {
+                   var html="<html>";
+                   html+= document.getElementById(id).innerHTML;
+
+                   html+="</html>";
+
+                   var printWin = window.open();
+                   printWin.document.write(html);
+                   printWin.document.close();
+                   printWin.focus();
+                   printWin.print();
+                   printWin.close();
+
+                }
+        </script>

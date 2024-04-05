@@ -1,0 +1,41 @@
+<div class="wrap_admintab">
+	<?php include "_menu.phtml"?>
+		<div class="adminright">
+		
+			<div class="admintab" style="min-height:376px;padding:0px;">
+			<?php if( isset($this->message ) ):?>
+<div class="error">	<?=$this->translate( $this->message );?> </div>
+<?php endif;?>
+
+<?php if( isset($this->success ) ):?>
+<div class="success">	<?=$this->translate($this->success);?> </div>
+<?php endif;?>
+
+<form action="<?=$this->actionUrl?>" method="post" enctype="multipart/form-data">
+<table cellpadding="8" border="1" bordercolor="#888888" width="100%">
+	<tr>
+		<td>
+			<label><?=$this->translate("Post Number")?></label>
+		</td><td>
+		<input type="text" class="itext" name="post_number" size="10" value="<?=$this->settings['post_number']?>" />
+		</td></tr>
+		<tr>
+		<td>
+			<label><?=$this->translate("Next Number")?></label>
+		</td><td>
+			<input type="text" class="itext" name="next_number" size="10" value="<?=$this->settings['next_number']?>" />
+		</td></tr>
+		<tr>
+		<td>
+			<label><?=$this->translate("Admin page show")?></label>
+		</td><td>
+			<input type="text" name="page_admin" class="itext" size="10" value="<?=$this->settings['page_admin']?>" />
+		</td></tr>		
+		<tr><td colspan="2" align="center">
+			<input type="submit" value="<?=$this->translate("Submit_Update")?>"/>
+		</td></tr>	
+</table>	
+</form>
+			</div>
+		</div>	
+</div>				

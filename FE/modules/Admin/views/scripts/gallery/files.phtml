@@ -1,0 +1,76 @@
+<div class="wrap_admintab">
+	<?php include "_menu.phtml"?>
+		<div class="adminright">
+
+			<div class="admintab" style="min-height:376px;padding:0px;">
+
+<h3><a href="<?=$this->controllerUrl?>/add<?=$this->action?>" class="add"></a></h3>
+<div style="text-align:right;padding:15px">
+<form action="<?=$this->controllerUrl?>/addfiles" method="post" enctype="multipart/form-data">
+<input type="hidden" name="ID" value="<?=$this->ID?>"/>
+<table cellpadding="8" border="1" bordercolor="#888888" width="100%" align="right">
+	<tr>
+		<td align="left">
+		<label>Album</input></label>: <div style="width: 700px;"><?=$this->catOptions?></div>
+		</td>
+	</tr>
+	<tr>
+		<td align="left"><label>Tiêu đề ảnh</label>: <input type="text" name="title" size="40"/>
+		<input type="file" name="files1"/>
+		<input type="submit" value="<?=$this->translate("Submit_Create")?>" class="button"/>
+		</td>
+	</tr>
+</table>
+</form>
+</div>
+
+<div style="clear:both;padding: 15px 15px">
+	Số bài viết tìm thấy: <?=$this->totalPost?>
+</div>
+<form action="<?=$this->controllerUrl?>/delete<?=$this->action?>" method="post">
+<div style="text-align:right;padding:8px"><?=$this->pageBar?></div>
+<table cellpadding="8" border="1" bordercolor="#888888" style="border-collapse:collapse" width="100%" align="center">
+<tr>
+	<th><?=$this->translate("#")?></th>
+	<th>Hình ảnh</th>
+	<th><?=$this->translate("Parent")?></th>
+	<th width="40"><?=$this->translate("Up")?></th>
+	<th width="40"><?=$this->translate("Down")?></th>
+	<th width="40"><?=$this->translate("Edit")?></th>
+	<th width="40"><?=$this->translate("Delete")?></th>
+	<th width="40"><input type="checkbox" onclick="checkAll(this)" class="itext"/></th>
+</tr>
+<?php foreach( $this->posts as $key => $post ): ?>
+	<tr>
+		<td align="center" width="20"><?=$post['ord']?></td>
+		<td align="center" width="200">
+			<img src="<?=BASE_URL?>/upload/gallery/<?=$post['file']?>"/>
+		</td>
+		<td align="left" nowrap="nowrap"><?=$post['post_link']?></td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/up<?=$this->action?>/?ID=<?=$post['ID']?>" class="up"></a>
+		</td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/down<?=$this->action?>/?ID=<?=$post['ID']?>" class="down"></a>
+		</td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/edit<?=$this->action?>/?ID=<?=$post['ID']?>" class="edit"></a>
+		</td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/delete<?=$this->action?>/?ID=<?=$post['ID']?>" class="delete"></a>
+		</td>
+		<td align="center"><input type="checkbox" size="1" value="<?=$post['ID']?>" name="ID[]"/></td>
+	</tr>
+<?php endforeach; ?>
+	<tr>
+		<td colspan="7">
+		</td><td align="center">
+			<input type="submit" class="deleteall"/>
+		</td>
+	</tr>
+</table>
+<div style="text-align:right;padding:8px"><?=$this->pageBar?></div>
+</form>
+</div>
+		</div>
+</div>

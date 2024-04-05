@@ -1,0 +1,53 @@
+<div class="wrap_admintab">
+	<?php include "_menu.phtml"?>
+		<div class="adminright">
+
+			<div class="admintab" style="min-height:376px;padding:0px;">
+
+<h3 class="add_link" style="margin-bottom: 5px;"><a href="<?=$this->controllerUrl?>/add" class="add"></a></h3>
+<form action="<?=$this->controllerUrl?>/delete<?=$this->action?>" method="post">
+<table cellpadding="5" border="1" bordercolor="#d9d9d9" width="100%" align="center">
+<tr>
+	<th width="20"><?=$this->translate("#")?></th>
+	<th width="100"><?=$this->translate("Title")?></th>
+	<th width="50"><?=$this->translate("Poster")?></th>
+	<th width="50"><?=$this->translate("Editer")?></th>
+	<th width="30"><?=$this->translate("Up")?></th>
+	<th width="30"><?=$this->translate("Down")?></th>
+	<th width="30"><?=$this->translate("Edit")?></th>
+	<th width="30"><?=$this->translate("Delete")?></th>
+</tr>
+<?php foreach( $this->posts as $key => $post ): ?>
+	<tr>
+		<td align="center">
+			<?=$post['ord']?>
+		</td>
+		<td align="center">
+			<?=$post['title']?>
+		</td>
+		<td align="center">
+			<?=$post['user_post']?>
+		</td>
+		<td align="center">
+			<?=$post['user_edit']?>
+		</td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/up/?ID=<?=$post['ID']?>" class="up"></a>
+		</td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/down/?ID=<?=$post['ID']?>" class="down"></a>
+		</td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/edit/?ID=<?=$post['ID']?>" class="edit"></a>
+		</td>
+		<td align="center">
+			<a href="<?=$this->controllerUrl?>/delete/?ID=<?=$post['ID']?>" class="delete"></a>
+		</td>
+	</tr>
+<?php endforeach; ?>
+</table>
+<?=$this->pageBar?>
+</form>
+</div>
+		</div>
+</div>

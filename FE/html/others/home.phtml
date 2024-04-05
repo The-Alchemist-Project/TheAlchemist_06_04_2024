@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+    <head>
+        <title>Trang chủ</title>
+        <?php include("_script.phtml"); ?>
+        <link media="all" type="text/css" rel="stylesheet" href="<?= BASE_URL ?>/js/home2/Source/Css/all.css" />
+        <script type="text/javascript" src="<?= BASE_URL ?>/js/home2/Archive/mootools-core-1.3-full-compat-yc.js"></script>
+        <script type="text/javascript" src="<?= BASE_URL ?>/js/home2/Source/mootools.slideGallery.js"></script>
+        <script type="text/javascript">
+            window.addEvent("domready", function() {
+
+                /* Example 10 */
+                var gallery = new slideGallery($$("div.gallery")[0], {
+                    steps: 1,
+                    speed: 500,
+                    duration: 5000,
+                    autoplay: true,
+                    transition: Fx.Transitions.Sine.easeInOut,
+                });
+
+            });
+        </script>
+    </head>
+    <body>
+        <div id="page">
+            <?php include("_login_popup.phtml") ?>
+            <div id="header">
+                <?= $this->action("header", "index", "Sub", array('language' => $this->language, 'moduleTitle' => $this->module)) ?>
+            </div><!--end header-->
+            <div id="main_index">
+                <div class="left_main_index">
+                    <div class="title_top">
+                        <span class="title_sub">
+                            <span class="title_sub2">
+                                <span class="title_sub1">
+                                    Tin mới
+                                </span>
+                            </span>
+                        </span>	
+                    </div><!--end title_top-->
+                    <div class="clear"></div>
+                    <div class="slide_top">
+                        <div class="gallery">
+                            <div class="holder">
+                                <ul>
+                                    <?php foreach ($this->vanban as $k => $post): ?>	
+                                        <li <?php if ($k == count($this->vanban) - 1) echo("style='padding:0px;'") ?>>
+
+                                            <img src="<?= BASE_URL ?>/files/images/<?= $post['imag'] ?>" width="150" height="96" style="border:#F00 solid 1px;" alt="<?= $post[title] ?>" />
+                                            <a title="<?= $post['title'] ?>" href="<?= BASE_URL ?>/<?= $this->language ?>/<?= $post['link'] ?>">
+                                                <?= get_quote(strip_tags($post['title']), 60) ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+
+                                </ul>
+                            </div>	
+                        </div>
+                    </div>	
+                    <div class="school_index">
+                        <div class="title_top">
+                            <a href="<?= BASE_URL ?>/vn/School">
+                                <span class="title_sub">
+                                    <span class="title_sub2">
+                                        <span class="title_sub1">
+                                            Nhà trường
+                                        </span>
+                                    </span>
+                                </span>	
+                            </a>	
+                        </div><!--end title_top-->
+                        <div class="content_school_index">
+                            <div class="content_school_index1">
+                                <p><a href="<?= BASE_URL ?>/vn/School/?ID=<?= $this->school[0]['ID'] ?>"><?= $this->school[0]['title'] ?></a></p>
+                                <a href="<?= BASE_URL ?>/vn/School/?ID=<?= $this->school[0]['ID'] ?>">
+                                    <img src="<?= BASE_URL ?>/files/images/school/<?= $this->school[0]['img'] ?>" width="258" height="143" style="border:#F00 solid 1px;" alt="#" />
+                                </a>
+                                <div class="text_content_school_index1">
+                                    <?= get_quote(strip_tags($this->school[0]['quote']), 380) ?>
+                                    <?/*	
+                                    <div><a href="<?= BASE_URL ?>/vn/School/?ID=<?= $this->school[0]['ID'] ?>">Xem chi tiết</a></div>
+                                    */?>	
+                                </div><!--end text_content_school_index1-->
+                            </div><!--end content_school_index1-->
+                            <div class="content_school_index2">
+                                <?php foreach ($this->school as $k => $post): ?>
+                                    <?php if ($k > 0): ?>
+                                        <div class="content_school_index2_1">
+                                            <a href="<?= BASE_URL ?>/vn/School/?ID=<?= $post['ID'] ?>">
+                                                <img src="<?= BASE_URL ?>/files/images/school/<?= $post['img'] ?>" width="184" height="119" style="border:#F00 solid 1px;" alt="<?= $post[title] ?>" />
+                                            </a>
+                                            <p><a href="<?= BASE_URL ?>/vn/School/?ID=<?= $post['ID'] ?>" title="<?= $post['title'] ?>">
+                                                    <?= get_quote(strip_tags($post['title']), 75) ?>
+                                                </a>
+                                            </p>
+                                            <?/*		
+                                            <div class="detail_home"><a href="<?= BASE_URL ?>/vn/School/?ID=<?= $post['ID'] ?>">Xem chi tiết</a></div>
+                                            */?>	
+                                        </div>
+                                        <?php if ($k < count($this->school) - 1): ?>
+                                            <img src="<?= BASE_URL ?>/style/images/kedoc2.png" alt="#" />
+                                        <?php endif; ?>
+                                    <?php endif; ?>	
+                                <?php endforeach; ?>
+                            </div><!--end content_school_index2-->
+                        </div><!--end content_school_index-->
+                    </div><!--end school_index-->
+                    <div class="news_index">
+                        <div class="title_top">
+                            <a href="<?= BASE_URL ?>/vn/Specialize">
+                                <span class="title_sub">
+                                    <span class="title_sub2">
+                                        <span class="title_sub1">
+                                            Chuyên môn
+                                        </span>
+                                    </span>
+                                </span>	
+                            </a>	
+                        </div><!--end title_top-->
+                        <div class="content_news_index">
+
+                            <div class="content_news_index1">
+                                <p><a href="<?= BASE_URL ?>/vn/Specialize/?ID=<?= $this->specialize[0]['ID'] ?>"><?= $this->specialize[0]['title'] ?></a></p>
+                                <a href="<?= BASE_URL ?>/vn/Specialize/?ID=<?= $this->specialize[0]['ID'] ?>">
+                                    <img src="<?= BASE_URL ?>/files/images/specialize/<?= $this->specialize[0]['img'] ?>" width="256" height="142" style="border:#F00 solid 1px;" alt="#" />
+                                </a>
+                                <div class="text_content_news_index1">
+                                    <?= $this->specialize[0]['quote'] ?>	
+                                </div><!--end text_content_school_index1-->
+                                <div class="clear"></div>
+                                <div class="text_content_news_index2">
+                                    <ul>
+                                        <?php foreach ($this->specialize as $k => $post): ?>								
+                                            <li><a href="<?= BASE_URL ?>/vn/Specialize/?ID=<?= $post['ID'] ?>" ><?= $post[title] ?></a></li>									
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            </div><!--end content_news_index1-->
+                        </div><!--end content_news_index-->
+                    </div><!--end news_index-->
+                    <div class="news_index">
+                        <div class="title_top">
+                            <a href="<?= BASE_URL ?>/vn/News">	
+                                <span class="title_sub">
+                                    <span class="title_sub2">
+                                        <span class="title_sub1">
+                                            Giáo dục đó đây
+                                        </span>
+                                    </span>
+                                </span>	
+                            </a>	
+                        </div><!--end title_top-->
+                        <div class="clear"></div>
+                        <div class="content_news_index">
+                            <div class="content_news_index1">
+                                <p><a href="<?= BASE_URL ?>/vn/News/?ID=<?= $this->news[0]['ID'] ?>"><?= $this->news[0]['title'] ?></a></p>
+                                <a href="<?= BASE_URL ?>/vn/News/?ID=<?= $this->news[0]['ID'] ?>">	
+                                    <img src="<?= BASE_URL ?>/files/images/news/<?= $this->news[0]['img'] ?>" width="256" height="142" style="border:#F00 solid 1px;" alt="#" />
+                                </a>	
+                                <div class="text_content_news_index1">
+                                    <?= $this->news[0]['quote'] ?>	
+                                </div><!--end text_content_school_index1-->
+                                <div class="clear"></div>
+                                <div class="text_content_news_index2">
+                                    <ul>	
+                                        <?php foreach ($this->news as $k => $post): ?>
+                                            <li><a href="<?= BASE_URL ?>/vn/News/?ID=<?= $post['ID'] ?>"><?= $post['title'] ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            </div><!--end content_news_index1-->
+                        </div><!--end content_news_index-->
+                    </div><!--end news_index-->
+                    <!--Hoc sinh-->
+                    <?php if (count($this->pupil)): ?>
+                        <div class="news_index">
+                            <div class="title_top">
+                                <a href="<?= BASE_URL ?>/vn/Pupil">
+                                    <span class="title_sub">
+                                        <span class="title_sub2">
+                                            <span class="title_sub1">
+                                                Học sinh
+                                            </span>
+                                        </span>
+                                    </span>	
+                                </a>
+                            </div><!--end title_top-->
+                            <div class="clear"></div>
+                            <div class="content_news_index">
+                                <div class="content_news_index1">
+                                    <p><a href="<?= BASE_URL ?>/vn/Pulil/?ID=<?= $this->pupil[0]['ID'] ?>"><?= $this->pupil[0]['title'] ?></a></p>
+                                    <a href="<?= BASE_URL ?>/vn/Pupil/?ID=<?= $this->pupil[0]['ID'] ?>">	
+                                        <img src="<?= BASE_URL ?>/files/images/pupil/<?= $this->pupil[0]['img'] ?>" width="256" height="142" style="border:#F00 solid 1px;" alt="#" />
+                                    </a>	
+                                    <div class="text_content_news_index1">
+                                        <?= $this->pupil[0]['quote'] ?>	
+                                    </div><!--end text_content_school_index1-->
+                                    <div class="clear"></div>
+                                    <div class="text_content_news_index2">
+                                        <ul>	
+                                            <?php foreach ($this->pupil as $k => $post): ?>
+                                                <li><a href="<?= BASE_URL ?>/vn/Pupil/?ID=<?= $post['ID'] ?>"><?= $post['title'] ?></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                </div><!--end content_news_index1-->
+                            </div><!--end content_news_index-->
+                        </div><!--end news_index-->
+                    <?php endif; ?>
+                    <div class="news_index">
+                        <div class="title_top">
+                            <a href="<?= BASE_URL ?>/vn/Union">
+                                <span class="title_sub">
+                                    <span class="title_sub2">
+                                        <span class="title_sub1">
+                                            Công đoàn
+                                        </span>
+                                    </span>
+                                </span>	
+                            </a>
+                        </div><!--end title_top-->
+                        <div class="content_news_index">
+                            <div class="content_news_index1">
+                                <p><a href="<?= BASE_URL ?>/vn/Union/?ID=<?= $this->union[0]['ID'] ?>"><?= $this->union[0]['title'] ?></a></p>
+                                <a href="<?= BASE_URL ?>/vn/Union/?ID=<?= $this->union[0]['ID'] ?>">	
+                                    <img src="<?= BASE_URL ?>/files/images/union/<?= $this->union[0]['img'] ?>" width="256" height="142" style="border:#F00 solid 1px;" alt="#" />
+                                </a>	
+                                <div class="text_content_news_index1">
+                                    <?= $this->union[0]['quote'] ?>	
+                                </div><!--end text_content_school_index1-->
+                                <div class="clear"></div>
+                                <div class="text_content_news_index2">
+                                    <ul>	
+                                        <?php foreach ($this->union as $k => $post): ?>
+                                            <li><a href="<?= BASE_URL ?>/vn/Union/?ID=<?= $post['ID'] ?>"><?= $post['title'] ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            </div><!--end content_news_index1-->
+                        </div><!--end content_news_index-->
+                    </div><!--end news_index-->
+                </div><!--end left_main_index-->
+                <div class="right_main_index">
+                    <?= $this->action("right", "index", "Sub", array('language' => $this->language, 'moduleTitle' => $this->module)) ?>
+                </div><!--end right_main_index-->
+            </div><!--end main_ indec-->
+            <div id="footer">
+                <?php include("_footer.phtml"); ?>
+            </div><!--end foster-->
+        </div><!--end index-->
+    </body>
+</html>

@@ -1,0 +1,22 @@
+<script>
+  (function() {
+    'use strict'
+
+    var theAlchemistJS = {};
+
+    theAlchemistJS.globals = {
+      module: '<?php echo isset($this->module) ? $this->module : null ?>',
+      language: '<?php echo isset($this->language) ? $this->language : null ?>',
+    };
+
+    theAlchemistJS.currentUser = <?php
+    echo isset($_SESSION['cp__customer']) && is_array($_SESSION['cp__customer'])
+        ? json_encode(
+            array_intersect_key($_SESSION['cp__customer'], array_flip(['ID', 'user', 'email', 'name']))
+        )
+        : 'null'
+    ?>;
+
+    window.TheAlchemistJS = theAlchemistJS;
+  })()
+</script>

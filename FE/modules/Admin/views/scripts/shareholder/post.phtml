@@ -1,0 +1,90 @@
+<div class="wrap_admintab">
+	<?php include "_menu.phtml"?>
+		<div class="adminright">
+
+			<div class="admintab" style="min-height:376px;padding:0px;">
+				<div id="tkiem">
+					<ul >
+						<form action="<?=$this->actionUrl?>" class="formajax">
+						<li class="form_h">
+							Tìm kiếm:  <input type="text" name="s" class="itext hh_s" size="25" style="color:#8e8e8e; font-style:italic;padding:3px;"  />&nbsp;<input type="submit" class="search" title="<?=$this->translate('Find post')?>"/>
+
+						</li>
+						</form>
+					</ul>
+
+						<h3 class="add_link"><a href="<?=$this->controllerUrl?>/add<?=$this->action?>" class="add"></a></h3>
+
+				</div>
+				<div style="clear:both"></div>
+				<form action="<?=$this->controllerUrl?>/delete<?=$this->action?>" method="post" class="formajax">
+
+				<table cellpadding="8" border="1" bordercolor="#d9d9d9" style="border-collapse:collapse" width="100%" align="center">
+				<tr>
+					<th><?=$this->translate("ID")?></th>
+					<th width="250"><?=$this->translate("Title")?></th>
+					<th><?=$this->translate("Date")?></th>
+					<th width="150">Thư mục</th>
+					<th width="100">Năm</th>
+					<th width="50"><?=$this->translate("Poster")?></th>
+					<th width="50"><?=$this->translate("Editer")?></th>
+					<th width="50"><?=$this->translate("Edit")?></th>
+					<th><?=$this->translate("Delete")?></th>
+					<th><input type="checkbox" onclick="checkAll(this)"/></th>
+				</tr>
+				<?php foreach( $this->posts as $key => $post ): ?>
+					<tr>
+						<td align="center"><?=$key+1?></td>
+						<td>
+							<a  u="<?=$this->controllerUrl?>/edit<?=$this->action?>/?ID=<?=$post['ID']?>">
+								<?=$post['sticky'] !='0' ? '<b style="color:red">'.$post['sticky'].'. </b>' :'' ?><?=$post['title']?><?=$post['has_video']=='1' ?"<sup><i class='has_video'></i></sup>":""?><?=$post['has_img']=='1' ?"<sub><i class='has_image'></i></sub>":""?></a>
+						</td>
+						<td align="center"><?=$post['date'] <= $this->Plugins->time() ? date("H:i:s d/m/Y",$post['date']) : ("<span class='nextdate'>".date("H:i:s d/m/Y",$post['date'])."</span>") ?></td>
+						<td align="center">
+                            <label class="ajax"><?=$post['cat_link']?></label>
+                        </td>
+						<td align="center">
+                            <?=$post['year']?>
+                        </td>
+
+                        <td align="center"><span title="<?=@date("H:i:s d/m/Y",$post['date_post'])?>"><?=@$post['user_post']?></span></td>
+						<td align="center"><?php if(isset($post['user_edit'])):?><span title="<?=date("H:i:s d/m/Y",$post['date_edit'])?>"><?=$post['user_edit']?></span><?php endif;?></td>
+						<td align="center">
+							<a href="<?=$this->controllerUrl?>/edit<?=$this->action?>/?ID=<?=$post['ID']?>" class="edit"></a>
+						</td>
+						<td align="center">
+							<a href="<?=$this->controllerUrl?>/delete<?=$this->action?>/?ID=<?=$post['ID']?>" class="delete"></a>
+						</td>
+						<td align="center"><input type="checkbox" size="1" value="<?=$post['ID']?>" name="ID[]"/></td>
+					</tr>
+				<?php endforeach; ?>
+				<?php if( isset($key) ): ?>
+					<tr>
+						<td colspan="8">
+							<div class="admintab">
+								<div style="padding:5px;color:#aaa">
+									<?php if( $this->postBad AND count( $this->postBad ) > 0 ):?>
+										<!--<a href="<?//=$this->controllerUrl?>/?parent_id=0" <?//=$this->translate('Posts have no parent')?> class="post_no_parent ajax"><?//=$this->postBad?></a> / --><?php endif;?>
+										Có <?=$this->totalPost?> bài viết được tìm thấy
+								</div>
+							</div>
+						</td>
+
+						<td align="center">
+							<input type="submit" class="deleteall" onclick="$('input.moveall').remove()" title="<?=$this->translate('Delete selected posts')?>"/>
+						</td>
+						<td align="center"><input type="checkbox" onclick="checkAll(this)"/></td>
+					</tr>
+				<?php else:?>
+					<tr>
+						<td colspan="8" align="center">
+							<?=$this->translate("Nothing found")?>
+						</td>
+					</tr>
+				<?php endif;?>
+				</table>
+				<?=$this->pageBar?>
+				</form>
+			</div>
+		</div>
+</div>

@@ -1,0 +1,22 @@
+<div class="box color-purple">
+    <h3 class="cat-title"><?= $this->translate('Last tick news') ?></h3>
+    <div class="news-list">
+        <?php if ( $this->news ): ?>
+            <?php foreach ( $this->news as $post ): ?>
+                <div class="media">
+                    <a class="pull-left" href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'hoat-dong' : 'News'); ?>/p<?= $post['ID'] ?>/<?= $this->Plugins->createAlias($post['title']) ?>" title="<?= $post['title'] ?>">
+                        <img class="media-object" src="<?= BASE_URL ?>/files/images/news/<?= $post['img'] ?>" alt="<?= $post['title'] ?>">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-date"><?= date("d/m/Y", $post['date']) ?></h4>
+                        <h4 class="media-heading">
+                            <a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'hoat-dong' : 'News'); ?>/p<?= $post['ID'] ?>/<?= $this->Plugins->createAlias($post['title']) ?>" title="<?= $post['title'] ?>">
+                                <?= get_quote(strip_tags($post['title']), 80) ?>
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</div>

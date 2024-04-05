@@ -1,0 +1,65 @@
+<script type="text/javascript" src="<?=BASE_URL?>/js/jquery.js"></script>
+<script type="text/javascript" src="<?=BASE_URL?>/js/accordion.js"></script>
+<script type="text/javascript">
+jQuery().ready(function(){
+	// applying the settings
+	jQuery('#theMenu').Accordion({
+		active: 'h3.selected',
+		header: 'h3.head',
+		alwaysOpen: false,
+		animated: true,
+		showSpeed: 400,
+		hideSpeed: 800
+	});
+	jQuery('#xtraMenu').Accordion({
+		active: 'h4.selected',
+		header: 'h4.head',
+		alwaysOpen: false,
+		animated: true,
+		showSpeed: 400,
+		hideSpeed: 800
+	});
+});
+</script>
+<ul id="theMenu">
+	<li class="li" style="position: static;">	<a class="li_a" style="font-weight:bold;" href="<?=BASE_URL?>/<?=$this->language?>/Home">Trang chủ</a>
+	</li>
+	<li class="li" style="position: static;">	<h3 class="head"><a class="li_a" href="<?=BASE_URL?>/<?=$this->language?>/About">Giới thiệu</a></h3>
+		<ul style="display: none;">
+			<?php foreach($this->aboutpost as $aboutpost):?>
+			<li><a href="<?=BASE_URL?>/<?=$this->language?>/About/?C=<?=$aboutpost['ID']?>"><?=$aboutpost['title']?></a></li>
+			<?php endforeach;?>
+		</ul>
+	</li>
+	<li class="li" style="position: static;">	<h3 class="head"><a class="li_a" href="<?=BASE_URL?>/<?=$this->language?>/Service">Dịch vụ</a></h3>
+		<ul style="display: none;">
+			<?php foreach($this->servicecats as $servicecats):?>
+			<li><a href="<?=BASE_URL?>/<?=$this->language?>/Service/?C=<?=$servicecats['ID']?>"><?=$servicecats['title']?></a></li>
+			<?php endforeach;?>
+		</ul>
+	</li>
+	<li class="li" style="position: static;">	<h3 class="head"><a class="li_a" href="<?=BASE_URL?>/<?=$this->language?>/Projects">Dự án</a></h3>
+		<ul style="display: none;">
+			<?php foreach($this->procats as $procats):?>
+			<li><a href="<?=BASE_URL?>/<?=$this->language?>/Projects/?C=<?=$procats['ID']?>"><?=$procats['title']?></a></li>
+			<?php endforeach;?>
+		</ul>
+	</li>
+	<li class="li" style="position: static;">	<h3 class="head"><a class="li_a" href="<?=BASE_URL?>/<?=$this->language?>/News">Tin tức</a></h3>
+		<ul style="display: none;">
+			<?php foreach($this->newscats as $newscats):?>
+			<li><a href="<?=BASE_URL?>/<?=$this->language?>/News/?C=<?=$newscats['ID']?>"><?=$newscats['title']?></a></li>
+			<?php endforeach;?>
+		</ul>
+	</li>
+	<li class="li" style="position: static;">	<h3 class="head"><a class="li_a" href="<?=BASE_URL?>/<?=$this->language?>/Careers">Tuyển dụng</a></h3>
+		<ul style="display: none;">
+			<?php foreach($this->carpost as $carpost):?>
+			<li><a href="<?=BASE_URL?>/<?=$this->language?>/Careers/?C=<?=$carpost['ID']?>"><?=$carpost['title']?></a></li>
+			<?php endforeach;?>
+		</ul>
+	</li>
+	<li class="li" style="position: static;">	<a class="li_a" style="font-weight:bold;" href="<?=BASE_URL?>/<?=$this->language?>/Contact">Liên hệ</a>
+
+	</li>
+</ul>

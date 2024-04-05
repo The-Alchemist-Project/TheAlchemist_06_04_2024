@@ -1,0 +1,58 @@
+<?php
+$customer = $_SESSION['cp__customer'];
+?>
+
+<div class="social-top-banner">
+    <div class="social-top-banner-1">
+
+        <img class="social-top-banner-img" src="<?= BASE_URL ?>/style/img/social/mywork.png" alt="">
+    </div>
+</div>
+
+<div class="work-top">
+    <div class="work-top-left">
+        <?php if (!$post['img']): ?>
+            <img src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+        <?php else: ?>
+            <img src="<?= BASE_URL ?>/files/customer/<?= $post['user_post'] ?>/<?= $post['img'] ?>" alt="">
+        <?php endif; ?>
+    </div>
+    <div class="work-top-right">
+        <table class="table">
+            <tbody class="crypt-table-hover">
+                <tr>
+                    <td class="align-middle work-top-right-td-left">Account Name:</td>
+                    <td class="align-middle work-top-right-td-right"> <?= $customer['name'] ?></td>
+                </tr>
+                <tr>
+                    <td class="align-middle work-top-right-td-left">Rank:</td>
+                    <td class="align-middle work-top-right-td-right"> Diamond</td>
+                </tr>
+                <tr>
+                    <td class="align-middle work-top-right-td-left">Won:</td>
+                    <td class="align-middle work-top-right-td-right"> 75%</td>
+                </tr>
+                <tr>
+                    <td class="align-middle work-top-right-td-left">Waiting:</td>
+                    <td class="align-middle work-top-right-td-right"> 15%</td>
+                </tr>
+                <tr>
+                    <td class="align-middle work-top-right-td-left">STB Sold:</td>
+                    <td class="align-middle work-top-right-td-right"> 2423 PTS</td>
+                </tr>
+                <tr>
+                    <td class="align-middle work-top-right-td-left" colspan="2">Account Description:</td>
+                </tr>
+                <tr>
+                    <td class="align-middle work-top-right-td-right" colspan="2">
+                        <?php if ($customer['desc']): ?>
+                            <?= $customer['desc'] ?>
+
+                        <?php endif; ?>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

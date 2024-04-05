@@ -1,0 +1,664 @@
+
+text/x-generic trade2-old-20112023.phtml ( HTML document, UTF-8 Unicode text, with very long lines, with CRLF line terminators )
+<?php
+$prices = $this->prices;
+$formulars = $this->formulars;
+$posts = $this->posts;
+$postBtcs = $this->postBtcs;
+$postCurrent = $this->postCurrent;
+$histories = $this->histories;
+$symbol = $this->symbol;
+$rsi7 = $this->rsi;
+//$symbol = 'BTCUSDT';
+$tab = $this->tab;
+$type = $this->type;
+$activeList = $this->aclist;
+$postMyLists = $this->postMyLists;
+$postMyProLists = $this->postMyProLists;
+//xử lý referer
+$referer = $_SERVER['SCRIPT_URI'];
+//Xử lý request
+$studies = $this->Plugins->get('study', "");
+
+if (!$studies && $postCurrent) {
+    if ($post['view_id']) {
+         echo $post['view_id'];
+        if ($post['view_id'] == 1) {
+            $studies = 'RSI, PSAR';
+        } elseif ($post['view_id'] == 2) {
+             $studies = 'RSI, SPAR';
+        } elseif ($post['view_id'] == 3) {
+            $studies = 'RSI14';
+        } elseif ($post['view_id'] == 4) {
+            $studies = 'RSI14, SPAR';
+        }
+    }
+}
+
+$study = [];
+if ($studies) {
+    if ($studies == 'RSI') {
+        $studies = 'RSI,PSAR';
+    }
+    foreach (explode(',', $studies) as $a) {
+        if ($a == 'RSI') {
+            $study[] = [
+                'id' => $a . "@tv-basicstudies",
+                'inputs' => ['length' => 7]
+            ];
+        } elseif ($a == 'RSI14') {
+            $study[] = [
+                'id' => "RSI@tv-basicstudies",
+                'inputs' => ['length' => 14]
+            ];
+        } else {
+            $study[] = [
+                'id' => $a . "@tv-basicstudies",
+            ];
+        }
+    }
+} else {
+    $studies = 'RSI,PSAR';
+    $study[] = [
+        [
+            'id' => "RSI@tv-basicstudies",
+            'inputs' => ['length' => 7]
+        ],
+        [
+            'id' => "PSAR@tv-basicstudies",
+        ]
+    ];
+}
+
+
+$interval = "1D";
+if ($type == "H4") {
+    $interval = "4H";
+} elseif ($type == "H1") {
+    $interval = "1H";
+} elseif ($type == "30m") {
+    $interval = "30";
+}
+
+$rightPosts = [];
+if ($activeList == 'pro') {
+    $rightPosts = $postMyProLists;
+} elseif ($activeList == 'my') {
+    $rightPosts = $postMyLists;
+} else {
+    $rightPosts = $posts;
+}
+?>
+<!DOCTYPE html>
+<html>
+    <?php include __DIR__ . '/layouts/head.phtml'; ?>
+    <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/al-trade.css">
+	
+
+    <title>Confluence Trade</title>
+<body>
+
+<!--header-->
+<?php include __DIR__ . '/layouts/headerPatterns.phtml'; ?>
+<!--end header-->
+
+<!--Al-trade_body-->
+<div class="wapper">
+        <!--Notice Box--> 
+        <div class="container"> 
+            <div class="altrade-body">
+                    <div class="notice-box">
+                        <a> Alchemist primary alert!<span style="color: #1A64F0;" href="#"> SEE MORE</span></a>
+                    </div>    
+                    <div class="confluence-bar">
+                        <div style="display: flex;">
+						 	
+						 	<div class="confluence-box-2 <?= $studies == 'RSI,PSAR' ? "confluence-box-2-active" : "" ?>" >
+                                <a href="?symbol=<?= $symbol ?>&study=RSI&type=<?= $type ?>&aclist=<?= $activeList ?>">RSI-7 &amp; Candlestick Model</a>
+                            </div>
+														
+							<div class="confluence-box-2 <?= $studies == 'RSI14' ? "confluence-box-2-active" : "" ?>" >
+                                <a href="?symbol=<?= $symbol ?>&study=RSI14&type=<?= $type ?>&aclist=<?= $activeList ?>">RSI-14 &amp; Candlestick Model</a>
+                            </div>
+							
+                            <div  class="confluence-box-2"><a>RSI7 & ParabolicSAR</a></div>
+                            
+                            <div  class="confluence-box-2"><a>RSI14 & ParabolicSAR</a></div>
+                            <div  class="confluence-box-2"><a>ADX14 & ParabolicSAR</a></div>
+                            <!--<div  class="confluence-box-2-active"><a class="<?= $studies == 'BULL' ? "confluence-box-2-active" : "" ?>" href="?symbol=<?= $symbol ?>&study=BULL">Bull Trap & Bear Trap</a></div>-->
+                            <div  class="confluence-box-2 "><a>Other</a></div>
+                        </div>
+                        <div class="stablecoin-frame">
+                            
+                            <a type="button" class="stablecoin-button-1 
+                                    <?= $tab == 'USDT' ? "stablecoin-button-1-active" : "" ?>" href="?tab=USDT">
+                                
+                                    <span class="label-satblecoin">
+                                        <img src="<?= BASE_URL ?>/style/css/new-images/icon-coin/icon-usdt.svg">
+                                    </span>
+                                        <span style="font-size: 16;">Tether </span>
+                                        <span style="color: #1A64F0;">USDT</span>
+                                
+                            </a>
+                            
+                            <a href="?tab=BTC" class="stablecoin-button-1 
+                                                    <?= $tab == 'BTC' ? "stablecoin-button-1-active" : "" ?>">
+                                
+                                    <span class="label-satblecoin">
+                                            <img src="<?= BASE_URL ?>/style/css/new-images/icon-coin/icon-btc.svg"> 
+                                    </span>  
+                                        <span>Bitcoin</span>
+                                        <span style="color: #1A64F0;">BTC</span>
+                                
+                            </a>
+                            <a href="?tab=BUSD" type="button" class="stablecoin-button-1 
+                                                <?= $tab == 'BUSD' ? "stablecoin-button-1-active" : "" ?>">
+                                
+                                    <span class="label-satblecoin">
+                                        <img src="<?= BASE_URL ?>/style/css/new-images/icon-coin/icon-busd.svg" alt="icon-busd.svg">
+                                    </span>
+                                        <span>Binance</span>
+                                        <span style="color: #1A64F0;">USD</span>
+                             <!--time-frame -->    
+                            </a>
+                                <img src="<?= BASE_URL ?>/style/css/new-images/Vector 62 (Stroke).svg" alt="Vector 62 (Stroke).svg">
+                            
+                            <a class="timeframe-button <?= $type == 'D1' ? "timeframe-button-active" : "" ?>" href="?study=RSI&symbol=<?= $symbol ?>&tab=<?= $tab ?>&type=D1&aclist=<?= $activeList ?>"><span>1D</span></a>
+                            <a class="timeframe-button <?= $type == 'H4' ? "timeframe-button-active" : "" ?>" href="?study=RSI&symbol=<?= $symbol ?>&tab=<?= $tab ?>&type=H4&aclist=<?= $activeList ?>"><span>4H</span></a>
+                            <a class="timeframe-button <?= $type == 'H1' ? "timeframe-button-active" : "" ?>" href="?study=RSI&symbol=<?= $symbol ?>&tab=<?= $tab ?>&type=H1&aclist=<?= $activeList ?>"><span>1H</span></a>
+                            <a class="timeframe-button <?= $type == '30m' ? "timeframe-button-active" : "" ?>" href="?study=RSI&symbol=<?= $symbol ?>&tab=<?= $tab ?>&type=30m&aclist=<?= $activeList ?>"><span>30m</span></a>
+                           
+                                                   
+                        </div>
+                     <!-- left box -->
+                     <div class="history-box">
+                                <a style="font-family: 'Poppins'; font-size: 18px; ">Backtest</a>
+                                
+                                <table class="history-table" <?= $activeUSD ?>" id="usd">
+                                    <thead>
+                                        <tr class="text_headerlist">
+                                            <th scope="col" style="color:#1A64F0;">Time</th>
+                                            <th scope="col" style="color:#1A64F0;">Date</th>
+                                            <th scope="col" style="color:#1A64F0;">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="tr-bottom text_onlist">
+                                                <?php if ($histories): ?>
+                                            <?php foreach ($histories as $k => $post): ?>
+                                                <?php
+                                                if ($type == 'H4') {
+                                                    $d2 = strtotime($post['date_h4'], '+4 hours') + 4;
+                                                } else {
+                                                    $d2 = strtotime('+1 day' , $post['date'] ) + 1;
+                                                }
+                                                ?>
+                                                <tr style="border-bottom: 1px solid #F6F6F6;" class="<?= $postCurrent['ID'] == $post['ID'] ? "trade-coin-tr-active" : "" ?>">
+                                                    <td class="align-middle">
+                                                        <a class='trade-coin-a' href="?ID=<?php echo($post['ID']) ?>&symbol=<?php echo($post['symbol']) ?>&type=<?php echo($type) ?>&study=<?= $studies ?>" data-toggle="tooltip" data-placement="right" title="<?= $post['symbol'] ?>"><?php echo(date("d/m",$post['close_time'] / 1000 + 1)) ?></a>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <?php echo(date("H:i", $d2)) ?>
+
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <?php if ($k % 1 == 0) : ?> Done
+                                                        <?php elseif ($k % 2 == 1) : ?> Waiting
+                                                        <?php else : ?> Fail
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td class="align-middle" colspan="3">
+                                                    Nothing
+                                                </td>
+                                            </tr>
+
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                              <!--  
+                              <table class="history-table" <?= $activeUSD ?>" id="usd">
+                                    <tbody class="tr-bottom text_onlist">
+                                        <?php if ($leftPostDown): ?>
+                                            <?php foreach ($leftPostDown as $postDown): ?>
+                                                <tr style="border-bottom: 1px solid #F6F6F6;">
+                                                    <td class="align-left">
+                                                        <a href="?ID=<?= $postDown['id'] ?>&list=<?= $list ?>&symbol=<?= $post['symbol'] ?>&tab=<?= $tab ?>&type=<?= $type ?>&study=<?= $studies ?>"
+                                                           style="color:<?= $postDown['model_type'] == "UP" ? '#00BD46' : '#CC0001' ?>;" 
+                                                           class="trade-coin-a" 
+                                                           data-placement="right" 
+                                                           title="<?= $postDown['symbol'] ?>">
+                                                            <?= get_quote(strip_tags($postDown['symbol']), 6) ?>
+                                                        </a>
+                                                    </td>
+                                                    <td class="align-middle" style="color:<?= $postDown['model_type'] == "UP" ? '#00BD46' : '#CC0001' ?>;">
+                                                        <span class="pr-2" data-placement="right">
+                                                            <span class='desc'><?= date('H:i - d/m' , strtotime($postDown['date_find'])) ?></span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+
+
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td class="align-middle" colspan="3">
+                                                    Nothing
+                                                </td>
+                                            </tr>
+
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table> 
+                                -->
+                        </div>
+
+                        <!--tutorial-->
+                        <div class="tutorial-frame" type="button">
+                            <label><img src="<?= BASE_URL ?>/style/css/new-images/video-circle.svg" alt="video-circle.svg""> Tutorial</label>                          
+                        </div>
+                        <div class="tutorial-frame-1" type="button">
+                            <label><img src="<?= BASE_URL ?>/style/css/new-images/book.svg" alt="book.svg"> Guide</label>                            
+                        </div>
+            
+                        <!--coin-name-->
+        
+                        <div class="coin-name">
+                            <a><?= $symbol ?></a>
+                        </div>
+            
+                        <div class="coin-suggestion">
+                                        <div class="text-effect <?= $referer == ('http://thealchemist.ai/en/trade2' ||'http://thealchemist.ai/en/trade2#') ? "text-effect-active" : "" ?>">
+                                            <a href="http://thealchemist.ai/en/trade2">
+                                            Suggestion
+                                            </a>
+                                        </div>
+                                        <img src="<?= BASE_URL ?>/style/css/new-images/Vector 60 (Stroke).svg" alt="Vector 60 (Stroke).svg">
+                                        <div class="text-effect">
+                                            <a>
+                                            My Watchlist
+                                            </a>
+                                        </div>
+                        </div>
+                        <!--TDV JS--> 
+                        <div class="tradingview-frame">
+                            <div class="tradingview-widget-container mb-3">
+                                <div id="crypt-candle-chart"></div>
+                            </div>
+                        </div>
+                            <!--listcoinbox-->
+                                <div class="listcoin-box">
+                                    <div class="standard-box">
+                                        
+                                        <div class="text-effect <?php $activeList == 'st' ? _e("text-effect-active") : '' ?>">
+                                            <a href="?study=<?php echo($studies) ?>&aclist=st&tab=<?php echo($tab) ?>&type=<?php echo($type) ?>">Standard<a/>
+                                        </div>
+                                        <img src="<?= BASE_URL ?>/style/css/new-images/Vector 60 (Stroke).svg" alt="Vector 60 (Stroke).svg">
+                                        <div class="text-effect <?php $activeList == 'my' ? _e("text-effect-active") : "" ?>">
+                                            <a href="?study=<?php echo($studies) ?>&aclist=my&tab=<?php echo($tab) ?>&type=<?php echo($type) ?>">My List</a>
+                                        </div>
+                                        <img src="<?= BASE_URL ?>/style/css/new-images/Vector 60 (Stroke).svg" alt="Vector 60 (Stroke).svg">
+                                        <div class="text-effect <?php $activeList == 'pro' ? _e("text-effect-active") : "" ?>">
+                                            <a href="?study=<?php echo($studies) ?>&aclist=pro&tab=<?php echo($tab) ?>&type=<?php echo($type) ?>">Pro List</a>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane trade-container-right-tab work-form-item-tab-info-content <?= $activeList ?>">
+                                            <table class="listcoin-table">
+                                            
+                                                <thead >
+                                                    <tr class="tr-bottom text_headerlist">
+                                                        <th scope="col" style="color:#1A64F0;">Name &emsp;&emsp;&emsp;&emsp; Discovered on</th>
+							
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody class="tr-bottom text_onlist" >
+                                                        <?php foreach ($rightPosts as $post): ?>
+                                                        <?php
+                                                        if ($type == 'H4') {
+                                                            $d2 = strtotime($post['date_h4'], +'4 hours') + 4;
+                                                        } else if($type == 'H1' || $type == '30m'){
+                                                            $d2 = strtotime($post['date_h1'], +'1 hours') + 1;
+                                                        }else {
+                                                            $d2 = strtotime($post['date'], '+1 day') + 1;
+                                                        }
+                                                        
+                                                        // Check if $studies contains 'rsi14' or 'rsi'
+                                                        $hasRsi14 = strpos($studies, 'RSI14') !== false;
+                                                        $hasRsi = strpos($studies, 'RSI') !== false;
+                                                        
+                                                        // Check the condition for 'rsi14' or 'rsi' based on their presence in $studies
+                                                        if (($hasRsi14 && $post['rsi14'] >= 30) || ($hasRsi14 && $post['rsi14'] <= 70) || ($hasRsi && !$hasRsi14 && $post['rsi'] < 30) || ($hasRsi && !$hasRsi14 && $post['rsi'] > 70)) :
+                                                        
+                                                        ?>
+                                                        <tr style="border-bottom: 1px solid #F6F6F6; height:38px;" class="<?= $postCurrent['ID'] == $post['ID'] ? "trade-coin-tr-active" : "" ?>">
+                                                            <td class="align-middle">
+                                                                <a class="trade-coin-a" href="?ID=<?php echo($post['ID']) ?>&aclist=<?php _e($activeList); ?>&symbol=<?php echo($post['symbol']) ?>&tab=<?php echo($tab) ?>&type=<?php echo($type) ?>&study=<?= $studies ?>" data-placement="right" title="<?= $post['symbol'] ?>"><?= get_quote(strip_tags($post['symbol']), 6) ?>
+                                                                </a>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <span class="pr-2" data-placement="right" title="<?= $d2 ?>">
+                                                                    <span class='desc'><?php echo(date("d/m", $d2)) ?></span>
+                                                                </span>
+                                                            </td>
+                                                            <td class="align-middle">
+                                                                <?php echo(date("H:i", $d2)) ?>
+                                                            </td>
+
+                                                        </tr>
+
+                                                        <?php
+                                                            endif;
+                                                        endforeach;
+                                                        ?>
+                                                </tbody> 
+                                            </table>
+                                    </div>
+                                </div>
+             
+                    <!--order infomation-->   
+                         <div class="order-information"> 
+                                <br>
+                                <br>
+                                   <a style="font-family: 'Poppins'; font-size: 16px; "> <strong>Order Information</strong></a>
+                                        <!--Trading Pair Information-->
+                                        <?php
+                                        $dCurrent = $postCurrent['date'];
+                                        $detail = [];
+                                        if ($postCurrent) {
+                                            $detail = json_decode($postCurrent['json_details']);
+                                            $formular = $formulars[$postCurrent['type_id']];
+                                        }
+                                        ?>
+                                        <div role="tabpanel" class="tab-pane <?= $activeUSD ?>" id="usd">
+                                        <!--coin-name-->
+                                <div class="information-box">
+                                    <div class="coin-box-1">
+                                        <div class="text-box-frame left-frame">
+                                            <a class="title-box-1">Trading &nbsp; Pair:</a>
+                                            <a class="title-box-2"> 
+                                                <?= $symbol ?> 
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!--Patterm-->
+                                    <div class="coin-box-1">
+                                        <div class="text-box-frame left-frame">
+                                            <a class="title-box-1">Detected&emsp;Pattern:</a>
+                                            <a class="title-box-long"> 
+                                                <?= $postCurrent['model_title'] ?? $formular['title'] ?> 
+                                            </a>
+                                        </div>
+                                    </div>
+                                        <!--Entry-->
+                                    <div class="coin-box-1">
+                                            <div class="text-box-frame left-frame">       
+                                                <a class="title-box-1" style="color:#1A64F0;">Entry &emsp; Point:</a>
+                                                <a class="title-box-2" style="color:#1A64F0;"> 
+                                                    <?php echo($detail->buylong)?> 
+                                                </a>
+                                            </div>
+                                    </div>
+                                        <!--Target-->
+                                    <div class="coin-box-1">
+                                        <div class="text-box-frame left-frame">
+                                            <a style="color: #00BD46;" class="title-box-1">Target &emsp; Point:</a>
+                                            <a style="color: #00BD46" class="title-box-2"> 
+                                                <?php echo($detail->target3) ?> 
+                                            </a>
+                                        </div>
+                                    </div>
+                                        <!---Stop-loss-->
+                                    <div class="coin-box-2">
+                                        <div class="text-box-frame left-frame">
+                                            <a style="color: #CC0001;" class="title-box-1">Stop Loss:</a>
+                                            <a style="color: #CC0001;" class="title-box-2"> 
+                                                <?php echo($detail->stoploss) ?> 
+                                            </a>
+                                        </div>
+                                    </div>
+                                        <!---Reward-->
+                                    <div class="coin-box-2">
+                                        <div class="text-box-frame left-frame">
+                                            <a style="color: #00BD46;" class="title-box-1">Reward:</a>
+                                            <a style="color: #00BD46;" class="title-box-2">     
+                                                <?php echo number_format(round($detail->r2, 10), 10); ?> 
+                                            </a>
+                                        </div>
+                                    </div>
+                                        <!---Risk-->
+                                    <div class="coin-box-2">
+                                        <div class="text-box-frame left-frame">
+                                            <a style="color: #CC0001;" class="title-box-1">Risk:</a>
+                                            <a style="color: #CC0001;" class="title-box-2">
+                                                <?php echo number_format(round($detail->r1, 10), 10); ?>
+                                            </a>
+                                        </div>
+                                    </div>
+                                        <!---Detected-->
+                                    <div class="coin-box-1">
+                                        <div class="text-box-frame left-frame">
+                                            <a class="title-box-1">Detected &emsp; on:</a>
+                                            <a class="title-box-2"> 
+                                                <?php echo(date("d/m H:i", $postCurrent['close_time'] / 1000 + 1)) ?>
+                                            </a>
+                                        </div>
+                                    </div>
+                                            <!---Status-->
+                                    <div class="coin-box-2">
+                                        <div class="text-box-frame left-frame">
+                                            <a class="title-box-1">Status:</a>
+                                            <a class="title-box-2">
+                                           
+                                            <span style='color:#28D781'>Done</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                        
+                                    <!--End Trading Pair Information-->
+                                    <!--Trading-Strategy-->
+                            
+                                    <div class="trading-strategy-box">
+                                        <div class="trading-text-box">Trading Strategy</div>
+                                            <div class="detected-box">
+                                                <div class="text-box-frame left-frame"> 
+                                                    <a style="width:fit-content; font-size: 12px;"class="title-box-1">Detected Pattern:</a>
+                                                    <a style="color:#1A64F0; font-size: 12px;" class="title-box-2">
+                                                        <?= $postCurrent['model_title'] ?? $formular['title'] ?>
+                                                    </a>
+                                                </div>
+                                            
+
+                                                <!--left-box-->
+                                                <div class="left-detected-box">
+                                                    <div class="sub-detected-box">
+                                                        <a style="width:fit-content; font-size: 14px; color: #1A64F0;">Entry Point:</a>
+                                                        <a style="width:fit-content; font-size: 16px; color: #1A64F0;">
+                                                            <?php echo($detail->buylong) ?>
+                                                        </a>
+                                                </div>
+                                                <div class="sub-detected-box">
+                                                    <a style="width:fit-content; font-size: 14px; color:#7D7D7D;">DCA1</a>
+                                                    <a style="width:fit-content; font-size: 16px;">
+                                                        <?php echo($detail->target1) ?></a>
+                                                </div>
+                                                <div class="sub-detected-box">
+                                                    <a style="width:fit-content; font-size: 14px; color:#7D7D7D;">DCA2</a>
+                                                    <a style="width:fit-content; font-size: 16px;">
+                                                        <?= $detail->target2 ?>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="right-indicator left-frame">
+                                            <script>console.log(`testing: <?php var_dump(json_decode($postCurrent['json_datas'], true)); ?> `)</script>
+                                                <a style="width:fit-content; font-size: 12px;"class="title-box-1">Indicator:</a>
+                                                <a style="color:#1A64F0; font-size: 12px;" class="title-box-2">
+                                                    <?php if ($studies == 'RSI') : ?> RSI-7 ~ <?php echo number_format((float) json_decode($postCurrent['json_datas'], true)['{cd2_rsi}'], 2); ?> 
+                                                    <?php elseif ($studies == 'RSI14') : ?> RSI-14 ~ <?php echo number_format((float) json_decode($postCurrent['json_datas'], true)['{cd2_rsi14}'], 2); ?> 
+                                                    <?php elseif ($studies == 'RSI,PSAR') : ?> RSI-7 ~ <?php echo number_format((float) json_decode($postCurrent['json_datas'], true)['{cd2_rsi}'], 2); ?>
+                                                    <?php elseif ($studies == 'RSI14,PSAR') : ?> RSI-14 &amp PSAR
+                                                    <?php elseif ($studies == 'ADX,PSAR') : ?> ADX &amp PSAR
+                                                    <?php else : ?> Others
+                                                    <?php endif; ?>
+                                                </a>
+                                            </div>
+
+                                            <div class="right-detected-box">
+                                                <div class="sub-detected-box">
+                                                    <a style="width:fit-content; font-size: 14px; color: #00BD46;">Target Point:</a>
+                                                    <a style="width:fit-content; font-size: 16px; color: #00BD46;">
+                                                        <?php echo($detail->target3) ?>
+                                                    </a>
+                                                </div>
+                                                <div class="risk-reward-box">
+                                                    <div class="small-sub-detected-box">
+                                                        <a style="width:fit-content; font-size: 14px; color: #CC0001;">Risk:</a>
+                                                        <a style="width:fit-content; font-size: 16px; color: #CC0001;">
+                                                            <?php echo number_format(round($detail->r1, 10), 10); ?>
+                                                        </a>
+                                                    </div>
+                                                    <div class="small-sub-detected-box-1">
+                                                        <a style="width:fit-content; font-size: 14px; color: #00BD46;">Reward:</a>
+                                                        <a style="width:fit-content; font-size: 16px; color: #00BD46;">
+                                                             <?php echo number_format(round($detail->r2, 10), 10); ?>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="sub-detected-box">
+                                                    <a style="width:fit-content; font-size: 14px; color: #CC0001;">Stop Loss</a>
+                                                    <a style="width:fit-content; font-size: 16px; color: #CC0001;">
+                                                            <?php echo($detail->stoploss) ?>
+                                                    </a>
+                                                </div>
+                                
+                                            </div>
+                                        </div>
+                                            
+                                            <!--button-Save-order-->
+                                            <div class="save-button-frame">
+                                                <?php if ($this->save): ?>
+                                                <button class="save-order-button trade-container-bottom-item2-save" disabled"><a><b>Processing</b></a>
+
+                                                <?php else: ?>
+                                                    <button class="save-order-button trade-container-bottom-item2-save" rel-id="<?= $postCurrent['subID'] ?>" rel-type="<?= $postCurrent['type'] ?>"><a><b>Save</b><a></button>
+                                                <?php endif; ?>
+                                            </div>
+                                            <!-- 
+                                                <a style="color:#FFFFFF; font-size: 16px;"><b>Save</b></a> 
+                                            -->
+                                                   
+                                           
+                                           
+                                            <div class="save-text-notice">
+                                                <?php if ($this->save): ?>
+                                                    Your investment is being analyzed in &nbsp;<a href="profile">My Dashboard</a>
+                                                <?php else: ?>
+                                                    Please keep in mind that these are only suggestions,
+                                                    <br>consider them carefully before trading!
+                                                <?php endif; ?>
+                                                </a>
+                                            </div>
+                                            </div>
+                        
+                                            <!--bottom-right-box-->
+                                                
+                                                        <div class="top-bottom-right" <?= $activeUSD ?>" id="usd">
+                                                                <a style="position: absolute;
+                                                                width: 180px;
+                                                                left: calc(50% - 180px/2);
+                                                                top: 24px; font-size: 18px; font-family: 'Poppins'; font-weight: 700;">How to trade with Candlestick</a>
+                                                                <div class="text-model-information">
+                                                           
+                                                                    <div class="infomartion-frame model-name">
+                                                                            <a class="model-text-box" style="text-align: left;">Model:</a>
+                                                                            <a  href='#' class="model-name">
+                                                                                <?= $postCurrent['model_title'] ?? $formular['title'] ?>
+                                                                            </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="learn-now-box">
+                                                                    <a href="http://thealchemist.ai/en/academy" >No idea what
+                                                                        <?= $postCurrent['model_title'] ?? $formular['title'] ?> is?
+                                                                    
+                                                                    <br>
+                                                                    <b>Learn now!
+                                                                    </b>  
+                                                                    </a>
+                                                                </div>
+                                                                
+                                                                <div class="myformula-text-box">
+                                                                    <a href="http://thealchemist.ai/en/work" style="color: #7D7D7D;">Got a strategy? Turn it into an algorithm with <a href="work" style="color:#1A64F0;">
+                                                                    <b>My Formula</b></a>
+                                                                </div>
+                                                            
+                                                        </div>
+                                                    
+                                                
+                                
+                                                
+                                    
+                                            <div class="bottom-right-box-end">
+                                                    <a class="text-box-manage">Manage your Portfolio</a>
+                                                    <div class="image-box-manage">
+                                                        <img src="<?= BASE_URL ?>/style/css/new-images/manage-img.svg" alt="portorio">
+                                                    </div> 
+                                                    <button class="button-go-dashboard">
+                                                        <a href="profile" style="color: white;">Go to <b>My Dashboard</b></a>
+                                                    </button>
+                                            </div>
+                            </div>
+                        
+            </div>
+        </div>
+</div>
+
+</div>
+</div>
+<!--footer-->
+<?php include __DIR__ . '/layouts/footer.phtml'; ?>
+<!--End footer-->  
+
+<!--popup connect wallet-->
+<?php include __DIR__ . '/layouts/pop.phtml'; ?>
+<!--End popup connect wallet--> 
+<?php include __DIR__ . '/layouts/scrips.phtml'; ?>
+
+         <script src="<?= BASE_URL ?>/style/js/tv.js"></script>
+        <script src="<?= BASE_URL ?>/style/js/new/tv.js"></script>
+        <script src="<?= BASE_URL ?>/style/js/new/mainh4.js"></script>
+        <script  type="text/javascript">
+            var studies = <?php echo json_encode($study); ?>;
+            if (document.getElementById('crypt-candle-chart')) {
+                new TradingView.widget(
+                        {
+                            "autosize": true,
+                            "symbol": "BTCUSDT",
+                            "interval": "<?php echo($interval); ?>",
+                            "timezone": "Asia/Bangkok",
+                            "theme": "Light",
+                            "style": "1",
+                            "locale": "en_EN",
+                            "toolbar_bg": "rgba(255, 255, 255, 1)",
+                            "enable_publishing": false,
+                            "allow_symbol_change": true,
+                            "show_popup_button": true,
+                            "popup_width": "1000",
+                            "popup_height": "1000",
+                            "withdateranges": true,
+                            "container_id": "crypt-candle-chart",
+                            "studies_overrides": {
+                                "rsi.rsi.plot.color": "#2196f3",
+                                "rsi.level.0": 20,
+                                "rsi.level.1": 80
+                            },
+                            "studies": studies
+                        }
+                );
+            }
+        </script>
+
+    </body>
+    </html>

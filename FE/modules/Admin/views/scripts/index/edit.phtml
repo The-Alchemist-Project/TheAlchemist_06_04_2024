@@ -1,0 +1,62 @@
+<div class="wrap_admintab">
+	<div class="adminleft">
+		<div class="admintab">
+			<p>"Bạn đang sử dụng hệ thông quản trị website của Thealchemist. Mọi thắc mắc hay yêu cầu nâng cấp vui lòng liên hệ trực tiếp với chúng tôi. Chúc bạn có một website đẹp."</p>
+			<img src="<?=BASE_URL?>/admin/chart.png" style='float:left'/> Tình trạng bộ nhớ:
+				<b><?=round(($this->Plugins->getSizeFolder("files") + $this->Plugins->getSizeFolder("upload"))/(1024*10))/100?> MB</b>
+			<br/> Kích thước file upload tối đa:
+				<b><?=$this->Plugins->getMaxSizeFileUpload()?> MB</b>
+		</div>
+		<div class="admintab">
+		<img src="<?=BASE_URL?>/admin/user.png" style='float:left'/> Tài khoản: <b><?=$_SESSION['cp__user']['name']?></b>
+		<br/>Email: <i><?=$_SESSION['cp__user']['email']?></i>
+		</div>
+		<div class="admintab">
+			<img src="<?=BASE_URL?>/admin/iconh8.png" style='float:left'/><b> Thông Báo Khách Hàng</b><br/>
+			<?php if(file_exists('http://dosvn.com/connect/customer.html')):?>
+			<iframe src="http://dosvn.com/connect/customer.html" style="width:245px;height:120px;border:none;background:#fff"></iframe>
+			<?php else:?>
+				<i>Dữ liệu tạm thời không lấy được</i>
+			<?php endif;?>
+		</div>	
+	</div>
+	<div class="adminright">
+		<div class="admintab" style="min-height:376px;padding:0px;">
+			<?php if( isset($this->message ) ):?>
+			<div class="error">	<?=$this->translate($this->message);?> </div>
+			<?php endif;?>
+
+			<?php if( $this->message !== 0 ):?>
+			<form action="<?=$this->actionUrl?>/add" method="post" enctype="multipart/form-data">
+			<table cellpadding="8" cellspacing="0" border="1" bordercolor="#d9d9d9" width="100%">
+				<tr>
+					<td><label><?=$this->translate("Name")?></label></td>
+					<td><input type="text" class="itext" name="name" size="40" value="<?=$this->name?>" /></td>
+				</tr>
+				<tr>
+					<td><label><?=$this->translate("Password")?></label></td>
+					<td><input type="password" class="itext" name="password" autocomplete="off" size="40" value=""/></td>
+				</tr>
+				<tr>
+					<td><label><?=$this->translate("Password Again")?></label></td>
+					<td><input type="password" class="itext" name="password1" autocomplete="off" size="40" value=""/></td>
+				</tr>
+				<tr>
+					<td><label><?=$this->translate("Email")?></label></td>
+					<td><input type="text" class="itext" name="email" size="40" value="<?=$this->email?>"/></td>
+				</tr>
+				<tr>
+					<td><label><?=$this->translate("Photo")?></label></td>
+					<td><input type="file" name="img"/><br/>
+						<img src="<?=BASE_URL?>/files/users/<?=$this->img? $this->img : "default.png"?>" style="max-width:100px"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><input type="submit" value="" class="taomoi"/></td>
+				</tr>	
+			</table>	
+			</form>
+			<?php endif;?>
+		</div>
+	</div>	
+</div>

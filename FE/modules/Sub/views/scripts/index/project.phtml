@@ -1,0 +1,40 @@
+<div class="content-tile">
+    <img src="<?= BASE_URL ?>/style/images/project.png">
+    <div class="title">
+        <h4>
+            <?php
+                $title='Typical projects';
+                if($this->moduleTitle=='index')
+                    $title='Typical services';
+            ?>
+            <?= $this->translate($title) ?>
+        </h4>
+    </div>
+</div>
+<?php if ( $this->projects ): ?>
+    <ul class="pjorect_all">
+        <?php foreach ( $this->projects as $k => $post ): ?>
+            <li class="project-list<?php if($k > 0 && $k % 2 == 1) echo(" img-even");?>">
+                <?php if($this->moduleTitle=='index'):?>
+                <a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'linh-vuc-kinh-doanh' : 'Services'); ?>/p<?= $post['ID'] ?>/<?= $this->Plugins->createAlias($post['title']) ?>">
+                    <img src="<?= BASE_URL ?>/files/images/bussiness/<?= $post['img'] ?>" width="160" height="80">
+                    <h4 title="<?=$post['title']?>"><?= get_quote(strip_tags($post['title']), 25) ?></h4>
+                </a>
+                <?php else:?>
+                    <a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'du-an' : 'Project'); ?>/p<?= $post['ID'] ?>/<?= $this->Plugins->createAlias($post['title']) ?>">
+                        <img src="<?= BASE_URL ?>/files/images/project/<?= $post['img'] ?>" width="160" height="80">
+                        <h4 title="<?=$post['title']?>"><?= get_quote(strip_tags($post['title']), 25) ?></h4>
+                    </a>
+                <?php endif;?>
+            </li>
+            <?php if ( $k > 0 && $k % 2 == 1 ): ?>
+                <div class="clearfix"></div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </ul>
+
+    <div class="clear_both"></div>
+    <div id="details">
+        <a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'du-an' : 'Project'); ?>"> <span><?= $this->translate('All') ?></span></a>
+    </div>
+<?php endif; ?>

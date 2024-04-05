@@ -1,0 +1,11 @@
+<?php if( isset( $_REQUEST['ID'] ) ):?>
+<h1 class="title"><?=$this->post['title']?></h1>
+<div class="quote">
+<?=$this->post['quote']?>
+</div>
+<div class="post">
+<?=$this->post['content']?>
+</div>
+<?php else:?>
+	<?=$this->post['content']?>
+<?php endif;?>

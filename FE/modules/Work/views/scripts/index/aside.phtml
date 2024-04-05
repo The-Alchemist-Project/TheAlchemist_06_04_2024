@@ -1,0 +1,27 @@
+<?php
+// $customer = $_SESSION['cp__customer'];
+// $type = $this->type ?? 'all';
+// $rq = $this->request;
+// $md = $rq['moduleTitle'] ?? 'Work';
+?>
+<aside class="aside-menu">
+    <div class="social-content-sub-left-info">
+        <?php if (!$customer['img']): ?>
+            <img src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+        <?php else: ?>
+            <img src="<?= BASE_URL ?>/files/customer/<?= $customer['ID'] ?>/<?= $customer['img'] ?>" alt="">
+        <?php endif; ?>
+        <a href="<?= BASE_URL ?>/<?= $this->language ?>/user"><?= $customer['name'] ?></a>
+    </div>
+    <div class="social-content-sub-left-2">
+        <ul>
+            <li class="social-content-sub-left-2-newfeed<?php ($type == 'all' && $md == 'Social' ) ? _e(" active") : "" ?>"><a href="<?= BASE_URL ?>/vn/social">News Feed</a></li>
+            <li class="social-content-sub-left-2-private<?php ($md == 'Profile') ? _e(" active") : "" ?>"><a href="#">My Profile</a></li>
+            <li class="social-content-sub-left-2-group<?php ($type == 'group' && $md == 'Social') ? _e(" active") : "" ?>"><a href="<?= BASE_URL ?>/vn/group">Groups</a></li>
+            <li class="social-content-sub-left-2-myaccount<?php ($md == 'User') ? _e(" active") : "" ?>"><a href="<?= BASE_URL ?>/vn/user">Marketplace</a></li>
+            <li class="social-content-sub-left-2-dashboard<?php ($md == 'Work') ? _e(" active") : "" ?>"><a href="<?= BASE_URL ?>/vn/work">My Formula</a></li>
+            <li class="social-content-sub-left-2-mywork<?php ($md == 'Dashboard') ? _e(" active") : "" ?>"><a href="<?= BASE_URL ?>/vn/dashboard">Dashboard</a></li>
+            <li class="social-content-sub-left-2-mywork<?php ($md == 'Leaderboard') ? _e(" active") : "" ?>"><a href="<?= BASE_URL ?>/vn/leaderboard">Leaderboard</a></li>
+        </ul>
+    </div>
+</aside>

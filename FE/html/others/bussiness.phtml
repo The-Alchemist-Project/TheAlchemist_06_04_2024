@@ -1,0 +1,72 @@
+<?=
+$this->action("header", "index", "Sub", array(
+    'language' => $this->language,
+    'moduleTitle' => $this->module,
+    'meta_desc'=>$this->meta['desc'],
+    'meta_key'=>$this->meta['key']
+))
+?>
+<?php
+$colors = array(
+   // "color-orange",
+    "color-blue");
+$color = $colors[rand(0, count($colors) - 1)];
+?>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <?php if ( $this->post ): ?>
+                <div class="color-white">
+                    <div class="post">
+                        <h1 class="post-title"><span class="fa fa-file-text-o"></span> <?= $this->post['title'] ?></h1>
+                        <div class="post-content clearfix"><?= $this->post['content'] ?></div>
+                        <?=
+                        $this->action("share", "index", "Sub", array(
+                            'language' => $this->language,
+                            'moduleTitle' => $this->module))
+                        ?>
+                    </div>
+                </div>
+                <?php else: ?>
+                    <div class="box <?php echo $color; ?>">
+                        <div class="posts">
+                            <?php foreach ( $this->posts as $post ): ?>
+                                <div class="media">
+                                    <a class="pull-left" href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'linh-vuc-kinh-doanh' : 'Business'); ?>/p<?= $post['ID'] ?>/<?= $this->Plugins->createAlias($post['title']) ?>" title="<?= $post['title'] ?>">
+                                        <img class="media-object" src="<?= BASE_URL ?>/files/images/<?php echo(strtolower($this->module)); ?>/<?= $post['img'] ?>" alt="<?= $post['title'] ?>">
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading clearfix"><a href="<?= BASE_URL ?>/<?= $this->language ?>/<?php echo ($this->language == "vn" ? 'linh-vuc-kinh-doanh' : 'Business'); ?>/p<?= $post['ID'] ?>/<?= $this->Plugins->createAlias($post['title']) ?>" title="<?= $post['title'] ?>"><?= $post['title'] ?></a></h4>
+                                        <div class="media-desc"><?= get_quote(strip_tags($post['quote']), 200) ?></div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+            </div>
+            <div class="col-lg-4">
+                <?=
+                $this->action("submenu", "index", "Sub", array(
+                    'language' => $this->language,
+                    'id_active' => $this->id_active,
+                    'moduleTitle' => $this->module))
+                ?>
+                <?=
+                $this->action("quickmenu", "index", "Sub", array(
+                    'language' => $this->language,
+                    'moduleTitle' => $this->module))
+                ?>
+                <?=
+                $this->action("news", "index", "Sub", array(
+                    'language' => $this->language,
+                    'moduleTitle' => $this->module))
+                ?>
+            </div>
+        </div>
+    </div>
+    <?=
+    $this->action("footer", "index", "Sub", array(
+        'language' => $this->language,
+        'moduleTitle' => $this->module))
+    ?>

@@ -1,0 +1,14 @@
+<div class="content-action">
+<!--    <a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=<?= $_SERVER['REQUEST_URI'] ?>">
+        <img src="<?= BASE_URL ?>/style/images/facebook.png" width="14" height="14">
+    </a>
+        <a target="_blank" href="https://twitter.com/share?url=<?= $_SERVER['REQUEST_URI'] ?>">
+            <img src="<?= BASE_URL ?>/style/images/twitter.png" width="14" height="14">
+    </a>-->
+    <a href="mailto:<?=$this->info['email']?>?Subject=Sendmail" target="_top">
+        <img src="<?= BASE_URL ?>/style/images/email.png">
+    </a>
+    <a onclick="printPage('print-content')">
+        <img src="<?= BASE_URL ?>/style/images/print.png">
+    </a>
+</div>

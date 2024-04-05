@@ -1,0 +1,39 @@
+<?php
+$customer = $_SESSION['cp__customer'];
+$type = $this->type;
+$rq = $this->request;
+$md = $rq['moduleTitle'] ?? 'Social';
+?>
+<aside class="aside-menu">
+    <div class="aside-user-info">
+        <?php if (!$customer['img']): ?>
+            <img src="<?= BASE_URL ?>/style/img/no-avatar.png" alt="">
+        <?php else: ?>
+            <img src="<?= BASE_URL ?>/files/customer/<?= $customer['ID'] ?>/<?= $customer['img'] ?>" alt="">
+        <?php endif; ?>
+        <a href="<?= BASE_URL ?>/<?= $this->language ?>/user" class="heading-16-semibold text-white text-center"><?= $customer['name'] ?></a>
+    </div>
+    <ul class="aside-list-item">
+        <li class="news<?php ($type == 'all' && $md == 'Social' ) ? _e(" active") : "" ?>">
+            <a href="<?= BASE_URL ?>/vn/social">News Feed</a>
+        </li>
+        <li class="profile<?php ($md == 'Profile') ? _e(" active") : "" ?>">
+            <a href="#">My Profile</a>
+        </li>
+        <li class="group<?php ($type == 'group' && $md == 'Social') ? _e(" active") : "" ?>">
+            <a href="<?= BASE_URL ?>/vn/group">Groups</a>
+        </li>
+        <li class="market<?php ($md == 'User') ? _e(" active") : "" ?>">
+            <a href="<?= BASE_URL ?>/vn/user">Marketplace</a>
+        </li>
+        <li class="work<?php ($md == 'Work') ? _e(" active") : "" ?>">
+            <a href="<?= BASE_URL ?>/vn/work">My Formula</a>
+        </li>
+        <li class="dashboard<?php ($md == 'Dashboard') ? _e(" active") : "" ?>">
+            <a href="<?= BASE_URL ?>/vn/dashboard">Dashboard</a>
+        </li>
+        <li class="leaderboard<?php ($md == 'Leaderboard') ? _e(" active") : "" ?>">
+            <a href="<?= BASE_URL ?>/vn/leaderboard">Leaderboard</a>
+        </li>
+    </ul>
+</aside>

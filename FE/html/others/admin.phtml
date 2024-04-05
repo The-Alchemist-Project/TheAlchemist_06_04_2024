@@ -1,0 +1,86 @@
+<?php if( !empty($_SESSION['cp__user']) ){ ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title><?=$this->translate($this->module)?></title>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="<?=BASE_URL?>/admin/style.css"/>
+	<link rel="stylesheet" href="<?=BASE_URL?>/admin/date.css"/>
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+	<script type="text/javascript" src="<?=BASE_URL?>/owl.js"></script>
+	<script type="text/javascript" src="<?=BASE_URL?>/admin/fc.js"></script>
+	<script type="text/javascript" src="<?=BASE_URL?>/admin/date.js"></script>
+	<script type="text/javascript" src="<?=BASE_URL?>/admin/form.js"></script>
+	<script type="text/javascript" src="<?=BASE_URL?>/editor/framework.php"></script>
+
+<script type="text/javascript">
+$('a.quicklink')
+	.onClick(function(){
+		$('#choise_quicklink').toggle([500],[500]);
+	});
+
+function formCheck() {
+	//alert('123');
+	//document.getElementsByN
+	var url=$("#quick_link input[name=modul]:checked").k(0).value;
+	//alert(url);
+	window.location=url;
+}
+</script>
+
+</head>
+<body>
+	<div id="header_ad">
+		<div id="userh">
+
+				<a href="<?=$this->actionUrl?>/?cp_lang=vn">
+					<img src="<?=BASE_URL?>/admin/vn.gif" title="Quản lí tiếng Việt" class="<?=$_SESSION['cp_lang']!="vn"?"flag_hidden":"flag_current"?>" style="width:21px;padding-right:5px"/>
+				</a>
+<!--				<a href="<?=$this->actionUrl?>/?cp_lang=en">
+					<img src="<?=BASE_URL?>/admin/uk.gif" title="Manage English language" class="<?=$_SESSION['cp_lang']!="en"?"flag_hidden":"flag_current"?>"style="width:21px;padding-right:5px"/>
+				</a>-->
+				<a href="<?=$this->moduleUrl?>/login" class="logout">
+					<b title="<?=$_SESSION['cp__user']['ID']?>"><?=$_SESSION['cp__user']['name']?></b> [ <?=$this->translate('Logout')?> ]
+				</a>
+		</div>
+		<div class="clear"></div>
+		<div id="submenu" style="z-index:999" >
+			<?php include_once("_admin_menu.phtml");?>
+		</div>
+	</div>
+	<div id="wrap">
+
+		<div class="inner_wrap" style="z-index:123">
+
+			<!--SUBMENU-->
+
+			<div class="clear"></div>
+			<div class="sub_time">
+				<div id="cptime"></div>
+			</div>
+			<!--SUBMENU-->
+			<!--SIDEBAR-->
+			<div id="sidebar">
+			</div>
+			<!--SIDEBAR-->
+			<!--CONTENT-->
+			<div id="content_outer">
+				<div id="content">
+					<?=$this->layout()->content?>
+				</div>
+			<div class="clear"></div>
+			</div>
+			<!--CONTENT-->
+		</div>
+			<div id="footer" class="clear">
+                Bản Quyền Thuộc CTCP - <a href="#" target="_blank">Thealchemist</a> &copy; 2009 - <?php echo(date('Y',time()))?>
+			</div>
+			<div class="clear"></div>
+	</div>
+
+</body></html>
+<?php }else{ ?>
+	<?php include('_admin_login.phtml')?>
+<?php }?>
+
+

@@ -1,0 +1,33 @@
+<?php if( isset($this->message ) ):?>
+<div class="error">	<?=$this->translate($this->message);?> </div>
+<?php endif;?>
+
+<?php if( $this->message !== 0 ):?>
+<form action="<?=$this->actionUrl?>/add" method="post" enctype="multipart/form-data">
+<table cellpadding="8" cellspacing="0" border="1" bordercolor="#d9d9d9" width="100%">
+	<tr>
+		<td><label><?=$this->translate("Name")?></label></td>
+		<td><input type="text" class="itext" name="name" size="40" value="<?=$this->name?>" /></td>
+	</tr>
+	<tr>
+		<td><label><?=$this->translate("Password")?></label></td>
+		<td><input type="password" class="itext" name="password" autocomplete="off" size="40" value=""/></td>
+	</tr>
+	<tr>
+		<td><label><?=$this->translate("Password Again")?></label></td>
+		<td><input type="password" class="itext" name="password1" autocomplete="off" size="40" value=""/></td>
+	</tr>
+	<tr>
+		<td><label><?=$this->translate("Email")?></label></td>
+		<td><input type="text" class="itext" name="email" size="40" value="<?=$this->email?>"/></td>
+	</tr>
+	<tr>
+		<td><label><?=$this->translate("Photo")?></label></td>
+		<td><input type="file" name="img"/></td>
+	</tr>
+	<tr>
+		<td colspan="2" align="center"><input type="submit" value="<?=$this->translate("Submit_Create")?>"/></td>
+	</tr>	
+</table>	
+</form>
+<?php endif;?>

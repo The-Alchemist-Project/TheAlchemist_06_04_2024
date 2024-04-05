@@ -1,0 +1,105 @@
+<?php
+$posts = $this->posts;
+$arrMembers = $this->members;
+$customer = $_SESSION['cp__customer'];
+?>
+<div class="social-top-more social-top-more-group">
+
+    <div class="social-top-more-sub social-top-more-emo" data-toggle="modal" data-target="#popGroupEdit0">
+        <img class="social-top-more-emo-img" src="<?= BASE_URL ?>/style/img/social/icon11.png" alt="">Add Group
+    </div>
+    <div class="modal fade" id="popGroupEdit0" tabindex="-1" role="dialog" aria-labelledby="popAvatarLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="popAvatarLabel">Add Group</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-group-addparent modal-body">
+                    <div class="form-change-group-error">Error</div>
+                    <form class="form-group-add">
+                        <div class="form-group">
+                            <label for="title">Group name</label>
+                            <input name="title" class="form-control" id="title" placeholder="...">
+                        </div>
+                        <div class="form-group">
+                            <label for="member">Members</label>
+                            <select class="selectpicker" multiple data-live-search="true" name="member_ids[]">
+                                <?php foreach ($this->members as $a): ?>
+                                    <option value="<?= $a['ID'] ?>"><?= $a['name'] ?></option>
+                                <?php endforeach; ?>
+
+                            </select>
+                        </div>
+                    </form>
+                    <button class="btn btn-success button-form-group-add" value="Add" name="Add">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="social-group-items">
+    <?php foreach ($posts as $key => $post): ?>
+        <div class="social-group-item">
+            <img class="social-group-item-img" src="<?= BASE_URL ?>/style/img/social/group.png" alt="">
+            <img class="social-group-item-img2" src="<?= BASE_URL ?>/style/img/social/group2.png" alt="">
+            <div class="social-group-item-detail">
+                <p class='title'><b>Group name:</b> <a href="<?= BASE_URL ?>/vn/social?group_id=<?= $post['ID'] ?>"><?= $post['title'] ?></a></p>
+
+                <?php if ($post['member_ids']): ?>
+                    <?php
+                    $arrMs = [];
+                    $memberIds = explode(',', $post['member_ids']) ?? [];
+                    foreach ($memberIds as $m) {
+                        $arrMs[] = $arrMembers[$m]['name'];
+                    }
+                    ?>
+                <?php endif; ?>
+
+                <p class='members'><b>Members:</b> <?= $arrMs ? implode(', ', $arrMs) : '' ?></p>
+            </div>
+            <div class="social-item-header-right social-group-item-right">
+                <div class="social-item-header-right-editicon">...</div>
+                <div class="social-edit-post">
+                    <a href="#" data-toggle="modal" data-target="#popGroupEdit<?= $post['ID'] ?>">Edit</a>
+                    <a href="<?= BASE_URL ?>/<?= $this->language ?>/group/index/delete?ID=<?= $post['ID'] ?>">Delete</a>
+                    <div class="modal fade" id="popGroupEdit<?= $post['ID'] ?>" tabindex="-1" role="dialog" aria-labelledby="popAvatarLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="popAvatarLabel">Edit post</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body form-group-addparent">
+                                    <div class="form-change-group-error">Error</div>
+                                    <form class="form-group-add">
+                                        <input type="hidden" name='group_id' value="<?= $post['ID'] ?>">
+                                        <div class="form-group">
+                                            <label for="title">Group name</label>
+                                            <input name="title" class="form-control" id="title" placeholder="..." value="<?= $post['title'] ?>">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="member">Members</label>
+                                            <select class="selectpicker" multiple data-live-search="true" name="member_ids[]">
+                                                <?php foreach ($this->members as $a): ?>
+                                                    <option value="<?= $a['ID'] ?>" <?php in_array($a['ID'], $memberIds) ? _e('selected') : "" ?> ><?= $a['name'] ?></option>
+                                                <?php endforeach; ?>
+
+                                            </select>
+                                        </div>
+                                    </form>
+                                    <button class="btn btn-success button-form-group-add" value="Add" name="Add">Edit</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>

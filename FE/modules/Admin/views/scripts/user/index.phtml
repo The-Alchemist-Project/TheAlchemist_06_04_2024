@@ -1,0 +1,23 @@
+<?php if($_SESSION['cp__user']['ID'] == 1):?>
+	<h3><a href="<?=$this->controllerUrl?>/add" class="add"></a></h3>
+<?php endif;?>	
+<table cellpadding="8" cellspacing="0" border="1" bordercolor="#d9d9d9" width="100%">
+<tr>
+	<th><?=$this->translate("Photo")?></th>
+	<th><?=$this->translate("Profile")?></th>
+	<th><?=$this->translate("Edit")?></th>
+	<th><?=$this->translate("Delete")?></th>	
+</tr>
+<?php foreach( $this->users as $user ): ?>
+<tr>
+	<td width="150" valign="top" align="center">
+		<img src="<?=BASE_URL?><?php if( $user['img'] =="" ):?>/files/users/default.png<?php else:?>/files/users/<?=$user['img']?><?php endif;?>" style="max-width:100px"/></td>
+	<td valign="top" align="left">
+		<b class="user_name"<?=$user['ID']==1?" style='color:red'":""?>><?=$user['name']?></b><br/>
+		<?=$user['email']?>
+	</td>
+	<td valign="middle" align="center"><a href="<?=$this->controllerUrl?>/edit/?ID=<?=$user['ID']?>" class='edit'></a></td>
+	<td valign="middle" align="center"><?php if( $user['ID'] !="1" ):?><a href="<?=$this->controllerUrl?>/delete/?ID=<?=$user['ID']?>" class='delete'></a><?php endif;?></td>
+</tr>
+<?php endforeach; ?>
+</table>

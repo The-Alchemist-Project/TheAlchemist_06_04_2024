@@ -1,0 +1,54 @@
+
+<?php if( isset($this->message ) ):?>
+<div class="error">	<?=$this->translate( $this->message );?> </div>
+<?php endif;?>
+
+<?php if( isset($this->success ) ):?>
+<div class="success">	<?=$this->translate($this->success);?> </div>
+<?php endif;?>
+<div class="wrap_admintab">
+	<div class="adminleft">
+		<ul id="menu_left">
+
+				<li class="big_link"><a href="">Giới Thiệu</a></li>
+				<li class="sub_link"><a href="<?=$this->moduleUrl?>/about/setting">Cài đặt phân trang</a></li>
+				<li class="sub_link"><a href="<?=$this->moduleUrl?>/about">Danh Sách Giới Thiệu</a></li>
+				<li class="sub_link"><a href="<?=$this->moduleUrl?>/about/add">Thêm Giới Thiệu</a></li>
+		</ul>
+	</div>
+		<div class="adminright">
+
+			<div class="admintab" style="min-height:376px;padding:0px;">
+				<form action="<?=$this->actionUrl?>" method="post" enctype="multipart/form-data">
+				<table cellpadding="8" border="1" bordercolor="#888888" width="100%">
+					<tr>
+						<td>
+							<label><?=$this->translate("Post Number")?></label>
+						</td><td>
+						<input type="text" class="itext" name="post_number" size="10" value="<?=$this->settings['post_number']?>" />
+						</td>
+					</tr>
+<!--					<tr>
+						<td>
+							<label><?=$this->translate("Next Number")?></label>
+						</td><td>
+							<input type="text" class="itext" name="next_number" size="10" value="<?=$this->settings['next_number']?>" />
+						</td>
+					</tr>-->
+					<tr>
+						<td>
+							<label><?=$this->translate("Admin page show")?></label>
+						</td><td>
+							<input type="text" name="page_admin" class="itext" size="10" value="<?=$this->settings['page_admin']?>" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="right">
+							<input  class="capnhat" type="submit" value=""/>
+						</td>
+					</tr>
+				</table>
+				</form>
+			</div>
+		</div>
+</div>

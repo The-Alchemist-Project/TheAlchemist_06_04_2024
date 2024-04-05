@@ -1,0 +1,302 @@
+<?php 
+  $result = $this->getTotalTrades;
+$getCoinTradeLasts = $this->getCoinTradeLasts;
+$coinsSelect = $this->coinsSelect;
+$coinDropdowns = [
+    'BTCUSDT' => [
+        'name' => "Bitcoin",
+        'img' => BASE_URL.'/style/new/images/coins/btc.png',
+    ],
+    'ETHUSDT' => [
+        'name' => "Ethereum",
+        'img' => BASE_URL.'/style/new/images/coins/ethd.png',
+    ],
+    'SOLUSDT' => [
+        'name' => "Solana",
+        'img' =>  BASE_URL.'/style/new/images/coins/sol.png'
+    ],
+    'DOTUSDT' => [
+        'name' => "Polkadot",
+        'img' =>  BASE_URL.'/style/new/images/coins/dot.svg'
+    ],
+    'KLAYUSDT' => [
+        'name' => "Klaytn",
+        'img' =>  BASE_URL.'/style/new/images/coins/klay.svg'
+    ],
+];
+?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TheAlchemist AI Predictions</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--font-->
+        <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/font.css">
+        <!--style--> 
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/theme.css">
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/swiper.min.css" >
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/style-acadenmy.css"> 
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/ai-predictions.css"> 
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/style-home.css">  
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/font.css">
+        <!--style--> 
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/theme.css">
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/style-home.css">  
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/aos.css">
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/swiper.min.css" >
+        <!--altrade_styles-->
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/css/new-css/al-trade.css">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>TheAlchemist AI Predictions</title>
+        
+        <link rel="shortcut icon" href="<?= BASE_URL ?>/favicon.ico" />
+        <link rel="stylesheet" href="<?= BASE_URL ?>/style/new/css/style.css">
+        
+        <script src="<?= BASE_URL ?>/style/js/jquery-3.6.0.min.js"></script>
+        <script src="<?= BASE_URL ?>/style/js/social.js"></script>
+        <style>
+            .text-success {
+                color: #00BD46 !important;
+            }
+            .d-flex{
+                display: flex;
+            }
+            .justify-content-between{
+                justify-content: space-between;
+            }
+            .text-primary{
+                color: #1A64F0 !important;
+            }
+            .text-danger {
+                color: #CC0001 !important;
+            }
+            .btn-primary {
+                padding: 6px;
+                border-radius: 6px;
+                background: var(--Primary, #1A64F0);
+                color: var(--neutral-7, #FFF);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 20px;
+                border : none;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+ 
+    <body>
+        <!--header-->
+        <?php include __DIR__ . '/layouts/headerPatterns.phtml'; ?>
+        <!--end header-->
+        <!--table-->
+        <div class="prediction-wrapper" style="overflow-x: auto">
+       		<div class="container">
+           		<h2 style="margin-top:60px;font-size: 32px;">AI Predictions</h2>
+           		<div class="table-wrapper"> 
+           		    <table class="table-responsive">
+                        <thead class="">
+                            <tr class="">
+                                <th style="color: #787878;min-width: 180px;">Crypto Currencies</th>
+                                <th style="color: #787878;min-width: 140px;">Time</th>
+                                <th style="color: #787878;min-width: 120px;">Status</th>
+                                <th style="color: #1A64F0;min-width: 120px;">Price</th>
+                                <th style="color: #0AAFA5;min-width: 120px;">1H Prediction</th>
+                                <th style="color: #787878;min-width: 100px;" class="text-success">Correct Predictions</th>
+                                <th style="color: #787878;min-width: 100px;">Total Predictions</th>
+                                <th style="color: #787878;min-width: 150px;">Dashboard</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <?php
+                            foreach($result as $row) {
+//                                $index = $row['index'];
+//                                $update_time = $row['update_time'];
+//                                $dateTime = DateTime::createFromFormat("d/m/Y H:i:s", $update_time);
+//                                $date = $dateTime->format("Y-m-d");
+//                                $time = $dateTime->format("H:i:s");
+//                                $pred_price = round($row['pred_price'] * 100) / 100;
+//                                $last_close = round($row['last_close']* 100) / 100;
+                                $last_close = $getCoinTradeLasts[$row['id_coin']]['price_actual_last'];
+                                $pred_price = $getCoinTradeLasts[$row['id_coin']]['price_preidct_last'];
+                                $status = $pred_price/$last_close * 100 - 100;
+//                                $total = $row['total'];
+//                                $status = round(($pred_price - $last_close) * 100/$last_close * 100) / 100;
+                                $coinInfo = array_filter($coinsSelect,function ($item) use ($row){return $item['key']== str_replace($this->quoteCoin,'',$row['symbol']) ;});
+                                $coinInfo = array_shift($coinInfo);
+                            ?>
+                            <tr class="item-currencies">
+                                <!--currency-->
+                                <td class="currency">
+                                    <div class="images">
+                                        <image src="<?=$coinInfo['img']?>" alt="logo currency" />
+                                    </div>
+                                    <div class="currency-name">
+                                        <p class="name">
+                                            <?= $row['symbol']?>
+                                        </p>
+                                        <p class="slug">
+                                            <?= $coinInfo['name'] ?>
+                                        </p>
+                                    </div>
+                                </td>
+                                <!--Time-->
+                                <td class="datetime">
+                                    <p class="date">
+                                        <?= date('Y-m-d',$row['time_create']) ?>
+                                    </p>
+                                    <p class="time">
+                                        <?= date('H:i:s',$row['time_create']) ?>
+                                    </p>
+                                </td>
+                                <!--status-->
+                                <td class="status">
+                                    <div class="item <?php echo $status > 0 ? "increase" : "decrease"; ?>">
+                                        <span><?= number_format($status,2);?>%</span>
+                                    </div>
+                                </td>
+                                <!--price-->
+                                <td class="price">
+                                    <span class="">
+                                        <?php echo(number_format($last_close,2));?>
+                                    </span>
+                                </td>
+                                <!--1h prediction-->
+                                <td class="prediction-1h">
+                                    <span><?php echo(number_format($pred_price,2));?></span>
+                                </td>
+                                <!-- correct-->
+                                <td class="correct text-success">
+                                    <span class="text-success"> <?=number_format($row['wins'])?></span>
+                                </td>
+                                <!--total-->
+                                <td class="total">
+                                    <span class="">
+                                        <?=number_format($row['all_trade'])?>
+                                    </span>
+                                </td>
+                                <!--trade on-->
+                                <td class="buttons">
+                                    <div class="button-wrapper">
+                                        <a target=”_blank” href="<?= BASE_URL ?>/en/aipredictionsdashboard?coin=<?= str_replace($this->quoteCoin,'',$row['symbol']) ?>&day=Year">
+                                            <span class="">Systerm</span>
+                                        </a>
+                                        <a target=”_blank” href="https://t.me/thealchemistofficial">
+                                            <span class="">My</span>
+                                        </a>
+                                    </div>
+                                </td>
+                          </tr>
+                          <?php 
+                            }
+                          ?>
+                        </tbody>
+                    </table>
+                    <?php if(empty($_SESSION['cp__customer'])){ ?>
+                    <button type="button" class="btn-primary" style="margin : 30px auto 0 auto;display: block;" id="load-more">Load more</button>
+                    <?php } ?>
+           		</div>
+            </div>
+        </div>
+        <!--glossary-->
+        <div class="banner-top-glossary">
+            <div class="container">
+                <p class="glossary-title">
+                    The AI-Predicts platform use AI technology to forecast the next 1 hour session opening price of 
+                    a coin/token.The platform is available for free, nevertheless, consider the hazards of trading
+                    using data from this platform.
+                </p>
+                <h2 class="glossary-heading">
+                    Our Awards
+                </h2>
+                <div class="glossary-award-wrapper">
+                    <div class="glossary-award-image">
+                        <image src="/style/css/images/predictions/skeleton-award.png" alt="award image" />
+                    </div>
+                    <div class="glossary-award-image">
+                        <image src="/style/css/images/predictions/skeleton-award.png" alt="award image" />
+                    </div>
+                    <div class="glossary-award-image">
+                        <image src="/style/css/images/predictions/skeleton-award.png" alt="award image" />
+                    </div>
+                    <div class="glossary-award-image">
+                        <image src="/style/css/images/predictions/skeleton-award.png" alt="award image" />
+                    </div>
+                </div>
+                <h2 class="glossary-heading">
+                    Our Backers
+                </h2>
+                <div class="glossary-backer-wrapper">
+                    <div class="glossary-backer-image">
+                        <image src="/style/css/images/predictions/bsc.png" alt="backer image" />
+                    </div>
+                    <div class="glossary-backer-image">
+                        <image src="/style/css/images/predictions/aws.png" alt="backer image" />
+                    </div>
+                    <div class="glossary-backer-image">
+                        <image src="/style/css/images/predictions/web3.png" alt="backer image" />
+                    </div>
+                    <div class="glossary-backer-image">
+                        <image src="/style/css/images/predictions/sonorus.png" alt="backer image" />
+                    </div>
+                </div>
+                <div class="glossary-button">
+                    <a href="https://t.me/thealchemistofficial" target="blank">
+                        Join Telegram Channel
+                    </a>
+                    <a href="https://twitter.com/TheAlchemist_AI" target="blank">
+                        Follow on Twitter
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--footer-->
+        <?php include __DIR__ . '/layouts/footerPatterns.phtml'; ?>
+        
+        <a href="#" class="icon-back-top"><i class="icon-up-open-1"></i></a>
+        <script>
+            let mouseDown = false;
+            let startX, scrollLeft;
+            const slider = document.querySelector('.table-wrapper');
+            
+            const startDragging = (e) => {
+              mouseDown = true;
+              startX = e.pageX - slider.offsetLeft;
+              scrollLeft = slider.scrollLeft;
+              slider.style.cursor = "grabbing"
+            }
+            
+            const stopDragging = (e) => {
+              mouseDown = false;
+              slider.style.cursor = "grab"
+            }
+            
+            const move = (e) => {
+              e.preventDefault();
+              if(!mouseDown) { return; }
+              const x = e.pageX - slider.offsetLeft;
+              const scroll = x - startX;
+              slider.scrollLeft = scrollLeft - scroll;
+            }
+            
+            // Add the event listeners
+            slider.addEventListener('mousemove', move, false);
+            slider.addEventListener('mousedown', startDragging, false);
+            slider.addEventListener('mouseup', stopDragging, false);
+            slider.addEventListener('mouseleave', stopDragging, false);
+        </script>
+
+        <script>
+            $('#load-more').click(function (){
+               window.location.href = "/<?= $this->language ?>/login";
+            });
+        </script>
+    </body>
+</html>

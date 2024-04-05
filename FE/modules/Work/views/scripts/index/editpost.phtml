@@ -1,0 +1,45 @@
+<?php
+$customer = $_SESSION['cp__customer'];
+$tab = $this->tab;
+$ac = 'form';
+if ($tab == 'bs') {
+    $ac = "formbs";
+} elseif ($tab == 'pro') {
+    $ac = 'formpro';
+}
+?>
+<div class="social-content" style="padding: 10px 0;">
+    <div class="row social-content-sub">
+        <div class="col-xl-3 col-lg-3 col-md-3 social-content-left">
+            <?=
+            $this->action("left", "index", "Social", array(
+                'language' => $this->language,
+                'id_active' => $this->id_active,
+                'moduleTitle' => $this->module))
+            ?>
+        </div>
+
+        <div class="col-xl-9 col-lg-9 col-md-9 social-content-center">
+            <div class="work-form-item-tab">
+                <div class="work-form-item-tab-sub work-form-item-tab-info work-form-item-tab-sub-active">Info</div>
+                <div class="work-form-item-tab-sub work-form-item-tab-faq">Faq</div>
+            </div>
+            <div class="work-form-item-tab-info-content">
+                <?=
+                $this->action($ac, "index", "Work", array(
+                    'language' => $this->language,
+                    'id_active' => $this->id_active,
+                    'moduleTitle' => $this->module))
+                ?>
+            </div>
+            <div class="work-form-item-tab-info-faq">
+                <?=
+                $this->action("faq", "index", "Work", array(
+                    'language' => $this->language,
+                    'id_active' => $this->id_active,
+                    'moduleTitle' => $this->module))
+                ?>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,301 @@
+.box-full-sign {
+	width:100%;
+	height:100vh;
+	
+	}
+.box-full-sign .box-left {
+	width:56%;
+	height:100vh;
+	float:left;
+	background:url(../images/bg-login.jpg) no-repeat  center center;
+	background-size: cover;
+	padding:48px 56px;
+	}
+.box-full-sign .box-right {
+	width:44%;
+	height:100vh;
+	float:left;
+	background:#fff;
+	overflow:auto;
+	
+	}
+.box-full-sign .box-right::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+.box-full-sign .box-right::-webkit-scrollbar {
+	width:8px;    
+}
+
+.box-full-sign .box-right::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(172,172,172,0);
+
+}	
+
+.box-full-sign .box-right:hover::-webkit-scrollbar-thumb {
+    background-color:  rgba(172,172,172,1);
+}	
+.box-full-sign .box-left .icon-back {
+	width:200px;
+	height:36px;
+	float:left;
+	background:url(../images/icon-row-back.svg) no-repeat 0 0;
+	cursor:pointer;
+	padding-left:40px;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 36px;
+	letter-spacing: -0.5px;
+	color: #F6F6F6;
+	}	
+.box-full-sign  .box-form {
+	max-width:500px;
+	width:100%;
+	margin:auto;
+	max-height: 100vh;
+	padding-top:110px;
+	padding-bottom:15px;
+	}
+
+.box-full-sign .logo {
+	display:inline-block;
+    height: 44px;
+    width: 230px;
+    background: url(../images/logo-Alchemist.svg) no-repeat 0 0;
+    text-indent: -99999px;
+}
+.box-full-sign .title {
+	margin:0;
+	font-weight: 700;
+	font-size: 40px;
+	line-height: 64px;
+	color: #111;
+	margin-top:70px;
+	letter-spacing: -0.5px;
+	}
+.box-full-sign .form {
+	margin:0;
+	padding:0;
+	display:inline-block;
+	width:100%;
+	}
+.box-full-sign .form li {
+	width:100%;
+	float:left;
+	margin-top:32px;
+	list-style:none;
+	position:relative;
+	}
+	
+.box-full-sign .form .label {
+	display:block;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 24px;
+	color: #333;
+	margin-bottom:8px;
+	letter-spacing: -0.5px;
+	}
+.box-full-sign .box-form  .input {
+	background: #F6F6F6;
+	border-radius: 8px;
+	width:100%;
+	display:block;
+	height:48px;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 22px;
+	color: #2C2C2C;
+	border:1px solid #F6F6F6;
+	padding:12px 16px;
+	text-align:left;
+	}
+.box-full-sign .box-form  .erro {border: 1px solid #CC0001;}
+.box-full-sign .box-form .pass { position:relative}	
+.box-full-sign .box-form .pass .input{ padding-right:40px;}	
+.box-full-sign .box-form .pass .view-pass {
+	width:24px;
+	height:24px;
+	position:absolute;
+	top:12px;
+	right:16px;
+	background:url(../images/icon-view-no-pass.svg) no-repeat center center;
+	cursor:pointer;
+	z-index:1;
+	}
+
+.box-full-sign .box-form .pass.open .view-pass {
+	background:url(../images/icon-view-pass.svg) no-repeat center center;
+	}	
+.box-full-sign .box-form  .input::-webkit-input-placeholder{color: #CCCCCC;}
+.box-full-sign .box-form .text {
+	margin:0;
+	margin-bottom:16px;
+	}
+.box-full-sign .box-form .text-erro {
+	margin:0;
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 20px;
+	color: #CC0001;
+	margin-top:15px;
+	letter-spacing: -0.5px;
+	}
+.box-full-sign .box-form .box-pass-strength {
+	width:100%;
+	display:inline-block;
+	margin-top:8px;
+	}
+.box-pass-strength .pass-strength {
+	width:100%;
+	 display: flex;
+	overflow:hidden;
+	}
+.box-pass-strength .note-text {
+	margin:0;
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 20px;
+	color: #666666;
+	margin-top:8px;
+	}	
+.box-pass-strength .pass-strength .item {
+	background: #D9D9D9;
+	border-radius: 8px;
+	height:4px;
+	width: 116px;
+	margin-right:12px;
+	}
+.box-pass-strength .pass-strength .strong	{background: #48D413;}
+.box-pass-strength .pass-strength .not-safe {background: #CC0001;}		
+.box-full-sign .box-form .forgot {
+	float:right;
+	color: #666666;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 20px;
+	margin-top:16px;
+	text-decoration:underline;
+	margin-bottom:16px;
+	}
+.box-full-sign .box-form .btn-button {
+	display:inline-block;
+	padding: 12px 24px;
+	width: 100%;
+	height: 48px;
+	background: #1A64F0;
+	border-radius: 8px;
+	border:0;
+	cursor:pointer;
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 24px;
+	letter-spacing: -0.5px;
+	color: #F6F6F6;
+	}
+.box-full-sign .box-form .text-des {
+	margin:0;
+	margin-top:24px;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 20px;
+	color: #7D7D7D;
+	text-align:center;
+	letter-spacing: -0.5px;
+	}
+.box-full-sign .box-form .text-des a {color: #003FE6;font-weight: 600; margin-left:4px;color: #1A64F0;}
+.box-full-sign  .box-line {
+	width:100%;
+	display:inline-block;
+	text-align:center;
+	height:20px;
+	position:relative;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 20px;
+	color: #666666;
+	margin:40px 0;
+	}
+.box-full-sign  .box-line span { 
+	display:inline-block;
+	background:#fff;
+	padding:0 24px;
+	position:relative;
+	z-index:1;
+}		
+.box-full-sign  .box-line:before {
+	width:100%;
+	height:1px;
+	background:#CCCCCC;
+	content:"";
+	position:absolute;
+	left:0;
+	top:10px;
+	}
+.box-full-sign .box-network {
+	width:100%;
+	display:inline-block;
+	text-align:center
+	}
+.box-full-sign .box-network .des {
+	margin:0;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 20px;
+	letter-spacing: -0.5px;
+	color: #7D7D7D;
+	margin-bottom:24px;
+	}	
+.box-full-sign .box-network .icon {
+	width:32px;
+	display:inline-block;
+	height:32px;
+	margin:0 10px;
+	text-indent:-9999px;
+	}
+.box-full-sign  .box-network .google {
+    background: url(../images/icon-gg32.svg) no-repeat center center;
+}
+.box-full-sign .box-network .wt {
+    background: url(../images/icon-wt32.svg) no-repeat center center;
+}
+.box-full-sign  .box-network .fb {
+    background: url(../images/icon-fb32.svg) no-repeat center center;
+}
+
+.checkbox {
+	display: inline-block;
+	font-weight: 500;
+	color: #333333;
+    font-size:14px;
+	line-height: 24px;
+	width:100%;
+}
+.checkbox  a {color: #1A64F0;}	
+.checkbox input[type="checkbox"] {
+    display:none;
+}
+
+.checkbox input[type="checkbox"] + label {
+   color: #333333;
+    font-size:14px;
+	letter-spacing: -0.5px;
+}
+ .checkbox input[type="checkbox"] + label span {
+	 float:left;
+    height: 24px;
+    width: 24px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    position: relative;
+	background: #F6F6F6;
+	border-radius: 8px;
+	border:0;
+	margin-right:8px;
+}
+  .checkbox input[type="checkbox"]:checked + label span {
+	  background: url(../images/icon-check.png) no-repeat  center center transparent;
+	  }
+ 																					
